@@ -1,0 +1,90 @@
+====================
+start https://functional-programming.it.jyu.fi/master/pages/Expressions.md
+
+sum [] = 0       -- Clause 1
+sum (x:xs) = x + sum xs   -- Clause 2
+
+sum [1,2,3]
+1 + sum [2,3]
+1 + (2 + sum [3])
+1 + (2 + (3 + sum []))
+1 + (2 + (3 + 0))
+1 + (2 + 3)
+1 + 5
+6
+
+
+this is my attempt at the exercise, and I'm not sure if I got the order correct:
+areaOfBigCircle       =  pi * 10 ** 2
+pi * 100
+3.14159 * 100
+314.159
+
+greeting              =  "Hello "  ++  "Jill"
+enthusiasticGreeting  =  greeting  ++  "!" 
+("Hello " ++ "Jill") ++ "!!"
+"Hello Jill" ++ "!!"
+"Hello Jill!!"
+
+bothTrue True True    = True
+bothTrue _    _       = False
+allTrue               = foldr bothTrue True 
+
+um i can't do that.  Too much new stuff. so here's my attempt at understanding it:
+foldr (+) 5 [1,2,3,4] 
+
+here is definition I found:
+foldr f z []     = z 
+foldr f z (x:xs) = f x (foldr f z xs) 
+
+so let's try again:
+foldr (+) 5 [1,2,3,4]
+(+) 1 (foldr (+) 5 [2,3,4])
+(+) 1 ((+) 2 (foldr (+) 5 [3,4]))
+(+) 1 ((+) 2 ((+) 3 (foldr (+) 5 [4])))
+(+) 1 ((+) 2 ((+) 3 ((+) 4 (foldr (+) 5 []))))
+(+) 1 ((+) 2 ((+) 3 ((+) 4 (5))))
+(+) 1 ((+) 2 ((+) 3 (9)))
+(+) 1 ((+) 2 (12))
+(+) 1 (14)
+15
+
+
+I tried these out in $stack ghci to see if I made any mistakes, and it looks ok:
+Prelude> foldr (+) 5 [1,2,3,4]
+15
+Prelude> (+) 1 (foldr (+) 5 [2,3,4])
+15
+Prelude> (+) 1 ((+) 2 (foldr (+) 5 [3,4]))
+15
+Prelude> (+) 1 ((+) 2 ((+) 3 (foldr (+) 5 [4])))
+15
+Prelude> (+) 1 ((+) 2 ((+) 3 ((+) 4 (foldr (+) 5 []))))
+15
+Prelude> (+) 1 ((+) 2 ((+) 3 ((+) 4 (5))))
+15
+Prelude> (+) 1 ((+) 2 ((+) 3 (9)))
+15
+Prelude> (+) 1 ((+) 2 (12))
+15
+Prelude> (+) 1 (14)
+15
+
+
+
+
+
+
+
+foldr f z []          = z
+foldr f z (x:xs)      = f x (foldr f z xs)
+
+
+
+
+
+
+
+
+start https://functional-programming.it.jyu.fi/master/pages/Expressions.md
+====================
