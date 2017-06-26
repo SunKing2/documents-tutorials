@@ -1,0 +1,103 @@
+$ tmux This is a tmux “session,”
+$ exit   closes tmux and returns back to the standard
+terminal
+
+tmux new -s basic
+e can fire it up, start up programs
+or processes inside the tmux environment, and then leave it running in the
+background by “detaching” from the session.
+
+when we detach from a tmux session, we’re
+not actually closing tmux. Any programs we started up in that session will
+stay running. We can then “attach” to the session and pick up where we left
+off.
+
+can now detach from the
+tmux session by pressing C TRL - b followed by d . This returns us to our regular
+terminal prompt
+
+C TRL - b
+We have to prefix each tmux command with this key com-
+bination
+
+close your terminal window.
+but the tmux session is still chugging
+along, along with the top application we launched.
+tmux ls
+
+tmux attach
+
+Let’s detach from the basic session
+with P REFIX d
+
+create a new tmux instance
+tmux new -s second_session -d
+
+$ tmux ls    lists session names
+
+We can attach to the session we want by using the -t flag:
+$ tmux attach -t second_session
+
+We can type exit within a session to destroy the session, but we can also kill
+off sessions with the kill-session command.
+$ tmux kill-session -t basic
+$ tmux kill-session -t second_session
+
+
+
+
+
+
+========== cheat sheet ================
+
+$ tmux ls   # list running tmux sessions
+$ exit      # close tmux session
+
+Sharing sessions between terminals:
+$ tmux new -s session_name
+$ tmux at -t session_name  # attach
+$ tmux kill-session -t session_name
+
+tmux new
+  -s s
+  -n window
+  -c dir
+
+tmux ls
+tmux lsw # windows
+tmux lsp # panes
+
+tmux kill-window [-a]  # all
+tmux kill-session [-a] # all
+
+Commands within session are prefixed ctrl-b
+
+ ?  - show tmux key bindings
+
+ %  - split window, left/right
+ "  - split window, top/bottom
+←/→ - move focus to left/right pane
+↑/↓ - move focus to upper/lower pane
+ x  - Kill the current pane.
+M1  - horiz sizing
+M2  - vert sizing
+M5  - tiled
+
+ c  - create new window
+n/p - move to next/previous window
+0-9 - move to window number 0-9
+ f  - find window by name
+ w  - menu with all windows
+ &  - kill current window
+ ,  - rename window
+
+ !  - Break current pane into new window
+ d  - detach the current client
+
+ [  - enter copy mode (then use emacs select/yank keys)
+      * press CTRL-SPACE or CTRL-@ to start selecting text
+      * move cursor to end of desired text
+      * press ALT-w to copy selected text
+
+ ]  - paste copied text
+

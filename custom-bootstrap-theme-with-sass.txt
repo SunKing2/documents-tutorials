@@ -1,0 +1,105 @@
+# assume following is installed:
+# npm
+# yarn
+# live-server installed globally
+# perl
+
+
+rm -r ~/Documents/prog/tutorials/custom-bootstrap-theme-with-sass/*
+mkdir -p ~/Documents/prog/tutorials/custom-bootstrap-theme-with-sass
+cd ~/Documents/prog/tutorials/custom-bootstrap-theme-with-sass
+
+
+yarn add bootstrap-sass jquery compass
+
+mkdir sass css
+
+#import the _bootstrap.scss  (don't use the _ prefix or the .scss suffix:
+cat > sass/app.scss <<EOL
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap-compass";
+
+EOL
+
+#xfce4-terminal -H -x compass watch --sass-dir sass --css-dir css
+compass compile --sass-dir sass --css-dir css
+
+
+# go to bootstrap site, copy the starter template index.html into the root of the project:
+wget http://getbootstrap.com/examples/starter-template/
+
+sed -i '/meta tags/ d' index.html
+sed -i '/"description"/ d' index.html
+sed -i '/"author"/ d' index.html
+sed -i '/"icon"/ d' index.html
+
+# change everything between and including <title>....<body> to
+#    <title>Starter Template for Bootstrap</title>
+#    <link rel="stylesheet" href="css/app.css">
+#  </head>
+#
+#  <body>
+perl -0777 -i.original -pe 's/<title>.*<body>/    <title>Starter Template for Bootstrap<\/title>\n    <link rel="stylesheet" href="css\/app.css">\n  <\/head>\n\n  <body>\n/igs' index.html
+perl -0777 -i.original -pe 's/<!-- Bootstrap core.*<\/body>//igs' index.html
+
+#<nav class="navbar navbar-inverse navbar-fixed-top">
+perl -0777 -i.original -pe 's/<nav class="navbar navbar-inverse navbar-fixed-top">/<nav class="navbar navbar-default">/igs' index.html
+
+
+ln -s ~/Documents/tutorials/custom-bootstrap-theme-with-sass.txt  ./runtut
+chmod +x ./runtut
+
+#lvb uncomment next line!!!!!
+#live-server
+
+
+# 13:16
+
+###############################################
+# change title that shows up in navbar
+perl -0777 -i.original -pe 's/Project name/BizLight Theme/igs' index.html
+
+# create a local copy Bootstrap's _variables.scss file
+cp ./node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss ./sass/
+
+#insert a line at the beginning of sass/app.scss   Notice we import "variables", not "_variables.scss"
+sed -i '1 i\@import "variables";' sass/app.scss
+
+
+# modify _variables.scss to increase navbar height:
+perl -0777 -i.original -pe 's/$navbar-height:                    50px !default;/$navbar-height:                    70px !default;/igs' sass/_variables.scss
+
+
+# lvb delete next line
+#perl -0777 -i.original -pe 's/aaa/bbb/igs' sass/_variables.scss
+
+# add a variable for $main-color to _variables.scss
+perl -0777 -i.original -pe 's/\/\/== Colors/\/\/ Custom\n\$main-color: #1a8c97;\n\n\/\/== Colors/igs' sass/_variables.scss
+# make navbar background this new main color
+perl -0777 -i.original -pe 's/navbar-default-bg:                #f8f8f8 !default;/navbar-default-bg:                \$main-color !default;/igs' sass/_variables.scss
+perl -0777 -i.original -pe 's/navbar-default-link-hover-bg:             transparent !default;/navbar-default-link-hover-bg:             darken\(\$navbar-default-bg, 6.5%\) !default;/igs' sass/_variables.scss
+perl -0777 -i.original -pe 's/aaa/bbb/igs' sass/_variables.scss
+perl -0777 -i.original -pe 's/aaa/bbb/igs' sass/_variables.scss
+perl -0777 -i.original -pe 's/aaa/bbb/igs' sass/_variables.scss
+
+
+
+compass compile --sass-dir sass --css-dir css
+
+
+yarn add font-awesome
+
+
+
+
+
+chromium-browser index.html
+# ./runtut
+#live-server
+
+
+cat >> sass/app.scss <<EOL
+echo '@import "../node_modules/font-awesome/scss/font-awesome";' > 
+EOL
+
+

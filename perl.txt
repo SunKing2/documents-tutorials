@@ -1,0 +1,1605 @@
+installing from CPAN,  If the name of the module 
+in Perl-land is Path::Tiny, then the name of the 
+package in Debian/Ubuntu-land is most likely going to be libpath-tiny-perl.
+
+$ sudo apt-get install libpath-tiny-perl # tip from perlmaven.com
+
+Failing that, you can install using perl:
+
+$ perl -MCPAN -e 'install Date::ICal' # tip from cpan.org faq
+
+
+my $new = $old =~ s/new/old/gr;   # nondestructive substitution activestate.com
+
+my $tab_sep_data = "John\tDoe\tmale\t42";
+my ($first,$last,$gender,$age)= split(/\t/, $tab_sep_data); # impatient
+\t tab-separated data
+\s+ whitespace-separated data
+\s*,\s* comma-separated data
+
+in 'use strict' requires declaration of my, our, local or state # learn to spot a good tutorial
+
+3 arg open:
+open my $handle, '<', 'filename' or die "Cannot open filename: $!";
+where < read, > write
+use autodie at top of code also works, but checking for success is a good idea # learn to spot a good tutorial
+
+Parsing text, use Text::CSV module, don't parse yourself
+same with HTML, JSON, XML  # learn to spot
+
+Authoring a module: Dist::Zilla and Module::Starter # learn to spot
+
+========
+perldoc.perl.org/perlintro.html:
+$_ which is the "default variable". It's used as the default argument to a number of functions in Perl, and it's set implicitly by certain looping constructs.
+
+     print;          # prints contents of $_ by default
+
+Arrays
+ my @mixed   = ("camel", 42, 1.23);
+ print $mixed[$#mixed];       # last element, prints 1.23
+ my @animals = ("camel", "llama", "owl");
+ if (@animals < 5) { ... }    # @animals as a scalar is length of the array
+ @animals[0..2];              # camel, llama, owl
+  @animals[1..$#animals];     # gives all except the first element
+
+     my @sorted    = sort @animals;
+     my @backwards = reverse @numbers;
+     
+     my %fruit_color = (
+         apple  => "red",
+         banana => "yellow",
+     );
+	 $fruit_color{"apple"};           # gives "red"          
+	 
+You can get at lists of keys and values with keys() and values().
+
+     my @fruits = keys %fruit_colors;
+     my @colors = values %fruit_colors;
+
+     
+if (x) {} elsif {} else {}
+unless (x) {}
+while (x) {}
+until (x) {}
+do {} while (x)
+do {} until (x)
+
+ # the Perlish post-condition way
+ print "Yow!" if $zippy;
+ print "We have no bananas" unless $bananas;
+ print "Oh no it's too cold" unless $temperature > 15; # 2 hours and 30 minutes example on this line only
+ print "LA LA LA\n" while 1;          # loops forever
+ 
+for (x;y;z) {}  # like C
+
+
+foreach
+
+     foreach (@array) {     # foreach my $string (@array) also is used
+         print "This element is $_\n";
+     }
+     print $list[$_] foreach 0 .. $max;
+     print $_ foreach @array;  # example from 2 hours 30 minutes this line only
+     
+     foreach my $i ( 0 .. $#array ) {  # 2 hours 30 minutes this example only
+	     print $i, ": ", $array[$i];
+     }
+     
+     
+     # you don't have to use the default $_ either...
+     foreach my $key (keys %hash) {  # foreach my $key (sort keys %hash) also (2 hrs 30 min))
+         print "The value of $key is $hash{$key}\n";
+     }
+     
+next and last (are like continue and break). Opt 
+We can also optionally provide a label for any loop. By convention, labels are written in ALLCAPITALS. ional label
+Primes below 100: # this example 2 hours 30 minutes
+
+CANDIDATE: for my $candidate ( 2 .. 100 ) {
+	for my $divisor ( 2 .. sqrt $candidate ) {
+		next CANDIDATE if $candidate % $divisor == 0;
+	}
+	print $candidate." is prime\n";
+}
+     
+     
+operators:
+>= on numbers ge on strings
+&& but also and
+|| but also or
+!  but also not
+.  string concatenation
+x  string multiplication
+.. range: creates a list of numbers or strings
++=, -= .= are valid
+
+
+ open(my $log, ">>", "my.log")     or die "Can't open my.log: $!";
+     my $line  = <$in>;  # read one line
+     my @lines = <$in>;  # slurping
+
+     while (<$in>) {
+         print "Just read in this line: $_";
+     }
+
+print can use filehandles:
+     print STDERR "This is your final warning.\n";
+     print $out $record;
+     print $log $logmessage;
+     
+ close $in or die "$in: $!";
+
+
+Simple matching
+
+     if (/foo/)       { ... }  # true if $_ contains "foo"
+     if ($a =~ /foo/) { ... }  # true if $a contains "foo"
+
+The // matching operator is documented in perlop. It operates on $_ by default, or can be bound to another variable using the =~ binding operator (also documented in perlop).
+Simple substitution
+
+     s/foo/bar/;               # replaces foo with bar in $_
+     $a =~ s/foo/bar/;         # replaces foo with bar in $a
+     $a =~ s/foo/bar/g;        # replaces ALL INSTANCES of foo with bar
+                               # in $a
+
+     # a cheap and nasty way to break an email address up into parts
+     if ($email =~ /([^@]+)@(.+)/) {
+         print "Username is $1\n";
+         print "Hostname is $2\n";
+     }
+
+ sub logger {
+    my $logmessage = shift;
+    open my $logfile, ">>", "my.log" or die "Could not open my.log: $!";
+    print $logfile $logmessage;
+ }
+ 
+  my ($logmessage, $priority) = @_; 
+
+========
+start 2 hours 30 minutes:
+
+references:
+my $colour    = "Indigo";
+my $scalarRef = \$colour;
+print $scalarRef;      # e.g. "SCALAR(0x182c180)"
+
+Use $ {} to use the reference on a scalar, array or hash:
+print ${ $scalarRef }; # "Indigo"
+
+my @colours = ("Red", "Orange", "Yellow", "Green", "Blue");
+my $arrayRef = \@colours;
+print ${ $arrayRef }[0]; # use the reference to get to the array
+
+my %atomicWeights = ("Hydrogen" => 1.008     
+, "Helium" => 4.003, "Manganese" => 54.94);
+my $hashRef = \%atomicWeights;
+print ${ $hashRef }{"Helium"};  # use a reference to get to the hash
+
+print $$scalarRef;          # "Indigo"  scalar shortcut
+print $arrayRef->[0];       # array shortcut
+print $hashRef->{"Helium"}; # hash shortcut
+
+end 2 hours 30 minutes
+=====
+
+perlintro.html:
+Complex datatypes use references:
+     my $variables = {
+         scalar  =>  {
+                      description => "single item",
+                      sigil => '$',
+                     },
+         array   =>  {
+                      description => "ordered list of items",
+                      sigil => '@',
+                     },
+         hash    =>  {
+                      description => "key/value pairs",
+                      sigil => '%',
+                     },
+     };
+     print "Scalars begin with a $variables->{'scalar'}->{'sigil'}\n";
+
+
+=====
+start 2 hours 30 minutes:
+
+my %account = (
+	"number" => "31415926",
+	"opened" => "3000-01-01",
+	"owners" => [
+		{
+			"name" => "Philip Fry",
+			"DOB"  => "1974-08-06",
+		},
+		{
+			"name" => "Hubert Farnsworth",
+			"DOB"  => "2841-04-09",
+		},
+	],
+);
+print "Account #", $account{"number"}, "\n";
+print "Opened on ", $account{"opened"}, "\n";
+print "Joint owners:\n";
+print "\t", $account{"owners"}->[0]->{"name"}, " (born ", $account{"owners"}->[0]->{"DOB"}, ")\n";
+print "\t", $account{"owners"}->[1]->{"name"}, " (born ", $account{"owners"}->[1]->{"DOB"}, ")\n";
+
+array functions:
+push and pop operate on the end
+my @stack = ("Fred", "Eileen", "Denise", "Charlie");
+print pop @stack; # "Charlie"
+print @stack;     # "FredEileenDenise"
+If the array is empty, pop leaves it alone (since there is no element to remove) and returns
+undef  #this line from Learning Perl
+
+push @stack, "Bob", "Alice";  # stack now has Fred, Eileen, Denise, Bob, Alice
+push @array, 1..10;    # Learning Perl
+push @array, @others;  # Learning Perl
+
+shift and unshift operate on the start
+print shift @stack; # "Fred"
+print @stack;       # "EileenDeniseBobAlice"
+unshift @stack, "Hank", "Grace";
+print @stack; # "HankGraceEileenDeniseBobAlice"
+print splice(@stack, 1, 4, "<<<", ">>>"); # "GraceEileenDeniseBob"
+print @stack;                             # "Hank<<<>>>Alice"
+
+join(
+$char, @array)
+reverse()
+scalar reverse()
+
+
+
+end 2 hours 30 minutes
+======
+
+start of Learning Perl
+
+$ perl -Mdiagnostics ./my_program
+perldiag documentation
+or:
+use diagnostics;
+
+Any time that you need a
+variable in Perl, you can use an assignment instead.
+chomp($text = <STDIN>);
+
+parentheses are always optional.
+$betty = chomp $food;
+
+
+undef:
+$madonna = <STDIN>;
+if ( defined($madonna) ) {
+print "The input was $madonna";
+}
+
+create an undefined variable:
+$madonna = undef; # As if it had never been touched
+
+
+You can't use an else condition in a postfix conditional. You can use a ternary conditional operator
+# my $circumference = $radius * 2 * 3.141592654 if radius > 0 else 0);  # error
+my $circumference = $radius > 0 ? $radius * 2 * 3.141592654 : 0;
+
+$rocks[ $#rocks ] = 'hard rock'; # the last rock
+$rocks[ –1 ]                     # easier way to do that last example
+
+Lists:
+(1, 2, 3,)             # trailing comma ignored
+(1..100)               # list of 100 integers
+(0, 2..6, 10, 12)      # same as (0, 2, 3, 4, 5, 6, 10, 12)
+($m..$n)               # range determined by current values of $m and $n
+(0..$#rocks)           # the indices of the rocks array from the previous section
+
+Lists without quotes:
+qw( fred barney betty wilma dino )  # removes all whitespace
+qw(
+fred
+barney
+betty
+wilma
+dino
+)
+
+Also can do qw! a b c!  qw/ a b c/  qw# a b c# qw{a b c} qw [a b c] qw<a b c>
+and can use a \ in any of the list items from this example if you need to 
+
+Assigning varibles using lists:
+extra values are silently ignored.  If you have too many variables, they get undef
+($fred, $barney, $dino) = ("flintstone", "rubble", undef);
+($fred, $barney) = ($barney, $fred); # swap those values
+($betty[0], $betty[1]) = ($betty[1], $betty[0]);
+
+An array doesn’t become an element in the list, because these arrays can contain only
+scalars, not other arrays (You can't store a list into a list, but you can store
+a reference to an array)
+
+The value of an array variable that has not yet been assigned
+is ( ) , the empty list. Just as new, empty scalars start out with undef , new, empty arrays
+start out with the empty list.
+
+When an array is copied to another array, it’s still a list assignment. The lists are simply
+stored in arrays. For example:
+@copy = @quarry; # copy a list from one array to another
+
+splice ARRAY,OFFSET,LENGTH,LIST  # where OFFSET, LENGTH, LIST are optional
+removes LENGTH number of elements from ARRAY starting at OFFSET and replaces them with elements of LIST
+@x = splice ...  # the removed elements are returned
+$y = splice ...  # the last element or undef is returned
+OFFSET and LENGTH can be negative, LIST can be any size list
+@array = qw( pebbles dino fred barney betty );
+@removed = splice @array, 1, 2, qw(wilma); # @ array is now qw(pebbles wilma barney betty)
+
+print "@rocks"    # prints five rocks separated by $" variable which is space
+print "$rocks[1+1]" # also works, even though the 2 is within a string
+
+interpolating if a list has same name as a scalar:
+As Perl scans for variable names, it considers those characters as additional name
+characters, which is not what you want. Delimit the variable namein a
+pair of curly braces.
+@fred = (); $fred = "right";
+print "this is ${fred}[3]\n";   #this is right[3] 
+
+
+Perl v5.10 adds a slightly better print that it calls say . It automatically puts a newline
+on the end for you:
+use v5.10;
+
+$perldoc -f shift
+shift ARRAY
+    shift EXPR
+    shift   Shifts the first value of the array off and returns it, shortening
+            the array by 1 and moving everything down. 
+
+
+repl like perl:
+perl -de1
+also try
+Devel::REPL
+
+$ perldoc -v '$"'  #describe what is this internal variable
+$ perldoc -q html  #search the perl faqs for html
+$ perldoc -m Test::More  # show module source code 
+$ perldoc -l Test::More  # show path of installed module
+$ vi $(perldoc -l Test::More)  # edit the installed module
+$ perldoc perl   :  is this more useful than perldoc perltoc  ?  maybe
+$ perldoc perldoc
+
+$_ = "Yabba dabba doo\n";
+print; # prints $_ by default
+
+
+
+each(), really for hashes but: In Perl 5.12 and later only, it will also return the index and value
+for the next element of an array so that you can iterate over it;
+use 5.012;	# so keys/values/each work on arrays
+@rocks = qw/ bedrock slate rubble granite /;
+while( ( $index, $value ) = each @rocks ) {
+    print "$index: $value\n";
+}
+
+scalar value is automatically promoted to make a one-element list:
+@fred = 6 * 7; # gets the one-element list (42)
+@barney = "hello" . ' ' . "world";
+
+# chomp every array item at once:
+chomp(@lines = <STDIN>); # Read the lines, not the newlines
+
+Whatever calculation is last performed in a
+subroutine is automatically also the return value.
+
+By default, all variables in Perl are global variables; that is, they are accessible from
+every part of the program. But you can create private variables called lexical variables
+at any time with the my operator.
+
+======
+start Learning Perl p71
+use strict doesn’t check variables named $a and $b because sort
+uses those global variables
+
+this aside is from Programming Perl 4th.:
+use 5.12.0;    # That's version 5, subversion 12, patchlevel 0.
+use v5.12.0;   # same
+use v5.12;     # same, but be sure to put the v!
+use 5.012;     # same, for compatibility with very old perls
+use 5.12;      # WRONG!
+
+You can detect whether a subroutine is being evaluated in a scalar
+or list context using the wantarray function,
+
+use v5.10;
+sub marine {
+    state $n = 0; # private, persistent variable $n
+    $n += 1;
+    print "Hello, sailor number $n!\n";
+}
+Perl ignores the statement on all subsequent calls.
+
+Initialization of state variables in list context currently forbidden ...
+
+
+get parameter in a sub:
+my $name = shift;
+
+Also make sure that sub will return something reasonable if no parameters are passed.
+
+<STDIN> , is actually a line-input oper‐
+ator (represented by the angle brackets) around a filehandle
+
+chomp($line = <STDIN>); # same thing, more idiomatically
+
+Since the line-input operator will return undef when you reach end-of-file, this is
+handy for dropping out of loops:
+while (defined($line = <STDIN>)) {
+    print "I saw $line";
+}
+
+
+#this will prompt, write a line of text, and prompt again
+while (<STDIN>) {
+    print "I saw $_";
+}
+enter some stuff:
+a
+I saw a
+b
+I saw b
+c
+I saw c
+read the input into a variable, and (as long as the result was
+defined, so you haven’t reached end-of file) then enter the while loop
+storing the input into default variable, $_ , just
+as if you had written this:
+while (defined($_ = <STDIN>)) {
+    print "I saw $_";
+}
+
+#this will prompt many times until eof, then spew out all the lines of text:
+foreach (<STDIN>) {
+    print "I saw $_";
+}
+more!  enter some more stuff:
+c
+d
+e
+I saw c
+I saw d
+I saw e
+
+But in the foreach loop, you’re using the line-input operator in
+a list context (since foreach needs a list to iterate through); you read all of the input
+before the loop can start running.
+
+the while loop stores only into a scalar each time, taking less memory.
+On a large file, the foreach example, storing all the input at once can consume much memory.
+
+
+#read all the files, which is a shorcut to the next example:
+#there is also <> operator, but it leads to nasty redirects, use this:
+use v5.22;
+while (<<>>) {
+    chomp;
+    print "It was $_ that I saw!\n";
+}
+
+#don't use me, if you can use the shortcut in the previous example!
+use v5.22;
+while (defined($line = <<>>)) {
+    chomp($line);
+    print "It was $line that I saw!\n";
+}
+
+
+To print a number in what’s generally a good way, use %g , which automatically choo‐
+ses floating-point, integer, or even exponential notation, as needed:
+printf "%g %g %g\n", 5/2, 51/17, 51 ** 17;    # 2.5 3 1.0683e+29
+
+printf "%10s\n", "wilma";        # `````wilma
+A negative field width is left-justified (in any of these conversions):
+printf "%-15s\n", "flintstone";  # flintstone`````
+
+printf "%12.0f\n", 6 * 7 + 2/3; # rounds to 0 decimal places ``````````43
+
+
+Also specify width as argument
+printf "%*s", 10, "wilma";            # `````wilma
+
+Or width and number of decimal places as arguments
+printf "%*.*f", 6, 2, 3.1415926;      # ```3.14
+
+silly way to show 10 strings of equal width:
+printf "The items are:\n".("%10s\n" x @items), @items;
+
+end Learning Perl
+======
+start perlfaq
+
+To call a function on each element in an array, and collect the results, use map:
+
+my @results = map { my_func($_) }   @array;
+my @triple  = map { 3 * $_ }        @single;
+my @results = map { some_func($_) } (5 .. 25); # use for loop with big ranges: memory
+
+
+end perlfaq
+========
+start learnxinyminutes.com
+
+# Arrays can also be interpolated into double-quoted strings, and the
+# elements are separated by a space character by default.
+
+
+my %fruit_color = ("apple", "red", "banana", "yellow");
+#  whitespace and the "=>" operator to lay them out more nicely:
+my %fruit_color = (
+  apple  => "red",
+  banana => "yellow",
+);
+
+my $fruits = ["apple", "banana"];  #create anonymous array returning reference
+my $colors = {apple => "red", banana => "yellow"}; # anonymous hash returning reference
+
+# References can be dereferenced by prefixing the appropriate sigil.
+
+my @fruits_array = @$fruits;
+my %colors_hash = %$colors;
+
+# As a shortcut, the arrow operator can be used to dereference and
+# access a single value.
+
+my $first = $array_ref->[0];
+my $value = $hash_ref->{banana};
+
+
+perlish post-conditions and other post-perlisms
+# the Perlish post-condition way
+print "Yow!" if $zippy;
+print "We have no bananas" unless $bananas;
+
+# the Perlish post-condition way again
+print for @elements;
+
+# iterating through the keys and values of a referenced hash
+print $hash_ref->{$_} for keys %$hash_ref;
+
+iterating with for, foreach, map:
+for my $element (@elements) {
+  print $element;
+}
+
+#cool:
+map {print} @elements;
+
+# implicitly
+for (@elements) {
+  print;
+}
+
+# iterating through a hash (for and foreach are equivalent)
+foreach my $key (keys %hash) {
+  print $key, ': ', $hash{$key}, "\n";
+}
+
+
+regex:
+# Simple matching
+if (/foo/)       { ... }  # true if $_ contains "foo"
+if ($x =~ /foo/) { ... }  # true if $x contains "foo"
+
+# Simple substitution
+$x =~ s/foo/bar/;         # replaces foo with bar in $x
+$x =~ s/foo/bar/g;        # replaces ALL INSTANCES of foo with bar in $x
+
+#file stuff:
+open(my $in,  "<",  "input.txt")  or die "Can't open input.txt: $!";
+open(my $out, ">",  "output.txt") or die "Can't open output.txt: $!";
+open(my $log, ">>", "my.log")     or die "Can't open my.log: $!";
+
+my $line  = <$in>; # read single line
+my @lines = <$in>; # read whole file
+print $out @lines;
+print $log $msg, "\n";
+
+#mymodule.pm or is it MyModule.pm
+package MyModule;
+use strict;
+use warnings;
+
+sub trim {
+  my $string = shift;
+  $string =~ s/^\s+//;
+  $string =~ s/\s+$//;
+  return $string;
+}
+
+1;
+
+
+#mymain.pl
+use MyModule;
+MyModule::trim($string);
+
+use MyModule 'trim';  #this format requires Exporter module
+trim($string);
+
+--------------begin oo-------------
+package MyCounter;
+use strict;
+use warnings;
+
+sub new {
+  my $class = shift;
+  my $self = {count => 0};
+  return bless $self, $class;
+}
+
+sub count {
+  my $self = shift;
+  return $self->{count};
+}
+
+sub increment {
+  my $self = shift;
+  $self->{count}++;
+}
+
+1;
+
+use MyCounter;
+my $counter = MyCounter->new;
+print $counter->count, "\n"; # 0
+$counter->increment;
+print $counter->count, "\n"; # 1
+
+
+#with Moo, this class would look like this instead:
+package MyCounter;
+use Moo; # imports strict and warnings
+
+has 'count' => (is => 'rwp', default => 0, init_arg => undef);
+
+sub increment {
+  my $self = shift;
+  $self->_set_count($self->count + 1);
+}
+
+1;
+
+--------------end oo-------------
+
+end learnxinyminutes.com
+========
+
+start http://tangzx.qiniudn.com/notes/lang/perl.html
+use diagnostics;
+perl -Mdiagnostics ./my_program
+
+$alpha = chr( hex('03B1') );
+$omega = chr( 0x03C9 );
+"\x{03B1}\x{03C9}"
+
+$rocks[ $#rocks ] = 'hard rock';  # the last rock
+$rocks[ –1 ] = 'hard rock';   #easier way to do previous line
+
+push @array, @others;
+
+\l 	Lowercase next letter
+\L 	Lowercase all following letters until \E
+\u 	Uppercase next letter
+\U 	Uppercase all following letters until \E
+\Q 	Quote nonword characters by adding a backslash until \E
+\E 	End \L, \U , or \Q
+foreach $rock (@rocks) {
+    $rock = "\t$rock"; # put a tab in front of each element of @rocks
+    $rock .= "\n"; # put a newline on the end of each
+}
+print "The rocks are:\n", @rocks; # Each one is indented, on its own line
+
+@back = reverse sort @rocks;
+
+$backwards = reverse qw/ yabba dabba doo /; # gives oodabbadabbay
+@fred = 6 * 7; # gets the one-element list (42)
+print "I have ", scalar @rocks, " rocks!\n"; # Correct, gives a number
+
+my $fred, $barney;  # WRONG! Fails to declare $barney
+my($fred, $barney); # declares both
+
+
+end http://tangzx.qiniudn.com/notes/lang/perl.html
+========
+perl crash course?
+The => operator acts like a comma which also quotes whatever is
+o its left; unquoted strings inside curly braces are automatically quoted.
+sort of order, but it’s dependent on the particular hash function being used, and
+not something one can depend on.
+22
+Hash indexing is done with curly braces; note again that when retrieving a
+scalar value from a hash by indexing, one should use a dollar sign. For example,
+the code snippet in figure 2 would print
+Brent, age 20, is a student.
+Note
+my %hash = (’name’, ’Brent’,
+’age’, 20,
+’occupation’, ’student’
+);
+print "$hash{’name’}, age $hash{’age’}, ";
+print "is a $hash{’occupation’}.\n";
+Figure 2: Using hashes.
+that hashes can be initialized with array literals; each pair of elements is taken to
+be a key/value pair. A more idiomatic way of writing the same code is exhibited
+in figure 3. The
+=>
+operator acts like a comma which also quotes whatever is
+my %hash = (name => ’Brent’,....
+print "$hash{name}, age $hash{age}, ";
+
+========
+start perl crash course:
+The => operator acts like a comma which also quotes whatever is
+to its left; unquoted strings inside curly braces are automatically quoted.
+my %hash = (name => ’Brent’, ....
+print "$hash{name}, age $hash{age}, ";
+
+
+end perl crash course:
+========
+
+
+======
+start Learning Perl
+STDIN , STDOUT , STDERR , DATA , ARGV , and ARGVOUT
+
+my %inverse_hash = reverse %any_hash; # ( value, key, value, key, value, key, ... )
+
+the last one in wins. That is, the later items in the list
+overwrite any earlier ones.
+
+any time that you need a comma ( , ), you can use the big arrow instead;
+
+simple string without quote marks is called a bareword
+
+while ( ($key, $value) = each %hash ) {
+print "$key => $value\n";
+}
+
+exists $books{"dino"} will return a true value if (and only if) dino is
+found in the list of keys from keys %books .
+
+delete function removes the given key (and its corresponding value) from the
+hash (if there’s no such key, its work is done; there’s no warning or error in that case):
+delete $books{$person}; # key no longer exists
+exists $books{$person}  # false;
+$books{$person} = undef # key now must exist
+exists $books{$person}  # true;
+
+"$books{$person}" # interpolates nicely
+"%books"          # nope, just shows the six characters.
+
+ENVironment hash is predefined:
+print "PATH is $ENV{PATH}\n";
+
+---------------------------------
+REGULAR EXPRESSIONS REGEXP:
+
+forward slashes are the match operator
+
+$_ = "yabba dabba doo";
+if (/abba/) {
+    print "It matched!\n";
+}
+
+The pattern in the match operator is a double-quoted context; you can do the same
+sorts of things you can do in a double-quoted string.  For example, all these are the tab:
+\t \N{CHARACTER TABULATION}  \011 \x09 \x{9} ${tab}  #last one assumes scalar variable initialized
+
+my $pattern = "(";
+/$pattern/
+Runtime error: Unmatched ( in regex; marked by <-- HERE in m/( <-- HERE / at (eval 323) line 6.
+
+match //
+//  # sequence of zero characters
+1
+
+leftmost longest rule:
+Once the pattern is successful, the match operator returns true. This process matched
+the leftmost possible place to match. It doesn’t need to find the second match (although
+you can specify global).
+# match //
+//  # sequence of zero characters
+1
+If you follow the leftmost, longest rule, you’ll work out that the empty pattern
+matches at the beginning of the string where it always finds the sequence of zero
+characters.
+
+\N  # any character except a newline
+
+/(fred)+/ # The quantifier applies to the entire group, so it matches
+strings like fredfredfred
+
+if (/(.)\1/) { # matches 'bb', have to match a character right next to itself
+
+\g{N}    \g1
+use v5.10;
+/(.)\g{1}11/
+
+/(.)\g{–1}11/  # relative back reference
+
+[5.24] # matches a literal dot or a 5, 2, or 4
+
+You may use the same character shortcuts as in any double-quotish string to define a
+character, so the class [\000-\177] matches any seven-bit ASCII character.
+
+horizontal whitespace, you could use the \h shortcut introduced in v5.10:
+
+
+\d \w \s \h \v  digit, word character, whitespace, horiz whitespace, vertical whitespace
+\D \W \S \H \V  any character not 
+
+before v5.18, the \s didn’t match the vertical tab, next line, or nonbreaking space.
+
+#5.10
+\R   \r\n , \n
+\h \H
+\v \V
+\n \N newline #5.18
+
+\p{Space}  # unicode property named Space, also matches NEXT LINE and 
+NONBREAKING SPACE characters. It also matches LINE TABULATION (vertical tab),
+which \s did not match before v5.18.
+
+\p{Space} \p{Digit}  \p{AHex}  
+\P{Space} \P{Digit}  \P{AHex}  
+
+\A  absolute beginning of string
+\z  absolute end of string   \Z allows optional newline after it
+
+end Learning Perl
+========
+start perlrequick
+"Hello World" =~ /World/;  # matches
+print "It matches\n" if "Hello World" =~ /World/;
+
+print "It doesn't match\n" if "Hello World" !~ /World/;
+$greeting = "World";        
+print "It matches\n" if "Hello World" =~ /$greeting/;
+
+"$_ =~" part can be omitted:
+$_ = "Hello World";
+print "It matches\n" if /World/;
+
+"//" default delimiters  change to, e.g.: m!! or m{} to use arbitrary delimiters
+
+metacharacters {}[]()^$.|*+?\
+
+escapes: \t \n newline \r carriage return
+\033   \x1B using octal, and hex
+
+regexes are treated similar to "" strings, so these work:
+/cat$foo/    /${foo}cat/
+
+/[bcr]at/  # character class
+-]\^$      # escape these characters in a character class
+can also put - as first or last character in character class
+[^.]       # negated
+/[^a]at/   # does not match at because
+           # [^.] must match a character or it will fail
+           
+.          # any character but \n
+\d\s\w\D\S\W  are in this tutorial
+
+\b         # boundary between a word character and a non-word character
+           # end of string is word boundary
+\b{wb}     # good for natural language don't, for example
+
+/yes/i     # case insensitive
+
+
+Earliest possible match:
+At each character position, it looks for a match, so:
+"cats and dogs" =~ /dog|cat|bird/;  # matches "cat"
+
+look out for tricky ^; it's not in a []
+/(^a|b)c/;   # matches 'ac' at start of string or 'bc' anywhere
+
+using backreferences in code:
+        # extract hours, minutes, seconds
+        $time =~ /(\d\d):(\d\d):(\d\d)/;  # match hh:mm:ss format
+        $hours = $1;
+        $minutes = $2;
+        $seconds = $3;
+        
+or more tersely stated:
+($hours, $minutes, $second) = ($time =~ /(\d\d):(\d\d):(\d\d)/);
+
+    $1, $2, ... should only be used outside of a regex, and "\g1", "\g2", ...
+    only inside a regex.
+
+Each quantifier (*, for example) will match as much as possible.
+This leads to the surprise for $1:
+$x = 'the cat in the hat';
+$x =~ /^(.*)(at)(.*)$/;  # $1 = 'the cat in the h'
+".*" has no string left to it, so it matches 0 times. and $3 is no match
+
+//g and pos $x using perl code:
+while ($x =~ /(\w+)/g) {
+            print "Word is $1, ends at position ", pos $x, "\n";
+        }
+
+
+    A failed match or changing the target string resets the position. If you
+    don't want the position reset after failure to match, add the "//c", as in
+    "/regex/gc".
+
+
+    In list context, "//g" returns a list of matched groupings, or if there
+    are no groupings, a list of matches to the whole regex. So
+
+        @words = ($x =~ /(\w+)/g);  # matches, so @words contains ('cat', 'dog', 'house')
+
+
+search/replace  (usually you mean s///g)
+$y = "'quoted words'";
+$y =~ s/^'(.*)'$/$1/;   #removes single quotes
+
+s///r non-destructive modifier, doesn't modify whatever =~ is bound to
+$y = $x =~ s/dogs/cats/r;  # here $x is the same, $ has the (changed) results of the modifier
+@foo = map { s/[a-z]/X/r } qw(a b c 1 2 3);  # foo now qw(X X X 1 2 3)
+
+s///e  can evaluate replacement strings:
+$x =~ s/(\w+)/reverse $1/ge;  # each word in string is reversed
+$x =~ s!(\d+)%!$1/100!e;      # percentage converted to decimal
+
+split operator:
+@word = split /\s+/, $x;
+@const = split /,\s*/, $x;  # comman (and optional spaces) delimited
+empty regex "//" splits into individual characters
+
+If the regex has groupings, then the list produced contains
+    the matched substrings from the groupings as well:
+
+        $x = "/usr/bin";
+        @parts = split m!(/)!, $x; # ('', '/', 'usr', '/', 'bin')
+Since the first character of $x matched the regex, "split" prepended an
+    empty initial element to the list.
+
+
+  "use re 'strict'"  # v5.22
+
+end perlrequick
+========
+
+
+======
+start Learning Perl
+
+paired delimiters    Nonpaired delimiters
+
+It’s common to use curly braces; text editor has the ability to jump from an opening curly brace to the
+corresponding closing one
+
+paired delimiters can even appear in patterns since usually, within the pattern each open has a corresponding close:
+m(fred(.*)barney)
+m{\w{2,}}
+m[wilma[\n \t]
+these characters within the pattern are regular expression metacharacters, that's why they have a close, the exception
+would be the <>; there is no metacharacter for <
+
+Flags (ie modifiers):
+/i   case insensitive
+/s   every dot in the pattern to act like the character class [\d\D], so match any character even if a newline
+     [\D\d] also works and so does [\S\s], i.e. every nondigit and digit should be everything
+/x   makes whitespace inside the pattern insignificant (you can even put comments in patterns, since they are whitespace)
+     example is  / -? [0-9]+ \.? [0-9]* /x
+     When using /x, a pattern contain a space or a \t gets ignored, so, for that case use \s within a pattern for them
+     The # in this case also needs to be escaped, if it's not a comment
+/a   v5.14 use the ASCII interpretation of character class /\w+/a is any [A-Za-z0-9_]
+/u   v5.14 use unicode                                     /\w+/u is any unicode word character
+/l   v5.14 respect locale                                  /\w+/l perhaps characters like Œ from Latin-9
+/aai need 2 a here, use ASCII only case folding.  ie don't fold unicode characters
+with locales, it's harder, see the book for that.
+/m   multiline matching  so /fred$/m finds fred at end of any line on a multiline string same with ^
+     without the /m, these act like \A and \Z
+/n   v5.22 turns all parens into non-capturing
+
+you really should mostly use \A and \Z rather than ^ and $
+
+\N is complement of \n: it's any character except newline
+
+
+
+binding operator ( =~ ) tells Perl to match
+the pattern on the right against the string on the left, instead of matching against $_
+It is simply saying, “This pattern match that would
+attach to $_ by default—make it work with this string on the left instead.” If there’s no
+binding operator, the expression uses $_ by default.
+
+my $likes_perl = <STDIN> =~ /\byes\b/i;  # stores the result of the test (and not the line of input)
+
+$_ = "Hello there, neighbor";
+if (/(\S+) (\S+), (\S+)/) {
+print "words were $1 $2 $3\n";
+}
+
+$dino = "after a few years";
+$dino =~ /([0-9]*) years/  # $1 is "", $2 is undef
+
+shouldn’t use these match
+variables unless the match succeeded; otherwise, you could be seeing a capture from
+some previous pattern.  Us an if like this:
+
+if ($wilma =~ /([a-zA-Z]+)/) {
+    print "Wilma's word was $1.\n";
+}
+
+my $wilma_word = $1;  # good idea to copy this, because some programmer may insert a new regex into the code
+
+(?:)  # these parens are non-capturing
+
+
+labels instead of $1, $2 etc by using (?<LABEL>PATTERN) with $+{LABEL} from the %+: hash:
+use v5.10
+my $names = 'Fred or Barney';
+if ( $names =~ m/(?<name1>\w+) (?:and|or) (?<name2>\w+)/ ) {
+    say "I saw $+{name1} and $+{name2}";
+}
+
+backreference in this case are like either of these:
+\g{LABEL}
+\k<label>
+
+Python syntas: (?P<LABEL>...) forms a capture (?P=LABEL) refers to that capture.
+
+
+
+
+
+end Learning Perl
+================
+================
+start perl crash course
+
+delete $hash{occupation};
+chop() chops last character off string
+chr(65) returns "A"
+
+some further reading will introduce you to:
+multi-line literal strings into your Perl programs with “here-documents”
+manipulate letter cases in strings (\u \l \U \L)
+q//, qq//, qw//, qr//, and qx// operators can quote strings along with "   and  '
+spaceship operator (<=>) is another operator
+You can grab multiple array or hash elements at once with slices. See perldata(1)
+splice and grep is available on arrays
+
+
+• Zero (the number) is false.
+• The empty string ’’ and the string ’0’ are false.
+• undef is false.
+• Anything else is true.
+
+vari-
+adic, that is, they take a variable number of parameters
+If multiple arrays or hashes are
+passed as parameters to a subroutine, their elements are simply flattened into
+the argument list
+
+many of Perl’s built-in functions act on the “default
+scalar”, $ 28 . Input from standard input or from a file goes to $ if not ex-
+plicitly assigned anywhere else; functions such as split, chomp, and print act
+on $ by default, as do pattern matches
+
+while ( <STDIN> ) {
+$_ = reverse $_;
+print;
+}
+one line of input at a time is read from
+standard input, and since it is not assigned anywhere else, it is assigned to $ .
+(Note that when EOF is reached, the input operator <STDIN> returns undef,
+since print has no arguments, it
+prints $ by default.
+print scalar reverse while <STDIN>; # same thing
+
+@_ pronounced "them"
+$_ pronounced "it"
+
+@thing1 = @things  # real copy, not a java-like reference operation
+
+assign an array of length m to
+another array of length n,  the array being assigned to just gets assigned the first n elements of the other
+array.
+
+subroutine parameters, if modified directly, modify the calling variables.  THowever, copying parameters into local variables enforces value semantics.
+
+
+
+
+end perl crash course
+================
+
+start random notes from internet sites
+
+Testing if a string contains a sub string
+
+if ($a_string =~ m/Elephant/)
+
+if ($a_string =~ m/Elephant/i) # case insensitive search
+
+Search, and Replace on a String
+
+$a_string =~ s/Peking/Bejing/g;
+
+Change String to all upper, or lower case
+
+  $string =~ tr/a-z/A-Z/;  # convert to upper case
+  $string =~ tr/A-Z/a-z/;  # convert to lower case
+
+These functions and operators work with the $_ variable by default:
+
+    * The pattern-matching operator
+    * The substitution operator
+    * The translation operator
+    * The <> operator, if it appears in a while or for conditional expression
+    * The chop function
+    * The print function
+    * The study function 
+
+s/abc/xyz/; #Substitution operator uses the $_ variable if you do not specify a variable using =~
+$substitcount = s/abc/xyz/g #Substituting inside $_, returns the number of substitutions performed
+
+tr/a-z/A-Z/; #Translates all lowercase letters in the value stored in $_ to their uppercase
+$transcount = tr/z/z/; #Counts the number of z's in $_. Then hash %transcount keeps track of
+#the number of occurrences of each of the characters being counted. 
+
+The $0 variable contains the name of the Perl script you are running.
+
+The $, variable
+
+The $, character sequence printed between elements with print. Defaults to a null character.
+The $? variable  return value.  check if zero or $returncode = $? >> 8;
+
+The $. variable contains the line number of the last line read from an input file.
+
+The $ARGV
+while (<>) {
+  print ("Filename being read currently is: $ARGV \n");
+  exit();
+}
+The $^T variable contains the time at which your program began running.
+
+The $` $& $' text before a match, matched text, text after the match
+
+The %ENV hash lists the environment variables.  print $ENV{PATH};
+
+
+#!/usr/bin/perl
+# multithreaded server example
+# datajunkie.me
+use strict;
+use warnings;
+use IO::Socket::INET;
+use threads;
+ 
+sub Main
+{
+      # flush after every write
+      $| = 1;
+ 
+      my ( $socket, $client_socket );
+      
+      # Bind to listening address and port
+      $socket = new IO::Socket::INET (
+            LocalHost => '127.0.0.1',
+            LocalPort => '1337',
+            Proto => 'tcp',
+            Listen => 5,
+            Reuse => 1
+      ) or die "Could not open socket: ".$!."\n";
+ 
+      print "SERVER Waiting for client connections...\n";
+ 
+      my @clients = ();
+      while(1)
+      {
+            # Waiting for new client connection.
+            $client_socket = $socket->accept();
+            # Push new client connection to it's own thread
+            push ( @clients, threads->create( \&clientHandler, $client_socket ) );
+            foreach ( @clients ) 
+            {
+                  if( $_->is_joinable() ) {
+                      $_->join();
+                }
+          }
+      }
+      $socket->close();
+      return 1;
+}
+ 
+sub clientHandler
+{
+      # Socket is passed to thread as first (and only) argument.
+      my ($client_socket) = @_;
+ 
+      # Create hash for user connection/session information and set initial connection information.
+      my %user = ();
+    $user{peer_address} = $client_socket->peerhost();
+      $user{peer_port} = $client_socket->peerport();
+ 
+      print "Accepted New Client Connection From:".$user{peer_address}.":".$user{peer_port}."\n";
+ 
+      # Let client know that server is ready for commands.
+      print $client_socket "> ";
+ 
+      # Listen for commands while client socket remains open
+      while( my $buffer = <$client_socket> )
+      {
+            # Accept the command `HELLO` from client with optional arguments
+            if( $buffer =~ /^HELLO(\s|$)/i )
+            {
+                  #Example reply
+                  print $client_socket "HELLO THERE!!\n";
+                  print $client_socket "Your IP:\t".$user{peer_address}."\n";
+                  print $client_socket "Your Port:\t".$user{peer_port}."\n";
+            }
+ 
+            # This will terminate the client connection to the server
+            if( $buffer =~ /^QUIT(\s|$)/i )
+            {
+                  # Print to client, and print to STDOUT then exit client connection & thread
+                  print $client_socket "GOODBYE\n";
+                  print "Client exit from ".$user{peer_address}.":".$user{peer_port}."\n";
+                  $client_socket->shutdown(2);
+                  threads->exit();
+            }
+            print $client_socket "> ";
+      }
+      print "Client exit from ".$user{peer_address}.":".$user{peer_port}."\n";
+ 
+      # Client has exited so thread should exit too
+      threads->exit();
+}
+ 
+# Start the Main loop
+Main();
+
+
+
+end random notes from internet sites
+================
+start Learning Perl p 155
+$&  part of the string that actually matched
+$`  Whatever came before the matched section
+$'  whatever was after it
+
+"Hello there, neighbor" =~ /\s(\w+),/;print"$`$&$'\n"  # Hello there, neighbor
+
+use v5.10;"Hello there, neighbor" =~ /\s(\w+),/p;print "${^PREMATCH}${^MATCH}${^POSTMATCH}\n";
+Hello there, neighbor
+
+Precedence
+parentheses:      ()
+quantifiers:      * + ?  {}
+anchors+sequence: \A , \Z , \z , ^ , $ , \b , \B  \G abc(putting one item after another, ie letters in a word)
+alternation:      |
+atoms:            a [abc] \d \1 \g{2} (individual characters, character classes, and back references)
+
+$_="gray";s/a/e/;print "$_\n"   # grey
+
+s/with (\w+)/against $1's team/;
+print "$_\n"; # says "He's out bowling against Fred's team tonight."
+
+Boolean value from s/// ; it’s true if
+
+s/\A\s+|\s+\z//g;
+# Strip leading, trailing whitespace
+
+s{fred}{barney};
+s[fred](barney);
+s<fred>#barney#;
+
+use the /i , /x , m/ , and /s
+we can choose a different target for s/// by using the bind‐
+ing operator
+
+/r , it leaves the original string alone and
+returns a modified copy of it:
+use v5.14;
+my $copy = $original =~ s/\d+ ribs?/10 ribs/r;
+
+$_ = "I saw Barney with Fred.";
+s/(fred|barney)/\U$1/gi; # $_ is now "I saw BARNEY with FRED."
+
+turn off case
+shifting with \E
+
+The \L and \u may appear together in either order
+
+v5.16 or later and want proper Uni‐
+code case-folding, you can use \F
+
+functions lc , uc , fc , lcfirst ,
+and ucfirst
+
+\Q \E :
+\Q quotes any metacharacter
+If you want the quoting to apply to only part of the pattern, you can use the \E
+
+quotemeta function
+
+my @fields = split /separator/, $string;
+
+trailing empty fields are discarded:  third argument of -1
+my @fields = split /:/, ":::a:b:c:::";   # gives ("", "", "", "a", "b", "c")
+
+The default for split is to break up $_ on whitespace:
+my @fields = split; # like split /\s+/, $_; leading empty field is suppressed though
+
+split ' ', $other_string . Using a space instead of the pattern is a special kind of
+split .
+
+Use the noncapturing parentheses, (?:) , in split if you need to group things.
+
+my $result = join $glue, @pieces;
+
+my $x = join ":", 4, 6, 8, 10, 12;  # $x is "4:6:8:10:12"
+my @values = split /:/, $x;         # @values is (4, 6, 8, 10, 12)
+my $z = join "-", @values;          # $z is "4-6-8-10-12"
+
+$_ = "Hello there, neighbor!";
+my ($first, $second, $third) = /(\S+) (\S+), (\S+)/;
+
+my @words = ($text =~ /([a-z]+)/ig);
+
+read into a hash
+my %last_name = ($text =~ /(\w+)\s+(\w+)/g);
+
+? after any quantifier  Nongreedy
+
+{3,5}   At least three, as many as five, but as few as possible
+
+\b{wb} is smart enough to recognize the t after the apostrophe
+use v5.22;
+$string =~ s/\b(\w)/\U$1/g;
+$string =~ s/\b{wb}(\w)/\U$1/g;
+
+\b{sb} 5.22  for things that don't split Mr. Flintstone
+\b{lb} 5.24  to break up lines not in the middle of a word
+
+/m multiline:  good for ^ and $  as well as working on an entire file read in
+
+\t(\+?\d+)\t
+
+
+perl -0777 -i.original -pe 's/aaa/bbb/igs' sample.qz
+perl -0777 -i.original -pe 's/\t(\+?\d+)\t/\t\+100\t/igs' sample.qz
+
+my $date = localtime;  # chomp (my $date = `date`);
+$^I = ".bak";
+while (<>) {
+    s/\AAuthor:.*/Author: Randal L. Schwartz/;
+    s/\APhone:.*\n//;
+    s/\ADate:.*/Date: $date/;
+    print;
+}
+
+$ perl -p -i.bak -w -e 's/Randall/Randal/g' fred*.dat
+
+-p  write a program  while (<>) { print; }  # -n will leave off the print
+-i  operate on files in place, with optional backup suffix: sets $^I to ".bak"
+-w  turn on warnings
+-e  this is executable code to place before the print
+arg @ARGV should hold filenames matching this pattern
+
+Produces a program like this:
+#!/usr/bin/perl -w
+$^I = ".bak";
+while (<>) {
+    s/Randall/Randal/g;
+    print;
+}
+
+--Interlude from ksplice blog:
+The top 10  tricks of Perl one-liners:
+1. -l   it will strip the trailing newline off of any lines read, and automatically add a newline to anything you print 
+2. -0   makes -n and -p feed you chunks split on NULL bytes instead of newlines.
+        perl -0777 makes perl not do any splitting, and pass entire files to your script in $_
+        -n  produces the program:
+        LINE:
+            while (<>) {  # your program goes here }
+3  -i
+4. ..   range operator, returns false as long as left is false, if true, evalues rh until it becomes true
+5. -a   turns on autosplit mode 
+6  -F
+7  \K
+8. $ENV{}
+9  BEGIN and END
+10 -MRegexp::Common
+--end of interlude
+
+
+error("Invalid input") unless valid($input);
+$i *= 2 until $i > $j;                 # until ($i > $j) {$i *=2}
+print " ", ($n += 2) while $n < 10;    # while ($n < 10) { print " ", ($n += 2) }
+{ }                                    # lexical scoped block
+
+only a single expression on either side of the modifier
+can’t put multiple statements on the left of the modifier
+foreach  control variable is always $_
+
+pre and post ++ and --
+for statement can have ; in any or even all of the 3 sections
+
+foreach = for
+but a for is really for C style with ;
+and a foreach is for(1..10) and such
+for counting from 1 to 10, for with a range is usually preferred.
+
+while (<>) { for_each(split) {$_} }
+Each time through that loop, another line of input will be in $_ .
+But didn’t we just say that $_ holds one line of input after another? Well, in the outer
+loop, that’s what it is. But inside the foreach loop, it holds one word after another. It’s
+no problem for Perl to reuse $_ for a new purpose; this happens all the time.
+
+redo: jumps to the top of the loop block.
+
+last , next, redo may be used in any of the five kinds of loop blocks: for , foreach ,
+while , until , or the naked block.
+
+Label, uppercase preferred, is usually at left margin, you can then say last LAB1, next LAB1, redo LAB1
+
+conditional operator is its name, not ternary operator
+
+Here’s a trick you might see used to code up a nice multiway branch:
+my $size =
+($width < 10) ? "small" :
+($width < 20) ? "medium" :
+($width < 50) ? "large" "
+    "extra-large"; # default
+
+Unlike what happens in C (and similar languages), the value of a short-circuit logical
+operator is the last part evaluated, not just a Boolean value. This provides the same
+result, in that the last part evaluated is always true when the whole thing should be
+true, and it’s always false when the whole thing should be false.
+
+my $last_name = $last_name{$someone} || '(No last name)';  # is this a good check for undefined? 
+
+use v5.10  # defined-or operator:
+my $last_name = $last_name{$someone} // '(No last name)';  # now works if first part has false
+
+it finds a defined value, no matter if that value on the lefthand side is
+true or false. Even if someone’s last name is 0 , this version still works because it won’t
+replace defined values
+
+my $Verbose = $ENV{VERBOSE} // 1;  # only assigned if it doesn't have value already
+$try // 'default';  0 -> 0, [] -> default  '0' -> 0
+
+with use warnings, you can now print value of undefined variables:
+printf "%s", $name // '';
+
+cpan -D Digest::SHA
+
+$ perl Makefile.PL
+$ make install
+
+$ perl Makefile.PL INSTALL_BASE=/Users/fred/lib
+
+$ perl Build.PL
+$ ./Build install
+
+$ perl Build.PL --install_base=/Users/fred/lib
+
+$ perl -MCPAN -e shell  # cpan shell
+
+$ cpan Module::CoreList LWP CGI::Prototype  # to install these modules
+
+ppm Time::Moment  # perl package manager   # cpan client that doesn't come with perl.
+
+local::lib  allows you to install modules in non-protected (your own) directory
+
+$ cpan -I Set::CrossProduct
+
+Advanced users can configure their CPAN clients to install into whatever directories
+that they like, too.
+$cpan   ... lot of stuff
+
+
+File::Basename
+File::Spec
+Path::Class
+DBI
+Time::Moment  or DateTime for more heavyweight
+
+
+file texts:
+type this in verbatim:
+perldoc -f -X
+-r is readable by me
+-w writable
+-x executable
+-e exists
+-s exists and has nonzero size
+-f is file
+-d is directory
+-T text
+-B binary
+-M modification age days
+
+
+IO::Interactive
+
+use v5.10;
+if (-w -r $filename) {
+    print "The file is both readable and writable!\n";
+}
+
+stat and lstat Functions
+my($dev, $ino, $mode, $nlink, $uid, $gid, $rdev,
+$size, $atime, $mtime, $ctime, $blksize, $blocks)
+= stat($filename);
+
+File::stat module provides a friendlier interface to stat .
+
+my $timestamp = 1454133253;
+my $date = localtime $timestamp;
+
+my($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst)
+= localtime $timestamp;
+
+gmtime
+time
+
+bitwise operators
+bitstrings
+
+
+chdir
+getcwd
+
+running perl with *.txt for instance: globbing—the names were already expanded in @ARGV .
+
+my @pm_files = glob '*.pm';
+my @all_files_including_dot = glob '.* *';
+
+File::Glob module
+provides other forms that handle edge cases.
+
+File::Spec::Functions module that
+knows how to construct paths appropriate for the local system:
+
+Path::Class module is a nicer interface to the same thing, but
+it doesn’t come with Perl.
+
+unlink
+rename
+
+use v5.14
+my $newfile = $file =~ s/\.old$/.new/r;
+
+mkdir
+rmdir
+
+end Learning Perl
+================
+================
+begin 2 hours 30 minutes
+
+print join ", ", map { uc $_ } @capitals;
+
+grep is a filter
+
+print join ", ", grep { length $_ == 6 } @capitals;
+
+use grep to see if an array contains an element:
+scalar grep returns the number of successful matches (ie size of resulting array)
+
+print scalar grep {$_ eq "Columbus"} @capitals;
+
+list comprehensions: formed with grep and map
+
+
+end 2 hours 30 minutes
+================

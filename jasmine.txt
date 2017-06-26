@@ -1,0 +1,26 @@
+expect(thing).toBe(realThing)
+expect(bigObject).toEqual({"foo": ['bar', 'baz']})
+expect("my string").toMatch(/string$/);
+
+expect(number).toBeCloseTo(42.2, 3)
+expect(result).toBeGreaterThan(3)
+expect(result).toBeGreaterThanOrEqual(25)
+expect(result).toBeLessThan(0)
+expect(result).toBeLessThanOrEqual(123)
+
+expect(result).toBeFalsy()
+expect(thing).toBeTruthy()
+
+expect(thing).toBeNaN()
+expect(result).toBeNull()
+expect(result).toBeDefined()
+expect(result).toBeUndefined()
+
+expect(array).toContain(anElement);
+
+expect(mySpy).toHaveBeenCalled();
+expect(mySpy).toHaveBeenCalledBefore(otherSpy)
+expect(mySpy).toHaveBeenCalledTimes(3)
+expect(mySpy).toHaveBeenCalledWith('foo', 'bar', 2)
+expect(function() { return 'things'; }).toThrow('foo');
+expect(function() { return 'things'; }).toThrowError(MyCustomError, 'message');

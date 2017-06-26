@@ -1,0 +1,35 @@
+# custom loaders for webpack : taken from chriserin at:
+# https://til.hashrocket.com/posts/6750cdfffd-custom-loaders-for-webpack
+mkdir tmp
+cd tmp
+cat > index.html <<EOL
+<body>
+  <script src="bundle.js"></script>
+</body>
+EOL
+cat > main.js <<EOL
+document.write('<h2>written by my dumb program main.js</h2>')
+EOL
+cat > smart-loader.js<<EOL
+module.exports = function(source) {
+  return source.replace('dumb', 'smart')
+}
+EOL
+cat > webpack.config.js<<EOL
+module.exports = {
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: './smart-loader' 
+      }
+    ]
+  }
+}
+EOL
+webpack
+firefox index.html

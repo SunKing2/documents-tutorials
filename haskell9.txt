@@ -1,0 +1,391 @@
+
+N: I am new to programming, the book I have (purple Haskell programming book) doesn't explain how to set up an IDE + Haskell on a Mac. What IDE should I use (that isn't vim/emacs + is free)?
+<srk> ghcid
+N: Also, is there any step-by-step tutorials on setting this up and writing a first 'hello world' program to see it works?
+N: what is a ghcid IDE?
+<srk> nah, just ghci ;)
+<srk> ghcid is "IDE", it just compiles your code over and over and tells you that it compiles
+contiver joined
+<srk> which often is the only thing you need
+N: So you type your complete program into ghci and it will have highlighting and so open like ecplise
+N: ?
+<srk> ghci is interpreter, you can prototype whole program in ghci
+<Cale> You generally won't type much of your program into ghci
+<srk> but mostly for testing/trying out stuff
+<Cale> but ghci is not the same thing as ghcid
+<Cale> you don't type anything into ghcid
+justan0theruser joined
+<Cale> It just sits there and lets you know the status of your code -- any errors or warnings which presently exist in it
+N: I want something that will be like ecplise / sublime / IntelliJ so I can see my code /edit it if errors etc
+<Cale> and then you use whatever text editor you like best alongside that
+<centril> neophytes: my setup is: sublime text 3 in one 1/2 of the window to the left, a terminal with ghci on 1/2 of the window to the right - then I use SublimeLinter-hlint to give me tips inside sublime text for improvements
+<Cale> You can even use IntelliJ if you like
+mengwong joined
+<centril> Yes, IntelliJ has a haskell plugin
+<Cale> I use SublimeText myself
+maninalift joined
+<Cale> I used vim for years before that
+<centril> Cale: there's a vim mode for st3
+<centril> im sure you use it
+N: I am wanting to learn functional programming to learn its connections to category theory (math guy here), not much of a programmer so I don't know anything about setting up IDEs or anything as such
+<Cale> Yeah, I mostly switched away from ST to get away from vim's keys though
+N: I just need a dumb easy to set up DIE
+N: IDE*
+<mengwong> oh lol then for once the tables are turned
+N: so I can start hacking right away
+<Cale> Due to the Chinese water torture of hitting u when I meant to hit i all the time
+<centril> neophytes: I recommend just going with a text editor with syntax highlighting and a plugin system + ghci like I described
+gugah_ joined
+<Cale> and then having to redo, and then find the place where I was going to edit again
+N: okay centril -- does sublime cost?
+<bollu> Cale: you don't like vim?
+<centril> neophytes: sublime text 3 is good, but a bit pricey... there is Atom if you want a FOSS solution that is free
+<freeside> "ghci is simply a CLI IDE installable as part of any haskell platform, so all you have to do is familiarize yourself with the standard packaging system used on your *nix variant and you should be all set, it's easy"
+<Cale> bollu: I hate every text editor.
+<bollu> Cale: :)
+<freeside> revenge of the software people on the math people
+<srk> nix* variant :D
+N: okay centril I'll look into atom and see if I can figure out how to set up Haskell with it
+Edith joined
+<Cale> bollu: The only reason I'm using Sublime right now is that I haven't been annoyed with its annoyances enough times to switch to yet another thing, but I'm sure they'll eventually get to me too
+<freeside> neophytes: have you gone and downloaded https://www.haskell.org/platform/mac.html yet?
+N: no
+N: I need a step-by-step process of what to do.
+N: I'll use atom
+<centril> freeside: why not start with stack from the start?
+<srk> +1 for stack
+<bollu> Cale: I see
+<bollu> Cale: what is your idea?
+<bollu> ideal*
+N: I don't know what a 'stack' is -- I literally am, new
+<freeside> because he wants a one-click situation, and https://www.haskell.org/platform/mac.html includes stack now
+<centril> freeside: oh, right
+<srk> nice
+<centril> that's nice
+<freeside> neophytes: get that download going and we can figure out a text editor next
+N: ok, downloading that now
+<freeside> what do you normally use to write your LaTeX papers, etc?
+<Monoide> neophytes: what area of maths are you from?
+<Cale> bollu: I don't even know -- something which doesn't do unexpected bullshit that wastes my time (hard to characterise, but almost every text editor seems to do at least some of this), and makes it easy to flip between contexts where I've recently been working.
+tsmish joined
+<centril> Cale: that is awfully nondescript and vague...
+<Cale> centril: yes
+<freeside> it ain't just text editors ... the unexpected bullshit that wastes your time is part of all computing.
+<Cale> centril: If it were less vague, I'd write my own text editor
+<freeside> https://projects.csail.mit.edu/gsb/old-archive/gsb-archive/gsb2000-02-11.html
+N: do I do core or full download freeside ? Monoide, I'm a math newbie but logic.. i got interested in FP because I realized there is a connection between covariance and contravariance (types) and covariant and contra variant functors.
+<Cale> One thing I really like in ST is that it has keys you can press to move through your history of positions without editing anything, across many files
+<freeside> go with the full download if you're on a decent connection.
+<centril> Cale: I can't really fix code for "makes it easy to flip btw contexts where I've recently been working"
+N: ok @freeside doing so now
+<Monoide> just do haskell beaucause it's a good langage and a huge source of amusement
+<Monoide> doing it for maths seems a bit ackward (I am a mathematician)
+<freeside> yes, the functors you are talking about there are https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/profunctors
+jluttine_ joined
+N: sweet freeside -- I want to learn Haskell so I can understand that code! I know the math, not the code there haha
+<Monoide> if you like logic don't foret to do some CoQ
+<Cale> centril: So Sublime does a nice job there -- I have f12 bound to looking up the definition of the thing under my cursor, and Shift-f12 bound to jumping back in the history of locations, so I can quickly get back to where I was working after looking something up.
+<centril> neophytes: if you want proofs about math stuff, then haskell really isn't for you... it's a general purpose programming language
+<Cale> That much is good.
+N: but I wanna say I'm very new to this sort of math and programming so I'm learning everything
+<centril> neophytes: I'd recommend taking a look at Agda
+N: ok
+<centril> if you want to do proofs
+<freeside> also you will probably get excited about Coq https://www.cis.upenn.edu/~bcpierce/sf/current/index.html
+<centril> freeside: AGDA Agda agda!
+<Monoide> Coq coq coq \o
+<centril> (and idris)
+<centril> Monoide: even the guy who made Coq uses Agda, i've heard
+<freeside> idris, the new 007
+<Cale> Where ST fails for me right now is that its highlighting for Haskell really sucks (it often gets confused and things that entire blocks of code are type signatures, especially if you put a signature in a pattern or have a let bound definition with a signature on it)
+N: freeside: it says the installation was successful
+structuralist joined
+<freeside> neophytes: what text editor do you normally use to write your LaTeX papers, etc?
+<centril> Cale: OK, but that can be fixed by improving the highlighter for haskell...
+mdarse joined
+<Cale> Yes, sure.
+<freeside> (hoping the answer is not "Word")
+<MarcelineVQ> Cale: I wonder if any editor survives syntax for promoted types
+<centril> Cale: it's not really a big problem...
+doodlehaus joined
+bjz joined
+N: freeside: text edit but i am on another computer (that is brand new) with nothing on it
+<Cale> centril: It's big enough that I want to turn syntax highlighting off or switch to something else sometimes.
+N: (I think that is what its called)
+N: I think I can use sublime 3 license thingy?
+<centril> Cale: ST3 for haskell is fine enough for me...
+<Cale> (and I'm not going to fix the highlighter -- have you seen the highlighter definition for Haskell? :)
+<Cale> There are also some annoyances with how it deals with closing braces
+<centril> Cale: haskell is not a big nough language that ST3 devs care that much, probably...
+<freeside> you said you wanted $0, so you might prefer Atom to Sublime Text
+<Cale> Like, sometimes I'll type } and it will unindent the line "helpfully" when I already had my cursor positioned where I wanted it.
+N: ok freeside
+N: so how do I set it up with atom
+N: I never used kit
+N: only used ecplise for java (which I am comfortable with)
+N: (both java + ecplise which I cannot spell)
+<Cale> That's the kind of "stupid unexpected bullshit" I was talking about before.
+<centril> Cale: so recent updates to GHC havent had recent updates in the highlighter for ST3
+<centril> neophytes: https://github.com/simonmichael/haskell-atom-setup
+N: I would like high lighting and so on
+<Cale> If I type a printable character, you're not allowed to move my cursor on me before inserting it.
+<freeside> well, if you're already familiar with Eclipse, then you can use that as your text editor for haskell, it's not a big deal
+anuxivm joined
+tromp joined
+<centril> Eclipse...
+N: ill use something different-- ill use atom
+<freeside> if you want to try something different, try Atom: http://atom.io/
+N: ok
+minn joined
+N: so I download that now?
+<centril> neophytes: atom is nice, it also VERY similar to sublime text 3
+<freeside> yes
+N: k
+<centril> but it is open source and free
+N: downloading atom
+<Cale> centril: But don't get me wrong, all in all, ST3 *is* okay for me -- for now.
+<freeside> there are haskell packages, but why don't we get you running hello world and fibonacci before we install those. https://atom.io/packages/search?q=haskell
+<Cale> centril: It's just I'm sure that eventually these little annoyances will gradually piss me off enough to try yet another thing
+<centril> Cale: what I most of all want in ST3 is language-server usage, so I can use ST3 more like an IDE for Rust
+<Cale> which will have different problems that I'm less annoyed with ;)
+Tuplanolla joined
+N: ok @ freeside atom is downloaded
+N: what should I do next
+<freeside> okay, well, go run the installers for both of those packages
+N: ok'
+<centril> neophytes: you probably want to setup hlint integration some time in the future
+eschnett joined
+N: wait which packages specially? the one you gave a link to has a lot
+N: https://atom.io/packages/search?q=haskell
+<Monoide> just do something that works and you'll complete your future needs in time
+<minn> It's been a while since I've used Haskell. Am I supposed to be using Stack to manage packages (among other things) instead of Cabal, or is that not standard?
+<centril> what Monoide said
+louispan joined
+<Cale> centril: btw, do you know how to get ST3 to read a standard tags file (like that emitted by hasktags)?
+<monochrom> Both cabal and stack are standards.
+<ertes> i'll face the question of editors on wednesday when i give my annual haskell workshop, which will no doubt have a few windows and mac users, and i don't want to force anyone to use emacs =)
+<centril> neophytes: start small... add plugins later
+N: ok
+<ertes> i'd actually like to give leksah a shot this time
+N: Ii only downloaded atom, not sure what to download next
+Linoleum joined
+<centril> Cale: wtf is standard tags file and hasktags ?
+<centril> neophytes: nothing... start a project, and open a terminal and write ghci in it
+<MarcelineVQ> ertes: there's also yi, iirc leksah is using yi though
+N: how do I start a project? got the terminal open and typed that on
+<Monoide> $ghci in terminal
+<centril> neophytes: then you edit a file, save it, and go to your terminal, load it, and when you make changes you do :r
+<Cale> centril: Many editors support a particular file format for describing the locations of definitions of various names, so that the editor can easily jump you to the definition
+<ertes> MarcelineVQ: i considered yi to be among the more advanced editors that require some dedication
+<Monoide> then >print "Hey I'm doing some Haskell"
+<minn> monochrom: Thanks.
+N: Last login: Sun Mar 12 19:12:30 on ttys000 recursive-functions-MacBook-Pro:~ ternary$ gchi -bash: gchi: command not found recursive-functions-MacBook-Pro:~ ternary$
+<MarcelineVQ> ertes: in the realm of opening and it and going "well now what do​ I do" I agree
+<freeside> typo, yo
+<Cale> Sublime is semi-okay at this, but it's really not all that good at it, and often wants to take me to the export declaration instead of the actual definition, for example.
+<centril> Cale: ST3 is not an IDE... there are limits to how smart text editors can be
+<Cale> right
+N: GHCi, version 8.0.2: http://www.haskell.org/ghc/ :? for help Prelude>
+<ertes> MarcelineVQ: judging by the screenshots leksah has at least one major advantage: users of the more established IDEs will feel at home instantly
+<Monoide> neophytes: print "Hey GHCI, my name is neophytes"
+N: Prelude> print "Hey GHCI, my name is neophytes" "Hey GHCI, my name is neophytes" Prelude>
+<Cale> centril: But you don't have to be all that smart to read a file which has a bunch of strings and file names together with source locations and use that to decide where to jump
+N: ok cool
+<centril> neophytes: Monoide: print "Hello World"
+N: so this is the REPL?
+<centril> neophytes: yes
+N: ok
+<Monoide> neophytes: congratulations, you just did your very first haskell line of code
+<Cale> centril: and then leave it up to some other program to generate that file :)
+N: sweet!
+<freeside> Prelude> take 10 $ map (+10) [1..]
+N: how do I use the compiler to write code and so on and see it produce a value
+<centril> Cale: I think language-server is better
+<freeside> now you need to boot up Atom
+<Cale> This was originally used for C, but most editors support it, and there are programs to generate them for other languages
+N: Prelude> take 10 $ map (+10) [1..] [11,12,13,14,15,16,17,18,19,20] Prelude>
+N: okay atom is up
+<Monoide> neophytes: the compiler is named 'ghc', you can run it for command line: $ghc you_code.hs
+<monochrom> emacs certainly has limits to how smart it can be. Not smart enough to solve the halting problem, something like that. :)
+<Monoide> it procuces (if no errors) an executable file you_code
+<Cale> ST3 does have a CTags plugin, but it seems to ignore my existing tags file
+<centril> effing emacs & vim...
+<centril> they should both be banned
+<centril> nano rules!
+<monochrom> nano doesn't have rules.
+mizu_no_oto joined
+<Monoide> nano doesn't
+<ertes> how am i supposed to connect to IRC without emacs?
+<ertes> how am i supposed to read my mail?
+N: okay so I have atom up what is the "Hello world" of Haskell?
+<centril> monochrom: I know of one thing to do in vim: :q!
+N: I wanna try to compile it
+<ertes> neophytes: main = putStrLn "Hello world!"
+N: k
+<Monoide> neophytes: to compile it you need to do a module, but then you also want to read a real documentation / tutorial / book
+<Cale> ertes: I use HexChat for IRC, and usually a web browser for mail, though my phone often competes with that.
+<ertes> neophytes: this line is enough as your main module
+N: ok
+<Monoide> (instead of asking IRC, which is fine, but maybe not really needed here)
+<centril> neophytes: but you should always try to put types on functions, so main :: IO () \n main = putStrLn "Hello World!"
+N: I saved it as hello_world.hs
+N: main = putStrLn "Hello world!"
+N: is my source code
+N: so I wanna compile it
+<ertes> neophytes: here is the quick way to compile it: ghc -O -o hello_world hello_world.hs
+<ertes> put an ".exe" there, if you're on windows
+N: ok
+bno1 joined
+ystael joined
+<centril> neophytes: for real world compilation of haskell, you should take a look at cabal & stack
+<monochrom> You don't need "-o hello_world" for this. Unix or Windows.
+<centril> noone uses ghc directly like that in real world scenarios
+N: did I not download that already?
+<Monoide> ghc hello_world.hs is enough
+coot joined
+<freeside> did it compile? good. you now have enough equipment to be dangerous. your next step should be to choose between http://haskellbook.com/ and https://fldit-www.cs.uni-dortmund.de/~peter/PS07/HR.pdf
+<centril> neophytes: yes =) but DLing and using is not the same ;)
+raycoll joined
+<ertes> neophytes: which OS?
+<centril> freeside: why not http://learnyouahaskell.com/chapters ?
+N: recursive-functions-MacBook-Pro:Haskell ternary$ ghc hello_world.hs [1 of 1] Compiling Main ( hello_world.hs, hello_world.o ) Linking hello_world ... recursive-functions-MacBook-Pro:Haskell ternary$
+robertkennedy joined
+USBoss joined
+N: did that work?
+<ertes> neophytes: looks good
+<Monoide> neophytes: try it!
+N: it didn't print hello world did it?
+<centril> neophytes: ./hello_world.o
+<ertes> neophytes: you should now have a file called "hello_world", which is executable
+<ertes> that's your actual program
+N: ecursive-functions-MacBook-Pro:Haskell ternary$ ./hello_world.o -bash: ./hello_world.o: Permission denied recursive-functions-MacBook-Pro:Haskell ternary$
+<centril> neophytes: or: $ ./hello_world
+<Monoide> not the .o
+augur joined
+<centril> Monoide: depends on the OS, no ?
+<Monoide> it's an object file
+<centril> oh, right
+<Monoide> it's not an executable
+<monochrom> The OS only determines whether you say ./ or .\
+<centril> but still, object files might be executable sometimes
+<centril> or .o files i mean
+<Monoide> well you need linkage
+<freeside> why is it that on the radio, everybody spells out URLs saying "backslash" when they should say "slash"?
+<ertes> whether you say "./" or ""… windows has the horrible habit of including . in PATH
+N: so what do I do to execute it
+<centril> neophytes: ./hello_world
+<Monoide> (you also want to read a few stuff about your Mac's terminal ;)
+<ertes> neophytes: or: ./hell<tab>
+N: sweet it worked
+<freeside> it worked! now go buy the purple book
+<centril> neophytes: you can always use ls -lah to see the files in your directory
+<ertes> neophytes: try this command: cabal --version
+<ertes> neophytes: if you get a bunch of version numbers, you now have a minimal development environment
+N: ownloading the latest package list from hackage.haskell.org
+<freeside> http://haskellbook.com/assets/img/sample.pdf
+N: Downloading the latest package list from hackage.haskell.org cabal-install version 1.24.0.2 compiled using version 1.24.2.0 of the Cabal library recursive-functions-MacBook-Pro:Haskell ternary$
+<monochrom> Neat.
+N: freeside: thanks just bought the book
+N: so Im good to go thru that now?
+<freeside> yeah
+N: (the book)
+<Monoide> yup
+N: ok sweet
+N: sweet do
+N: thanks guys for setting me up
+<Monoide> now you need some brain, some hard work and a lot of coffee / tea
+<centril> neophytes: now that you've setup haskell... forget all about it, and read:
+<monochrom> No, you need sleep.
+<centril> neophytes: http://www.cse.chalmers.se/edu/year/2016/course/DAT140/
+N: I'm new to programming + math stuff but very open to lots of hard work + coffeee & tea
+<Monoide> (and this channel to answer all your silly questions ;)
+<ertes> neophytes: if you have any questions your learning resource doesn't cover, feel free to ask here
+N: centril: just checked and they have a free pdf version of the book you linked with my university access -- will check this out too
+N: ertes: sweet thanks
+<freeside> and being a mathematician you should probably also read some of the foundational papers, like, hm, http://publications.lib.chalmers.se/records/fulltext/local_135303.pdf
+<ezyang> String, Text, ByteString, Foundation String; anything I've missed?
+justicefries left
+<ertes> neophytes: if you happen to live in germany near stuttgart, you can also visit my workshop on wednesday =)
+N: excellent thanks freeside (I am an aspiring mathematician / newbie I should say ;-) ) but I have a deep interest in this!
+<centril> neophytes: you probably want Types and Programming Languages (Pierce)
+N: shoot I live in US lol else I would!
+<freeside> you can also pick up some videos at https://www.cs.uoregon.edu/research/summerschool/summer10/curriculum.html
+<Monoide> you would love https://projecteuler.net/
+N: wow they have videos
+N: excellent
+<Monoide> because it's a bunch of exercices to learn haskell, plus it's algorithmic / maths
+<freeside> also https://www.cs.uoregon.edu/research/summerschool/summer16/curriculum.php
+N: centril: which one should I read first
+<centril> neophytes: or, just move to Sweden, Gothenburg and start studying at Chalmers Technical University, the world capital of Haskell, Agda, and functional programming
+N: also which universities have research groups in this?
+<centril> Chalmers, Chalmers, Chalmers
+N: k
+N: this is my new favorite irc channel
+<freeside> you are our new favourite haskell newbie
+<ertes> i'm not sure haskellbook.com is suitable, if you're new to programming altogether
+<monochrom> The enthusiasm of #haskell participants ensures that every student has enough reading material to learn Haskell for 7 lifetimes (and therefore never getting to use Haskell).
+N: haha
+<Monoide> monochrom: :D
+<centril> neophytes: but... beware, Donald Trump said that stuff is going on in Sweden :P
+<freeside> we're also up for a good editor war anytime
+N: trump says a lot of things
+N: I'll be careful ;-)
+<centril> monochrom: lol :D
+N: k im gonna go read
+N: thanks guys
+<centril> ertes: I'd say for a newbie, start with learnyouahaskell
+<Monoide> do https://projecteuler.net/ to practice
+<minn> I learned to program from Thompson's "The Craft of Functional Programming" and supplementing with some papers by Wadler. Would recommend to anyone.
+<Monoide> (it will get you in algorithmic / recursive problems)
+<ertes> centril: honestly i don't recommend that one, regardless of whether one is a programmer or not
+<Monoide> (so you can learn good usage without going too deep too quickly)
+<freeside> i just worked through the purple book, i'm a big fan of it. imho the best and most comprehensive
+<centril> neophytes: so: my recommendation: learnyouahaskell -> your book -> write a compiler for a small imperative language + a small functional language -> (forget about haskell) -> http://www.cse.chalmers.se/edu/year/2016/course/DAT140/ -> Types and Programming Languages
+<ertes> the resource i'd recommend without hesitation is this: https://www.seas.upenn.edu/~cis194/spring13/lectures.html
+<freeside> i was disappointed by Learn You A Haskell -- it had the whimsy of Why's Poignant Guide to Ruby but not the rigour
+N: centril: sounds good
+N: copying your comment
+N: pasting in my notepad
+<centril> freeside: you dont want rigour for an intro course to FP...
+<centril> you want: get shit done fast
+<monochrom> freeside: Does "purple book" mean haskellbook.com?
+<freeside> yes
+<MarcelineVQ> ertes: idk about that, haskellbook.com is called haskell programming from first principles for a reason, I'm not sure there's a better place to start with haskell if you're entirely new to programming
+<centril> and for that LYaH (LearnYouAHaskell) is nice
+<ertes> CIS194 has, as far as i see, very good pacing *and* correctness
+<monochrom> I don't think LYAH gets shit done fast either.
+<ertes> MarcelineVQ: the name alone doesn't cut it though =)
+<freeside> neophytes, you should get used to using Atom instead of TextEdit
+<Monoide> neophytes: stop listening to us
+<centril> neophytes: for the purposes of mathematical proofs, you want to learn haskell just to familiarize yourself with coding in FP, and then move on to Agda
+<Monoide> just do what tf you want and have fun
+Rodya_ joined
+<Monoide> fun is what you want, and should be your only goal
+<centril> also ^
+<freeside> also **
+<Monoide> if you want ideas to have fun, I have a bunch just ask me :)
+N: okay centril
+N: https://www.youtube.com/playlist?list=PLbgaMIhjbmEnaH_LTkxLI7FMa2HsnawM_ -- just found this guy
+<centril> neophytes: but if you want general purpose programming, then haskell is really nice
+<ertes> centril: you know, you could just pay someone to beat the crap out of you… doing proofs in agda achieves the same thing, but much much slower
+<monochrom> Also, rigour or not depends on personality, not absolute mandate.
+<freeside> looks good ... soon you too will be able to talk about FP in incomprehensible terms
+Guest92877 joined
+<centril> ertes: say what ?
+N: lol
+N: im gonna go read
+N: thanks guyys
+N: afk
+mzf joined
+N: guys*
+<ertes> centril: the next time you pass six universe level variables around you will remember this conversation
+N: afk now
+<centril> neophytes: now I have to thank you... gonna watch those
+<monochrom> FWIW for example when I learned Haskell (or anything) I went for rigour. Maybe not absolute rigour, but rigour enough so that it was scientific not cargo-culting.
+<centril> ertes: :D
+<centril> ertes: at least it doesn't have :t * :: * ^^
+<monochrom> But cargo-culting works fine for some people too, so I don't always inflict my degree of rigour to everyone.
+esad joined
+<freeside> you don't want to build your tech stack on sand.
+Xlaech joined
+<freeside> known knowns are preferable to known unknowns and unknown knowns. 

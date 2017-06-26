@@ -1,0 +1,143 @@
+next chapter
+
+head, tail take 3  drop 3   length sum product reverse
+
+[1,2,3] !! 2  --  element 2  (from 0)
+[1,2,3] ++ [4,5]
+
+in mathematics, we say f(g(x)):
+f g(x)  is proper, and f g x won't work for this intention
+
+a function with 2 parameters x, g(y):
+f x (g y)
+
+hugs commands
+:?    show commands help
+:edit [filename]
+:! ls
+:reload
+:load <filename>
+:type <expr>
+
+reserved words
+case class data default deriving do else
+if import in infix infixl infixr instance
+let module newtype of then type where
+
+list arguments have suffix s  such as students persons
+
+indentation normally suffices but you can enclose a grouping in {} and separate by ;
+
+comments -- like this
+{- or
+   like this -}
+
+
+end of programming in haskell chapter 2
+beginning of programming in haskell : chapter 3
+
+Bool -> Bool is a datatype of a function
+
+v                  :: T   means v is a value in the type t:  "v has type T"
+False              :: Bool
+True               :: Bool
+not                :: Bool -> Bool
+
+For expressions not yet evaluated:
+e                  :: T   means evaluation of expr. e will produce a value of type T
+not False          :: Bool
+not True           :: Bool
+not (not False)    :: Bool
+
+type inference calculates the type of every expression.
+type inference for functions:
+if f is a function that maps arguments of type A to results of type B, and e is an expression of type A, then the application f e has type B:
+f   :: A -> B
+e   :: A
+f e :: A
+
+For example, the typing 
+  not False    :: Bool
+can be inferred from this rule using the fact that 
+  not :: Bool -> Bool     and     False :: Bool
+On the other hand, not 3 does not have a type under the above rule for function application, because that would require that 3 :: Bool, which is not valid because 3 is not a logical value.  Expressions such as not 3 do not have a type, they contain a type error, and are invalid expressions.
+
+Because type inference precedes evaluation, Haskell programs are type safe, in the sense that type errors can never occur during evaluation.  In practice, type inference detects a very large class of program errors, and is one of the most useful features of Haskell.  Not, however, that the use of type inference does not eliminate the possibility that other kinds of error may occur during evaluation.  For example, the expression:
+  1 `div` 0
+is free from type errors, but produces an error when evaluated because division by zero is undefined
+
+The downside of type safety is that some expressions that evaluate success- fully will be rejected on type grounds. For example, the conditional expression if True then 1 else False evaluates to the number 1, but contains a type error and is hence deemed invalid. In particular, the typing rule for a conditional expression requires that both possible results have the same type, whereas in this case the first such result, 1, is a number and the second, False, is a logical value. In practice, however, programmers quickly learn how to work within the limits of the type system and avoid such problems.
+
+:type not False   -- in Hugs, examine type of any expression
+
+
+Basic types: Bool, Char, String, Int, Integer, Float
+Bool     True
+Char     '\t'
+String   "99 luftballons"
+Int      231 - 1   -- in Hugs is -231 to 230
+Integer  2 ^ 31    -- no limit on Integer
+Float    sqrt 2
+
+A single number may have more than one numeric type:
+3        -- 3 :: Int, 3 :: Integer or 3 :: Float
+
+List types: we write [T] for the type of all lists whose elements have type T:
+ [False,True,False]    :: [Bool]
+ [’a’,’b’,’c’,’d’]     :: [Char]
+ ["One","Two","Three"] :: [String]
+
+ length = number of elements in list
+ ['x']    with one element is called a singleton list
+ []       with zero elements is called the empty list. This differs from:
+ [[]]     singleton list comprising the empty list as its only element
+
+ - a list of type Bool, for example, has a type, entirely unrelated to its length
+ - there are no restrictions on the type of elements of a list; eg: list of lists 
+ - lists can have infinite length, and in Haskell this is natural and practical
+
+Tuple types: we write (T1, T2, ... Tn) for the type of all tuples whose ith components
+ have type Ti for any i in range 1 to n:
+
+ (False, True)      :: (Bool, Bool)
+ (False, 'a', True) :: (Bool, Char, Bool)
+ ("Yes", True, 'a') :: (String, Bool, Char)
+
+ arity:             number of components in a tuple
+ ()                 empty tuple has arity zero
+ (1, 'a')           pair has arity two
+ ('z', 'y', 'x')    triplet has arity three
+ (3)                !!! error: tuples of arity 1 not permitted, conflicts with ()
+
+ - the type of a tuple conveys its arity, eg: the type (Bool, Char)
+ - there are no restrictions on the types of a tuple's compoents: eg lists of tuples
+ - tuples must have finite arity, and a tuple type must be calculated before evaluation
+
+Function types
+ A function is a mapping from arguments of one type to results of another type.
+ We write T1 -> T2 for the type of all functions that map arguments of type T1 to 
+ results of type T2:
+
+ not          :: Bool   -> Bool
+ isDigit      :: Char   -> Bool
+
+ Since types of arguments and types of results are unrestricted, a function with a 
+ single argument and result is sufficient to handle multiple arguments and results by
+ packaging multiple values using lists and tuples.
+ Here are two examples:
+
+ add          :: (Int, Int) -> Int    -- calculate sum of a pair of integers
+ add (x, y)   = x + y
+ zeroto       :: Int -> [Int]         -- return list of integers from 0 to given limit
+ zeroto n     = [0..n]
+
+ Haskell convention: preceding function definitions by their types
+ - serves as useful documentation.
+ - types provided manually by a user are checked for consistency with types calculated
+   automatically using type inference.
+
+ There are no restrictions that functions must be total on their argument type; there 
+ may be some arguments for which the result is not defined; e.g. head []
+
+end of programming in haskell chapter 3, section 5.  
+Next: 3.5 curried functions

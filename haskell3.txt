@@ -1,0 +1,26 @@
+ranges seem to behave like elipses, not like ranges
+['a'..'z']
+[2,4..20]                    [2,4,6,8,10,12,14,16,18,20]
+[3,2..20]                    []
+[3,4..20]                    shows list 3,4,5 to 20
+[3,7..20]                    [3,7,11,15,19]
+
+not too smart though:
+[20..21]                     [20,21]
+[20..1]                      []
+[2,4,6..20]                  !!! parse error
+floating point numbers are imprecise, avoid in ranges
+
+take, cycle, repeat  (infinite lists, lazy)
+take 24 [13,26..]            works fine
+take 10 (cycle [1,2,3])      [1,2,3,1,2,3,1,2,3,1]
+take 12 (cycle "LOL ")       "LOL LOL LOL "
+take 10 (repeat 5)           [5,5,5,5,5,5,5,5,5,5]
+
+simpler to just use the replicate function if you want some number of the same element in a list. 
+replicate 3 10               [10,10,10].
+
+list comprehensions
+[x*2 | x <- [1,7,8]]                   [2, 14, 16]
+[mod z 3 | z <- [1..8]]                [1,2,0,1,2,0,1,2]
+[x | x <- [50..70], x `mod` 7 == 0]    [56,63,70]

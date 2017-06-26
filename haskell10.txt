@@ -1,0 +1,90 @@
+:l test     don't need extension
+
+$ stack ghci
+GHCi, version 8.0.2: http://www.haskell.org/ghc/  :? for help
+Ok, modules loaded: none.
+Prelude> :l p31
+[1 of 1] Compiling Main             ( p31.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> sayHello "Louie"
+Hello, Louie!
+*Main> :module
+Prelude> 
+
+here we loaded an external file, ran the function. 
+Then we unloaded the file from the repl, using :m, notice the prompt changed both when we loaded the file, and when we unloaded it.
+
+All haskell:
+- declaration
+- expression
+
+Normal form: no more evaluation steps can be taken = in irreducible form
+The normal form of 1 + 1 is 2
+
+redex: reducible expression
+
+the process is called evaluation or reduction, (sometimes imprecisely normalizing or executing)
+
+all functions in Haskell take one argument and return one result
+currying: applying a series of nested functions, each to one argument.
+
+triple      x      =      x *3
+f.decl.     param  used   body
+                   to
+                   define
+
+the name of the function is the function declaration
+the parameters correspond to the head of a lambda and bind variables that appear in the body expression.
+
+The body: triple 6,x is bound to 6.  Since you've applied the function, you can also replace the fully applied function with its body and bound arguments.
+
+in the repl, we must preced the function declaration with 'let' 
+
+When we evaluate an expression = reducing the terms until the expression reaches its simplest form.  It is now said to be irreducible, or finished evaluating.  We call this a value.
+
+
+Reducing an expression = evaluating the terms until left with a value.
+
+Application of functions to arguments are reducible, values are not.
+
+As in lambda calculus, application is evaluation.  Applying a function to an argument allows evaluation or reduction.  Values are expressions, but cannot be reduced further.  Values are a terminal point of reduction.
+
+WHNF: haskell doesn't evaluate everything to normal form (canonical form) by default; but to weak head normal form by default; not everything will get reduced to its irreducible form immediately.  This is approximately:
+
+  (\f -> (1, 2 + f)) 2
+
+reduces to the following in WHNF:
+
+  (1, 2 + 2)
+
+end of 2.5 text, 2.5 exercises remain.
+
+2.6
+
+alphanumeric function names are prefix functions by default
+symbolic     function names are infix  functions by default
+
+
+Prelude> :info (*)
+class Num a where
+-- Defined in ‘GHC.Num’
+infixl 7 *
+
+7 is precedence 0-9 where higher is applied first.
+
+infixl is left associative 
+
+infixr is right associative (^), for exampl, so
+2 ^ 3 ^ 4  is really 2 ^ (3 ^ 4)
+
+finished 2.6 and exercises 
+
+2.7
+
+lines exceeding 100 columns:
+x = 10
+    * y + 5
+
+require at least one space on indentation of second line
+
+

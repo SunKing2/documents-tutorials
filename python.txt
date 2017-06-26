@@ -1,0 +1,552 @@
+numbers
+    int     1234, 0b111
+    float  3.14
+    decimal
+    complex 3+4j
+string (immutable)
+list
+dict
+tuple (immutable)
+File
+set
+bool
+type
+None
+
+Function
+Module
+Class
+
+
+    range
+    frozenset (immutable)
+    bytes
+
+    bytearray (mutable!)
+    user-defined classes (unless specifically made immutable)
+
+
+string concatenation:
+builder_list = []
+for data in container:
+    builder_list.append(str(data))
+"".join(builder_list)
+ 
+### Another way is to use a list comprehension
+"".join([str(data) for data in container])
+ 
+### or use the map function
+"".join(map(str, container))
+
+
+keep pyc files away:
+$ export PYTHONDONTWRITEBYTECODE=1
+$ # remove them:
+$ find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete
+
+reload module:
+>>> import hello
+hello world
+# now make a change to hello.py somewhere else
+>>> from imp import reload
+>>> reload(hello)
+
+>>> import myfile
+>>> myfile.title
+>>> from myfile import title
+>>> title
+
+
+>>>import threenames
+dir will return a list of strings which are the attributes of the imported module:
+>>> dir(threenames)
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'a', 'b', 'c']
+
+
+exec(open('module.py').read())
+
+
+
+if a == b:
+for a in range ( 0, n ) :
+def f ( a ) :
+None  (not null or void)
+
+
+
+>>> help(1)
+Help on int object:
+
+#object attributes
+>>> dir(1)
+['__abs__', '__add__', '__and__', '__class__', '__cmp__', '__coerce__',
+
+>>> b = u'This is a Unicode string'
+>>> a = b.encode('utf8')
+
+import random
+>>> random.random()
+0.7082048489415967
+>>> random.choice([1, 2, 3, 4])
+
+strings
+are sequences of one-character strings; other, more general sequence types include
+lists and tuples, covered later.
+
+S[-2]
+'a'
+# The last item from the end in S
+# The second-to-last item from the end
+
+slicing,everything in X from offset I up to but not including offset J .
+left bound defaults to zero, and the right bound defaults to the length of
+the sequence being sliced:
+"spam"
+S[1:3]    pa 
+s[1:]      pam
+s[:3]      spa
+s[:-1]     spa   : everything but the last
+s[:]        spam  : 0:len(s)
+
+s * 8            spamspamspamspamspamspamspamspam
+s[0] = 'z'     error,  strings are immutable
+s = 'z' + s    is ok
+
+Immutable: numbers, strings, and tuples are immutable; lists, dictionaries, and
+sets are not
+
+
+String to list, string to bytearray:
+S = 'shrubbery'
+L = list(S)
+L                                  ['s', 'h', ... 'y']
+L[1] = 'c'
+''.join(L)                        scrubbery
+
+B = bytearray(b'spam') 
+B.extend(b'eggs')
+B                                   bytearray(b'spameggs')
+B.decode()                     'spameggs'   # translate to normal string
+bytearray supports in-place changes for text, but only for text of ascii characters
+
+
+Sequence operations:
+these string operations work on tuples and lists too
+
+String methods:
+s.split(',')
+s.upper()
+s.isdigit()  s.isalpha()
+s.rstrip()  # remove rh white space like trim in basic
+>>> '%s, eggs, and %s' % ('spam', 'SPAM!')
+'spam, eggs, and SPAM!'
+>>> '{}, eggs, and {}'.format('spam', 'SPAM!')
+'spam, eggs, and SPAM!'
+>>> '{0}, eggs, and {1}'.format('spam', 'SPAM!')
+'spam, eggs, and SPAM!'  // older syntax 2.6+, 3.0+
+
+string formatting:
+>>> '{:,.2f}'.format(296999.2567)
+'296,999.26'
+>>> '%.2f | %+05d' % (3.14159, -42)
+'3.14 | -0042'
+
+>>> help(S.replace)
+
+
+formatting (prettyprint) code:
+pip install autopep8
+autopep8 your_script.py    # dry-run, only print
+autopep8 -i your_script.py # replace content
+
+==================================
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+
+class GetHandler(BaseHTTPRequestHandler):
+    
+    def do_GET(self):
+        message = '<h1>Hello World!</h1>'
+        self.send_response(200)
+        self.send_header('Content-type','text/html')
+        self.end_headers()
+        self.wfile.write(message)
+        return
+
+#if __name__ == '__main__':
+server = HTTPServer(('', 8080), GetHandler)
+print 'Starting server on port 8080, use <Ctrl-C> to stop'
+server.serve_forever()
+
+
+
+=========================
+
+#!/usr/bin/env python
+"""
+Very simple HTTP server in python.
+
+Usage::
+    ./dummy-web-server.py [<port>]
+
+Send a GET request::
+    curl http://localhost
+
+Send a HEAD request::
+    curl -I http://localhost
+
+Send a POST request::
+    curl -d "foo=bar&bin=baz" http://localhost
+
+"""
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import SocketServer
+
+
+class S(BaseHTTPRequestHandler):
+    def _set_headers(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+    def do_GET(self):
+        self._set_headers()
+        self.wfile.write("<html><body><h1>hi!</h1></body></html>")
+
+    def do_HEAD(self):
+        self._set_headers()
+
+    def do_POST(self):
+        # Doesn't do anything with posted data
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+        self._set_headers()
+        self.wfile.write("<h1>POST!</h1><pre>" + post_data + "</pre>")
+
+
+def run(server_class=HTTPServer, handler_class=S, port=80):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print 'Starting httpd...'
+    httpd.serve_forever()
+
+
+if __name__ == "__main__":
+    from sys import argv
+
+    if len(argv) == 2:
+        run(port=int(argv[1]))
+    else:
+        run()
+
+====================
+An iterable is an object that has an __iter__ method which returns an iterator, 
+or which defines a __getitem__ method that can take sequential indexes 
+starting from zero. 
+An iterator is an object with a next (Python 2) or __next__ (Python 3) method. 
+>>> vec = [1, 2, 3]
+>>> it = iter (vec)
+>>> next (it)
+1
+>>> next (it)
+2
+type (it)
+<class  ‘list_iterator’>
+
+
+>>> f = open(“test.txt”,”w”) #opens file with name of “test.txt”
+>>> f.write(“Barcelona, “)
+>>> f.write(“is the best city of the world.”)
+>>> f.write(“With an excellent weather.”)
+>>> f.close()
+>>> 
+>>> f = open(“test.txt”,”r”) #opens file with name of “test.txt”
+>>> print(f.read())
+Barcelona, is the best city of the world.With an excellent weather.
+>>> f.close
+
+
+randomint = random.randint(1, 100)
+
+•
+Classes
+ Python supports a limited form of multiple inheritance in classes.
+>>> class Calculator(object):
+ #define class to simulate a calculator
+ def __init__ (self):
+	 #start with zero
+ 	self.current = 0
+ def add(self, amount):
+	 #add number to current
+ 	self.current += amount
+ def getCurrent(self):
+ return self.current
+
+>>> myCalc = Calculator() 
+# make myCalc into a Calculator object
+>>> myCalc.add(2) 
+#use myCalc’s new add method derived from Calculator class
+>>> print(myCalc.getCurrent())
+2
+>>> myCalc.add(2)
+>>> print(myCalc.getCurrent())
+
+
+"lambda". This is not exactly the same as lambda in functional 
+programming languages
+>>> fibonacci = (lambda  x: 1 if  x <= 2 else
+fibonacci(x-1) + fibonacci(x-2))
+>>> fibonacci(10)
+55
+>>> foo = [2, 18, 9, 22, 17, 24, 8, 12, 27]
+>>> for  i in filter(lambda  x: x % 3 == 0, foo):
+print (i)
+18
+9
+etc
+
+
+3 in (1, 2, 3)  #true
+('Hi!',) * 4    #('Hi!', 'Hi!', 'Hi!', 'Hi!')
+
+>>> lst = ["", 0, False, 0.0, None]
+>>> any(lst)
+False
+
+
+any vs all on list, set, tuple:
+my_list = []
+all(a==2 for a in my_list)
+It's true because for every element in the list, all 0 of them, they all are equal to 2.
+
+You can think of all being implemented as:
+
+def all(list, condition):
+  for a in list:
+    if not condition(a):
+      return false
+  return true
+
+Whereas any is:
+
+def any(list, condition):
+  for a in list:
+    if condition(a):
+      return true
+  return false
+
+That is to say, all is innocent until proven guilty, and any is guilty until proven innocent.
+
+
+
+What is the Pythonic way to check for an empty set?
+For sequences, (strings, lists, tuples), use the fact that empty sequences are false.
+
+Yes: if not seq:
+     if seq:
+
+No: if len(seq):
+    if not len(seq):
+
+
+dict(arguments)
+>>> {'number': 3, 'string': 'abc', 'numbers': [3, 4, 5]}
+{'numbers': [3, 4, 5], 'number': 3, 'string': 'abc'}
+>>> dict([(1, "one"), [2, "two"], (3, "three")])
+{1: 'one', 2: 'two', 3: 'three'}
+>>> dict(zip("ABCDEF", range(10, 16)))
+{'A': 10, 'C': 12, 'B': 11, 'E': 14, 'D': 13, 'F': 15
+>>> dict(
+...   number=3,
+...   string="abc",
+...   numbers=[3, 4, 5]
+... )
+{'number': 3, 'string': 'abc', 'numbers': [3, 4, 5]}
+
+
+>>> lst = ['Python','is','fun!']
+>>> ' '.join(lst)
+'Python is fun!'
+
+create dicts using the zip() function
+>>> lst_1 = ['Python','is','fun']
+>>> lst_3 = [10, 9, 8, 7, 6, 5]
+>>> d = {}
+>>> for k, v in zip(lst_1, lst_3):
+...   d[k] = v
+>>> d
+{'Python': 10, 'fun': 8, 'is': 9}
+
+create dict using dict() and zip() from 2 lists in one easy step:
+>>> dict(zip(lst_1, lst_3))
+{'Python': 10, 'is': 9, 'fun': 8}
+
+
+bytearray string type we met earlier, which is es-
+sentially a bytes string (a str in 2.X) that supports most of the list object’s in-place
+mutable change operations.
+
+non-ASCII characters with \x hexadecimal and
+short \u and long \U
+>>> 'sp\xc4\u00c4\U000000c4m'
+'spÄÄÄm'
+
+text is encoded to bytes when stored in a file, and decoded into
+characters (a.k.a. code points) when read back into memory. Once it is loaded, we
+usually process text as strings in decoded form only.
+>>> import re
+>>> match = re.match('Hello[ \t]*(.*)world', 'Hello
+>>> match.group(1)
+'Python '
+Python world')
+
+>>> re.split('[/:]', '/usr/home/lumberjack')
+['', 'usr', 'home', 'lumberjack']
+
+>>> L.pop(2)
+1.23
+>>> L
+[123, 'spam', 'NI'] # Shrinking: delete an item in the middle
+# "del L[2]" deletes from a list too
+
+Other list methods insert an item at an arbitrary position
+( insert ), remove a given item by value ( remove )
+
+
+num = 0xdd
+>>> hex(255)
+'0xff'
+>>> hex(-42)
+'-0x2a'
+
+mylist = list(range(0,10)  # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+>>> d[1] = 'Blah!'
+>>> d
+{1: 'Blah!'}
+>>> d['name'] = 'Joe'
+>>> d[number] = 42
+>>> d
+{1: 'Blah!', 'name': 'Joe', 'number': 42}
+
+
+>>> import os
+>>> os.system('ls ~/prog')
+
+
+>>> a = os.listdir('.')
+>>> a
+['Desktop', 'tmp3.txt', 'docker7', 'deleted_directories', 'phantomjs', 'tmp4.txt', 'tmp2.txt', '.eslintrc.json', 'docker8', 'docker-archlinux', 'go', 'jdk1.7', 'docker5', 'scala-2.12.2', 'docker4-tomcat', 'iso', 'docker2', 'kotlinc', 'docker3', 'WebStorm-171.4249.40', 'docker6', 'tmp1.txt', 'eclipse-installer', 'tmp', 'tmp.m3u', 'tmp.txt', 'tmp.js']
+>>> type(a)
+<class 'list'>
+
+>>> import os
+>>> os.path.basename('/Users/somename/somedirectory/pythoniscool.txt')
+'pythoniscool.txt'
+
+>>> os.path.split('/Users/somename/somedirectory/pythoniscool.txt')
+('/Users/somename/somedirectory', 'pythoniscool.txt')
+
+
+===============
+scraping web pages with BeautifulSoup bs4
+===============
+import requests
+import re
+from bs4 import BeautifulSoup as bs
+    
+page = requests.get("https://en.wikipedia.org/wiki/History_of_programming_languages")
+
+soup = bs(page.content, 'html.parser')
+tds = soup.select('#mw-content-text table ul li')
+for i in tds:
+    s = i.text
+    #print("[[[[" + s + "]]]]")
+    m = re.search('(19..|20..) – (.*)', s)
+    if m and m.group(1):
+        print(m.group(1), m.group(2).rstrip())
+
+===============
+
+T = (1, 2, 3)
+T[2] = 4    #error
+T = T[:2] + (4,)  # Okay: T becomes (1, 2, 4)
+
+Don't Expect Results From Functions That Change Objects
+
+In-place change operations such as the list.append( ) and list.sort( ) methods modify an object, but do not return the object that was modified (they return None)
+
+D.keys().sort()  # in-place sort returns None
+Ks = D.keys()
+Ks.sort()
+for k in Ks: print D[k]  # fixes the problem
+
+Conversion between number and string with cat:
+explicit is better than implicit (that is, EIBTI), so you must convert manually:
+
+X = int(S) + I   # Do addition: 43
+X = S + str(I)   # Do concatenation: "421" 
+
+References, not copies:
+ L = [1, 2, 3] 
+ M = L
+changing L in place, such as L[1] = 0 changes the values referred to by M also
+
+To copy:
+M = L[:]
+
+
+>>> X = 99
+>>> def func():
+...     print X      # Does not yet exist
+...     X = 88       # Makes X local in entire def
+... 
+>>> func( )          # Error!
+when the function is actually run, the assignment hasn't yet happened when the print executes, so Python raises an undefined name error
+If you really mean to print global X, you need to declare it in a global statement, or reference it through the enclosing module name.
+
+Default arguments on mutable objects retain same object between calls:
+behave like static local function variables in the C language
+>>> def saver(x=[]):
+...     x.append(1)
+...     print x
+>>> saver()
+[1]
+>>> saver()            # Grows on each call!
+[1, 1]
+
+Empty except clauses in try statements may catch more than you expect. An except clause in a try that names no exception catches every exception -- even things like genuine programming errors, and the sys.exit() call.
+
+6. Use re.compile
+
+If you are going to check a regular expression in a loop, don’t do this:
+
+for i in longlist:
+  if re.match(r'^...', i)
+
+yet define the regex once and use the pattern:
+
+p = re.compile(r'^...')
+for i in longlist: 
+  if p.match(i)
+
+
+# how to spew help for all string methods to a nice output file
+$python3
+>>> help(str)
+:s
+log file: help_str.txt
+:q
+>>> ctrl-d
+$
+
+# get help using interactive help
+>>> help()
+help> str
+
+
+list comprehensions to get list of all methods of
+str, one per line:
+print("\n".join( [i for i in dir(str) if i[0] != '_' ]))
+
+

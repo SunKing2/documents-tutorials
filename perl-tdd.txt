@@ -1,0 +1,36 @@
+!#/bin/bash
+# We'll create Scramble::Game and test it.
+# Adapted from book "Perl Medic"  (Chapter on Testing)
+h2xs -AXn Scramble::Game
+cd Scramble-Game
+perl Makefile.PL
+make test
+mv t/Scramble-Game.t t/01_basics.t
+sed -i '/t\/Scramble-Game.t/ d' MANIFEST  # remove .t file from MANIFEST
+perl -0777 -i.original -pe 's/\A.*use strict/#\/usr\/bin\/perl\nuse strict/igsm' t/01_basics.t
+perl -0777 -i.original -pe 's/^###.*$//igsm' t/01_basics.t
+perl -0777 -i.original -pe "s/tests => 1;/'no_plan'; #TODO change to use Test::More tests => 20\nuse blib;/igs" t/01_basics.t
+make test
+
+# Adapted from
+# "An Introduction to Test Driven Development Using Perl" Grant McLean 2008
+cat > lib/Scramble/Game.pm <<EOF
+package Scramble::Game;
+
+use 5.022002;
+use strict;
+use warnings;
+
+1;
+EOF
+prove t/01_basics.t
+
+# test a nonexistent constructor will fail:
+cat >> t/01_basics.t <<EOF
+my \$game = Scramble::Game->new;
+isa_ok(\$game, 'Scramble::Game');
+EOF
+prove t/01_basics.t
+
+perl -0777 -i.original -pe 's/use strict;\nuse warnings/use Moose/igsm' lib/Scramble/Game.pm
+make test

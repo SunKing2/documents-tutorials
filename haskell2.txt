@@ -1,0 +1,69 @@
+lists: homogenous: same type elements
+
+ghci> let
+let a = 1 inside GHCI is the equivalent of writing a = 1 in a script and then loading it. 
+
+strings are lists of characters:
+"hello" is just syntactic sugar for ['h','e','l','l','o']
+
+++ and : cons
+++ end of list               slow
+:  beginning of list         instantaneous
+
+[1,2,3,4]     ++ [9,10,11,12]    [1,2,3,4,9,10,11,12]
+"hello"       ++ " " ++ "world"  "hello world"
+['w','o']     ++ ['o', 't']      "woot"
+'A'           :  "small cat"     "A small cat"
+5             :  [1,2,3,4]       [5,1,2,3,4]
+
+notice how ++ takes two lists
+whereas    :  takes an item and a list
+
+[1,2,3] is actually just syntactic sugar for 1:2:3:[]. 
+
+[]                 empty list.
+[[]]               list containing 1 element
+[[],[],[]]         list containing 3 elements
+
+"hello" !! 4                 'o'
+"hello" !! 5                 !!! error
+[1.1,2,3] !! 0               1.1
+
+2.                           !!! parse error
+[1.1, 2.]                    !!! weird section ()  error
+
+nesting and homogeneous
+[[1,2], [3,4,5]]             ok
+[[1,2], ['a', 'b']]          !!! weird instance (Num Char) error
+
+comparing > < ==  True, False;
+   first head is compared, then second element...
+[3,4,2] > [3,4]              True
+[3,0,1] > [2, 97, 98, 99]    True
+
+functions on lists:
+head
+tail                         all but head 
+last                         last element
+init                         all but last element
+
+head []                      !!! exception
+
+null [1,2,3]                 False
+null []                      True
+length []                    0
+reverse [1,2,3]
+
+take 1 [7, 8, 9]             [7]
+take 2 [7, 8, 9]             [7, 8]
+take 2 [8]                   [8]  !!! this works ok
+take 0 [8]                   []
+
+drop 3 [8,4,2,1,5,6]         [1,5,6]
+drop 0 and drop 100 also work ok
+
+maximum, minimum, sum, product  work as expected
+
+
+3 `elem` [1,2,3]             True !!! usually done infix
+

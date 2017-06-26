@@ -1,0 +1,9 @@
+ 1910  cd tmp
+ 1912  yarn init -y
+ 1913  yarn add karma karma-jasmine karma-chrome-launcher jasmine-core -D
+ 1927  sudo yarn global add karma-cli
+ 1951  which chromium-browser
+ 1952  source ~/.bashrc
+ 1953  karma start
+ 1954  karma start
+

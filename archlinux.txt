@@ -1,0 +1,94 @@
+# ping archlinux.org
+# timedatectl set-ntp true
+# sda will create 1st partition: 12GB, 2nd primary partition 2GB (swap), rest of the space will not be used
+fdisk /dev/sda
+o
+n
+p
+enter
+enter
++12G
+a
+n
+p
+enter
+enter
++2G
+t
+2
+82
+w
+
+fdisk -l /dev/sda
+
+mkfs.ext4 /dev/sda1
+mkswap /dev/sda2
+
+mount /dev/sda1 /mnt
+
+export EDITOR=vim
+
+# move a few canadian and american mirrors to the top of this list:
+vi /etc/pacman.d/mirrorlist
+
+pacstrap /mnt base
+
+#########################################
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+ln -sf /usr/share/zoneinfo/Canada/Eastern /etc/localtime
+
+hwclock --systohc
+
+vi /etc/locale.gen
+uncomment these 2:
+en_CA.UTF-8 UTF-8
+en_US.UTF-8 UTF-8
+
+locale-gen
+
+#create a file, add one line:
+vi /etc/locale.conf
+LANG=en_US.UTF-8
+
+echo saturn > /etc/hostname
+
+#add the saturn name to  (the third line is different on your system):
+#127.0.1.1 is NOT A TYPO
+vi /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	saturn
+::1   <<some other stuff on this line>>
+
+
+# e1000 is the network module if you need to install a network when it doesn't work when rebooting
+# show the device (it should say up):
+ip link show dev enp0s3
+
+passwd
+
+pacman -S grub
+grub-install --target=i386-pc /dev/sdx
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+exit
+reboot
+
+
+#  here is the fix for virtualbox networking!!!!! (do after rebooting)
+systemctl start  dhcpcd.service
+
+# this will always work upon rebooting:
+/usr/sbin/dhcpd enp0s3
+
+# maybe this, if still a problem:
+#systemctl enable dhcpcd.service
+
+# or even:
+#systemctl start dhcpcd@enps03
+
+

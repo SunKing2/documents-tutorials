@@ -1,0 +1,315 @@
+This file contains only information on how to run stack new, stack build, stack test
+it's centered on 
+- creating your own author information by default
+- running the default template, and altering it, and rerunning it
+- quick how to run the test
+- some intro information on how to make custom templates
+
+create your own stack template configuration:
+start http://conscientiousprogrammer.com/blog/2015/11/30/haskell-tidbits-24-days-of-hackage-2015-day-1-introduction-and-stack/
+
+You can customize the yaml file so that $ stack new will include your info as author
+
+overwrite  the contents of this file with this command and the next several lines
+cat >> ~/.stack/config.yaml
+templates:
+  params:
+    author-email: "franklinchen@franklinchen.com"
+    author-name: "Franklin Chen"
+    category: test
+    copyright: "2015"
+    github-username: "FranklinChen"
+
+
+detailed info of further customization your $ stack new stuff is at this link
+https://docs.haskellstack.org/en/stable/yaml_configuration/
+
+How to create and run a stack project, and make it print hello world instead:
+From:
+https://translate.google.ca/translate?hl=en&sl=ja&u=http://qiita.com/igrep/items/da1d8df6d40eb001a561&prev=search
+
+#create stack project and run
+stack new foobar-project && cd foobar-project && stack build && stack setup && stack exec foobar-project-exe
+sed -i 's/"someFunc"/"Hello, world!"/g' ./src/Lib.hs
+stack build && stack exec foobar-project-exe 
+
+
+How to use an alternate template called franklinchen, run it and run tests:
+
+from 
+http://conscientiousprogrammer.com/blog/2015/11/30/haskell-tidbits-24-days-of-hackage-2015-day-1-introduction-and-stack/
+
+stack new stack-template-demo franklinchen && cd stack-template-demo && stack setup && stack build && stack exec stack-template-demo && stack test
+
+#surprisingly this is available in the repl without loading it 
+
+stack ghci
+ourAdd 2 3
+5
+Lib.ourAdd 4 5
+9
+
+#surprisingly, module main is accessible while in the repl too
+main
+2 + 3 = 5
+
+
+Although i did not try it, you can install it like this:
+---cut---
+$ stack install
+...
+...
+Copying from /Users/chen/stack-template-demo/.stack-work/install/x86_64-osx/lts-3.16/7.10.2/bin/stack-template-demo to /Users/chen/.local/bin/stack-template-demo
+
+Copied executables to /Users/chen/.local/bin:
+- stack-template-demo
+
+For example (since ~/.local/bin is in my PATH):
+
+$ stack-template-demo
+2 + 3 = 5
+
+---end cut---
+
+
+custom stack templates additionaly information on how to make your own:
+https://github.com/commercialhaskell/stack-templates
+
+Using your own local template
+
+Note that the template specified does not have to be in the official stack-templates repo. It can also be on your local file system. For example, before I submitted my template to stack-templates, I used to run
+
+$ stack new stack-template-demo /path/on/my/computer/to/franklinchen.hsfiles
+
+where franklinchen.hsfiles is my template (read below on creating your own template).
+
+end http://conscientiousprogrammer.com/blog/2015/11/30/haskell-tidbits-24-days-of-hackage-2015-day-1-introduction-and-stack/
+
+==============
+start https://functional-programming.it.jyu.fi/master/pages/InstallTheTools.md
+
+You can make a hello world with "simple" option on $stack new x simple
+
+
+stack new firstHaskell simple && cd firstHaskell && stack setup && stack build && stack exec firstHaskell
+
+cat src/Main.hs 
+module Main where
+
+main :: IO ()
+main = do
+  putStrLn "hello world"
+
+cat > src/Main.hs <<EOF
+module Main where
+
+name = "Louie"
+
+main = do
+   putStrLn ("hello " ++ name)
+
+EOF
+
+stack build && stack exec firstHaskell
+
+
+# more notes
+If this is the first time you are trying stack, you need to say stack setup before building to install the compiler.
+
+you can find the executable deep inside the .stack-work directory
+
+With Haskell, we usually don't compile our programs altogether when developing them. Instead, the preferrable way for quickly testing is to launch the GHCi interpreter. Type 
+
+stack ghci
+
+Try the following for starters:
+
+main
+reverse name
+
+this will show 
+Hello, Louie
+and
+eiuoL
+respectively
+
+
+$ stack ghci
+*Main> main
+hello Louie
+*Main> reverse name
+"eiuoL"
+
+You can add libraries to your project by modifying the cabal file.
+Extra libraries go to the build-depends slot. For example, try modifying build-depends to read base >= 4.7 && < 5, text. Then just run stack build again and it will automatically install all your dependencies. 
+
+
+
+Asteroids
+stack new asteroids simple && cd asteroids && stack setup && stack build && stack exec asteroids
+sed -i 's/< 5/< 5, gloss/g' asteroids.cabal
+cat > src/Main.hs <<EOF
+module Main where
+import Graphics.Gloss
+import Graphics.Gloss.Interface.Pure.Game
+import Graphics.Gloss.Interface.Pure.Simulate
+import Graphics.Gloss.Interface.Pure.Display
+
+data AsteroidWorld = Play [Rock] Ship [Bullet]
+                   | GameOver 
+                   deriving (Eq,Show)
+
+type Velocity     = (Float, Float)
+type Size         = Float
+type Age          = Float
+
+
+
+data Ship   = Ship   PointInSpace Velocity      
+    deriving (Eq,Show)
+data Bullet = Bullet PointInSpace Velocity Age  
+    deriving (Eq,Show)
+data Rock   = Rock   PointInSpace Size Velocity 
+    deriving (Eq,Show)
+
+initialWorld :: AsteroidWorld
+initialWorld = Play
+                   [Rock (150,150)  45 (2,6)    
+                   ,Rock (-45,201)  45 (13,-8) 
+                   ,Rock (45,22)    25 (-2,8)  
+                   ,Rock (-210,-15) 30 (-2,-8) 
+                   ,Rock (-45,-201) 25 (8,2)   
+                   ] -- The default rocks
+                   (Ship (0,0) (0,5)) -- The initial ship
+                   [] -- The initial bullets (none)
+
+
+simulateWorld :: Float -> (AsteroidWorld -> AsteroidWorld)
+
+simulateWorld _        GameOver          = GameOver  
+
+simulateWorld timeStep (Play rocks (Ship shipPos shipV) bullets) 
+  | any (collidesWith shipPos) rocks = GameOver
+  | otherwise = Play (concatMap updateRock rocks) 
+                              (Ship newShipPos shipV)
+                              (concat (map updateBullet bullets))
+  where
+      collidesWith :: PointInSpace -> Rock -> Bool
+      collidesWith p (Rock rp s _) 
+       = magV (rp .- p) < s 
+
+      collidesWithBullet :: Rock -> Bool
+      collidesWithBullet r 
+       = any (\(Bullet bp _ _) -> collidesWith bp r) bullets 
+     
+      updateRock :: Rock -> [Rock]
+      updateRock r@(Rock p s v) 
+       | collidesWithBullet r && s < 7 
+            = []
+       | collidesWithBullet r && s > 7 
+            = splitRock r
+       | otherwise                     
+            = [Rock (restoreToScreen (p .+ timeStep .* v)) s v]
+ 
+      updateBullet :: Bullet -> [Bullet] 
+      updateBullet (Bullet p v a) 
+        | a > 5                      
+             = []
+        | any (collidesWith p) rocks 
+             = [] 
+        | otherwise                  
+             = [Bullet (restoreToScreen (p .+ timeStep .* v)) v 
+                       (a + timeStep)] 
+
+      newShipPos :: PointInSpace
+      newShipPos = restoreToScreen (shipPos .+ timeStep .* shipV)
+
+splitRock :: Rock -> [Rock]
+splitRock (Rock p s v) = [Rock p (s/2) (3 .* rotateV (pi/3)  v)
+                         ,Rock p (s/2) (3 .* rotateV (-pi/3) v) ]
+
+restoreToScreen :: PointInSpace -> PointInSpace
+restoreToScreen (x,y) = (cycleCoordinates x, cycleCoordinates y)
+
+cycleCoordinates :: (Ord a, Num a) => a -> a
+cycleCoordinates x 
+    | x < (-400) = 800+x
+    | x > 400    = x-800
+    | otherwise  = x
+
+drawWorld :: AsteroidWorld -> Picture
+
+drawWorld GameOver 
+   = scale 0.3 0.3 
+     . translate (-400) 0 
+     . color red 
+     . text 
+     $ "Game Over!"
+
+drawWorld (Play rocks (Ship (x,y) (vx,vy)) bullets)
+  = pictures [ship, asteroids,shots]
+   where 
+    ship      = color red (pictures [translate x y (circle 10)])
+    asteroids = pictures [translate x y (color orange (circle s)) 
+                         | Rock   (x,y) s _ <- rocks]
+    shots     = pictures [translate x y (color red (circle 2)) 
+                         | Bullet (x,y) _ _ <- bullets]
+
+handleEvents :: Event -> AsteroidWorld -> AsteroidWorld
+
+handleEvents _ GameOver = GameOver
+
+handleEvents (EventKey (MouseButton LeftButton) Down _ clickPos)
+             (Play rocks (Ship shipPos shipVel) bullets)
+             = Play rocks (Ship shipPos newVel) 
+                          (newBullet : bullets)
+ where 
+     newBullet = Bullet shipPos 
+                        (-150 .* norm (shipPos .- clickPos)) 
+                        0
+     newVel    = shipVel .+ (50 .* norm (shipPos .- clickPos))
+
+handleEvents _ w = w
+
+type PointInSpace = (Float, Float)
+(.-) , (.+) :: PointInSpace -> PointInSpace -> PointInSpace
+(x,y) .- (u,v) = (x-u,y-v)
+(x,y) .+ (u,v) = (x+u,y+v)
+
+(.*) :: Float -> PointInSpace -> PointInSpace
+s .* (u,v) = (s*u,s*v)
+
+infixl 6 .- , .+
+infixl 7 .*
+
+norm :: PointInSpace -> PointInSpace
+norm (x,y) = let m = magV (x,y) in (x/m,y/m)
+
+magV :: PointInSpace -> Float
+magV (x,y) = sqrt (x**2 + y**2) 
+
+limitMag :: Float -> PointInSpace -> PointInSpace
+limitMag n pt = if (magV pt > n) 
+                  then n .* (norm pt)
+                  else pt
+
+rotateV :: Float -> PointInSpace -> PointInSpace
+rotateV r (x,y) = (x * cos r - y * sin r
+                  ,x * sin r + y * cos r)
+
+
+main = play 
+         (InWindow "Asteroids!" (550,550) (20,20)) 
+         black 
+         24 
+         initialWorld 
+         drawWorld 
+         handleEvents
+         simulateWorld
+EOF
+
+
+
+end  https://functional-programming.it.jyu.fi/master/pages/InstallTheTools.md
+==============
+

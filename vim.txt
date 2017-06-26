@@ -1,0 +1,738 @@
+ubuntu linux bible
+ZZ save and exit
+w! filename
+{number}G go to line#
+0G go to last line
+motions: ( and ) sentence
+         { and } paragraph
+^e scroll down a line
+^y scroll up a line
+x dw d$ d) d}
+r cw c$ c) c}
+     y$    y}
+{number p} paste that many lines
+or just use P if you forgot
+:%s/a/b/g  or :%s/a/b/gc to confirm
+
+windows:
+:split fname
+:vsplit fname
+vim -o a b c
+:hide
+:only
+^w{up} cursor up {to prev window?} ??
+^w^w   cycle thru windows
+^w_    maximize
+^w=    tile
+^w+    increase window size by 1 line
+ 
+end ubuntu linux bible
+======================
+dunno where I got this from Jul 13, 2007
+W
+B
+E like w, b, e, but word is now after a space
+gg start of file
+G  EOF
+
+scroll:
+       fwd  bk
+line   ^Y   ^E
+1/2scr ^D   ^U
+scr    ^F   ^B
+
+I  insert at beginning of line
+======================
+vim screencast #2
+:e!  reload current file
+gg   top of file
+(w  x)
+motions: hjkl ^$ wb 0 ^u^d gg
+w forward a word
+b back a word
+y{motion}   yy y$ yw
+c{motion}      c$ cw cb
+d{motion}      d$ dw
+all d commands get put into register for use with P/p
+p after a yw pastes it after cursor, use P
+p after a yy pastes it after line,   use P
+xp is one way to transpose two letters when cursor is on first one 
+end screencast 2
+======================
+vimtutor
+(:set showcmd shows the commands as they are being typed, from google)
+
+the format for a change command is 
+operator  [number]  motion
+U to undo all changes in a line
+undo all the undos use ^R  (is this r?, is there a typo in vimtutor?)
+2dd then p  seems to put back both lines, despite what another tutorial was saying
+r{char} will replace the character with {char}
+ce to change until the end of a word (stackexchange says it does like a cw)
+c$
+p puts the deleted text after the cursor, if a line was deleted, it will go
+on the line below the cursor.
+end Lesson 3
+=====================
+progressively
+. repeat last command
+{number}{command} will repeat command
+10idesu
+.
+3.  will only print 3 desu  {dunno why?}
+{number}G  go to line {number}
+gg shortcut for 1G
+G  go to last line
+w and e are for start of following word and end of current word,
+but if you want to define word as separated by blanks, use
+W and E
+% go to corresponding (, { or [
+* go to next occurence of this word under cursor
+# go to previous occurrence of word under cursor
+
+commands can have :
+{start position}{command}{end position}
+0y$  
+0 go to beginning of this line
+y yank from here... 
+$ until the end of line
+ye yank from here till the end of word
+y2/foo yank from here till (but excluding) second occurrence of foo
+you can do this not only with y:
+d , v(visual select) gU (uppercase) gu (lowercase) ...etc
+end of 3rd level
+======================
+
+screencast 3
+/   search
+incremental search so you can see what you are searching as you type
+----aside from oualline.com to 10 things vi user needs to know about vim ---
+:set incsearch   " turn on searching as you type search text
+:set hlsearch    highlights all searched text
+:set cindent     turns on a better automatic indent: c style, help cindent (for tabstop)
+:make
+:cn  go to line causing error from :make
+:ab #b /****************************************
+word completion with ^P (previous match) and ^N (next match)
+--- end aside---
+* go to next occurrence of word under cursor
+# previous
+fD  find the next D  [these seem to work only on current line]
+; next one
+, previous one
+ctD  change 'til D
+/ and ?  to search forward and backward
+n next (search again)
+N previous search again
+d/myfunc will delete until that search term
+ytD to yank 'til D
+d* delete until next instance of that word
+
+end screencast 3
+=========================
+vimtutor lesson 4
+^G show filename [status] lines %{location]
+8G goes to line 8
+/errroor
+n
+N
+?
+^O go back to where you came from after a search.  keep hitting it
+^I go forward to where you came from after a search
+% find matching ( [ { 
+:s/old/new/g
+3,5s/old/new/g
+:%s/old/new/g
+:%s/old/new/gc
+G end of file
+gg first line
+
+end vimtutor lesson 4
+=========================
+progressively 4th level
+0    go to column 0
+^    first character on line
+$    last column
+g_   last character on line
+fa   find next letter a on line
+Fa   find previous
+(resp. ;) will find the next (resp. previous) occurrence
+ta   goto just before letter a
+Ta   previous
+3fa  find 3rd occurrence
+dt"  remove everything until the "
+<action>a<object>
+<action>i<object>
+action can be d, y, v(select in visual mode)
+object can be w, W, s(sentence) p(paragraph) " ' ) ] }
+(map (+) ("foo"))
+vi"  find everthing between the quotes of this word
+va"  find everything including quotes of this word
+vi)  between )
+va)  between and including )
+v2i) next level of parents, also v2a
+^v   select rectangular block
+^v^dI#  comment out block of lines
+^n   complete word
+^p   something about completion???
+qa 
+@a
+@@  replay last macro
+On a line containing only the number 1, type this:
+
+    qaYp<C-a>q →
+        qa start recording.
+        Yp duplicate this line.
+        <C-a> increment the number.
+        q stop recording.
+    @a → write 2 under the 1
+    @@ → write 3 under the 2
+    Now do 100@@ will create a list of increasing numbers until 103.
+
+v
+V
+select the lines with these
+J join them all together
+< or > indent or outdent
+= autoindent them
+
+add something at end of a selected Visual block:
+^v goto line  $  A  {some text} {ESC}
+
+:split
+^w{h or j or k or l}
+^w_ maximize size of split
+^w| maximize size of split
+^w+ increase size of split
+^w- decrease size of split
+:help usr_02.txt
+
+end progressively 4th level
+end of progressive lessons 
+========================
+joelbyler/vim.md
+
+~ - switch case
+g~iw - switch case of current word
+gUiw - make current word uppercase
+guiw - make current word lowercase
+>> - indent line one column to right
+<< - indet line one column to left
+== - auto-indent current line
+
+i - start insert mode at cursor
+I - insert at the beginning of the line
+a - append after the cursor
+A - append at the end of the line
+o - open (append) blank line below current line (no need to press return)
+O - open blank line above current line
+
+idioms:
+ea - append at end of word
+xp: transpose character under cursor with next one
+ddp: swap current line with next one
+ddkP swap current line with previous
+
+Visual Mode - Marking text
+
+v - start visual mode, mark lines, then do command (such as y-yank)
+V - start Linewise visual mode
+o - move to other end of marked area
+U - upper case of marked area
+ctrl+v - start visual block mode
+O - move to Other corner of block
+aw - mark a word
+ab - a () block (with braces)
+aB - a {} block (with brackets)
+ib - inner () block
+iB - inner {} block
+Esc - exit visual mode
+
+Visual Mode
+Commands
+
+> - shift right
+< - shift left
+c - change (replace) marked text
+y - yank (copy) marked text
+d - delete (cut) marked text
+~ - switch case
+
+Cut and paste
+
+1. Place the cursor at the start of your text.
+2. ma (marks the location as point 'a')
+3. Place the cursor at the end of your text.
+4. d'a (cuts back to location 'a')
+
+
+Working with multiple files
+
+:e filename - Edit a file in a new buffer
+:n **/*.pl - Open all perl files under the current directory, recursively
+:tabe filename - Edit a file in a new tab (Vim7, gVim)
+:bnext (or :bn) - go to next buffer
+:bprev (or :bp) - go to previous buffer
+:bd - delete a buffer (close a file)
+:sp filename - Open a file in a new buffer and split window
+ctrl-w s - Split windows
+ctrl-w w - switch between windows
+ctrl-w q - Quit a window
+ctrl-w v - Split windows vertically
+
+Tabs (Vim7)
+
+{i}gt  - go to tab in position i
+gt - Next tab
+gT - Previous tab
+:tabr - First tab
+:tabl - Last tab
+:tabm [N] - Move current tab after tab N. No N: last. N=0: first.
+$vim -p file1 file2 fileN  - Open multiple files in different tabs (vim7) 
+
+Command Line Options
+
+$vim -c "vim command" file - execute an editor command on startup
+
+:viusage big cheat sheet 
+
+
+joelbyler/vim.md
+========================
+
+Vim Text Objects: The Definitive Guide
+
+vim Text Objects: edit by word, sentence, paragraph, programming language sections, more
+
+number command motion
+daw: deletes all contiguous [a-zA-Z_] characters plus trailing space
+diw: same but <inner> so leaves surrounding spaces
+cas : copy current sentence including spaces
+cis: same excluding surrounding ws.
+dap
+dip : same with paragraphs
+
+c$ = "hello world"; d = (2+3/2); 
+while(1) {
+  println("hello");
+  println("world");
+}
+c$ = "hello world"; d = (2+3/2); 
+while(1) {
+  println("hello");
+  println("world");
+}
+c$ = "hello world"; d = (2+3/2); 
+while(1) {
+  println("hello");
+  println("world");
+}
+c$ = "hello world"; d = (2+3/2); 
+while(1) {
+  println("hello");
+  println("world");
+}
+a'a"bc a?bc a!bc a/bc a@bc a#bc a%bc a^bc a&bc a*bc a(bc a)bc a-bc a+bc a=bc a;bc a:bc a,bc a<bc a>bc a.bc 
+a_bc a2bc a'bc a"bc a?bc a!bc a/bc a@bc a#bc a%bc a^bc a&bc a*bc a(bc a)bc a-bc a+bc a=bc a;bc a:bc a,bc a<bc a>bc a.bc 
+
+a2bc a'bc a"bc a?bc a!bc a/bc a@bc a#bc a%bc a^bc a&bc a*bc a(bc a)bc a-bc a+bc a=bc a;bc a:bc a,bc a<bc a>bc a.bc 
+   a' a" a? a! a/ a@ a# a% a^ a& a* a( a) a- a+ a= a; a: a, a< a> a. 
+
+
+Vim Text Objects: The Definitive Guide
+========================
+
+
+==========start Louie's vim tutorial ==========
+
+motions: words:
+                   word or punc.    word by spaces
+start              w                W
+end                e                E
+start- backwards   b                B
+end-backwards      e                E
+
+motions: lines:
+                   full line        text on line (trimmed)
+start              0                ^
+end                $                g_
+
+motions: all lines:
+start              gg
+end                G
+
+motions: misc
+( and )   sentence
+{ and }   paragraph
+[ and ]
+hjkl
+^u^d
+                      change    delete    yank
+character und. cursor r or s    x
+previous character              X 
+entire line           cc or S   dd        yy
+to the end of word    cw        dw        yw
+word                  ce        de        ye
+beginng of word       cb        db        yb
+beginng of line       c0, c^    d0, d^    y0, y^
+to end of line        c$        d$ or D   y$ 
+
+-------------------------
+paste:
+p    put after cursor, or if a line, after current line
+P    put before cursor, or if a line, before current line
+
+scroll:
+       fwd  bk
+line   ^Y   ^E
+1/2scr ^D   ^U
+scr    ^F   ^B
+
+==========end Louie's vim tutorial ==========
+
+start ubuntu linux bible
+.vimrc can contain these commands:
+  autocmd automatically execute specific commands based on type of file you are editing
+  iab     automatically expanding abbreviations
+  map     keymap, and define own commands
+  set     set variable
+
+
+
+
+end ubuntu linux bible
+=========================================
+
+start vastola lecture3.pdf
+
+vi +n file            : start on line n
+vi +  file            : start on last line
+vi +/bla              : 
+vi -r file            : recover after crash
+
+movement              : space is like l, Enter is like j
+
+^w                    : move to first character of insertion.
+
+i                     : insert before cursor
+I                     : insert BOL
+
+cc                    : change current line
+5cc                   : change 5 lines
+r                     : replace current character
+R                     : replace current character to EOL
+s                     : current character
+S                     : current line
+~                     : toggle case
+
+x                     : character under cursor
+X                     : character to left of cursor
+
+
+:1,. {command}        : to BOF
+:.,$ {command}        : to EOF
+:1,$ {command}        : whole file
+ex: 
+:1,$ d
+
+/The\>                : search on word boundary
+:/orange/s//lemon/g   : find orange on next line, replace it
+.,$s/aa/bb/g          : without spaces works too
+:g/one/s//two/g       : replace all one with two
+
+--- begininterlude lagmonster vi.html-----
+H	Move to top of screen
+M	Move to middle of screen
+L	Move to botton of screen
+:d	Delete current line
+:y      yank current line
+
+mc	Set marker c on this line
+`c	Go to beginning of marker c line.
+'c	Go to first non-blank character of marker c line.
+
+&	Repeat last :s command
+
+\(...\)	Grouping - usually used to group conditions
+
+:g/pattern/	Range - All lines that contain pattern
+
+-----end interlude lagmonster vi.html-----
+
+
+==========================================
+misc stuff I found:
+:buffers          lists buffers, buffer number,  and a/h state
+:set showmode     shows mode of some sort
+in :help, when on a hyperlink: CTRL+] (jump to tag)
+          ctrl-t : go back from jumping to a tag (pop tag off stack)
+:help index to see list of topics
+:help ctrl-h  works and shows for normal mode
+:help i_ctrl-h shows the topic for insert mode
+other prefixes are v_ i_ : (for ex mode commands) and
+c_ command line editing
+-  command arguments
+
+:help 'number' is for topics that refer to configure and customize
+
+3iThis is a big line<cr>     #inserts 3 lines all the same
+20ix<esc>  inserts 20x
+3a!<esc>   inserts 3 exclamations marks
+:ls   same as :buffers
+:reg  see contents of registers
+:let @/ = 'printf'   # now when you do a n it will search for 'printf' because
+   'last pattern search' register (indicated by /)  contains the last pattern
+:edit!     reload current file 
+
+yanking/deleting to registers, and pasting:
+        "fy     : copy selection and paste in register f
+        "fd     : delete selection and paste in register f
+        (This works with "xyy "xY and all other similar things too.)
+        "fp     : paste what is present in registers f.
+
+"mdd  uses the buffer m; delete current line
+"mp   paste it
+
+:set all
+autoindent, mesg, number, shiftwidth, showmode, warn, wrapscan, wrapmargin, etc.
+
+:ab 9u Humuhumunukunukuapu
+:una 9u
+
+:map  command mode
+:map! insert mode
+
+^J  Move the cursor down one line in the same column. A count moves that many lines 
+down.  
+^M  Move to the first character on the next line.  
+^N  Move the cursor down one line in the same column. A count moves that many lines 
+down.  
+^P  Move the cursor up one line in the same column. A count moves that many lines up.  
+
+z<cr> put current line at top of screen
+z.                        center
+z-                        bottom
+16z   put line 16 in center of screen
+C     change to EOL
+S     change entire line
+!4jsort : run sort program on these 4 lines, replace them with the results
+@ type the command in the specified buffer
+:unm  unmaps from a :map
+:w >> filename   append contents of buffer to filename
+
+
+
+end misc stuff I found     
+==========================================
+      
+        
+start http://linuxgazette.net/152/srinivasan.html:        
+	ctx - change till x (deletes from here until first character 'x', and puts you insert mode)
+	dtx - delete till x 
+
+        daw - delete a word
+        dw - delete from here till end of word
+        daW - delete a Word(includes special chars, except space)
+        dW - delete from here till end of Word
+
+        das - delete the sentence we are in
+        daB - delete an inner Block of code {}
+        s - sentence
+        w - word
+        W - WORD
+        t - tag ( 'dat' removes from <xml-style-tag> till </xml-style-tag>
+        p - paragraph
+        B - block of code ( '{' or '}' works only for C-style blocks)
+
+        Bracket forms:
+                ( or ) - parenthesis ( ... )
+                [ or ] - [ .. ]
+                < or > - refers to <....>
+                { or } - a { block also referred to by the above b
+
+        Quote forms:
+                Just like the bracket forms
+                ", ', ` - can be used for referring to text-objects delimited by them.
+
+These things can therefore be used in a manner similar to
+
+        da<text-object> : delete a text object
+        di<text-object> : delete the inner part of the text object.
+        (This leaves the () or the spaces in words or the {} in blocks)
+ 
+        gD - takes you to the first (intelligent) instance of the word under
+             the cursor in the same file. It is intelligent, since in a programming
+             language, it takes you to the definition or the declaration of the function
+             or variable.
+        gj - goto next line. (Huh?). This is the same as j when the lines do not wrap.
+             When the lines do wrap around the editor, hitting j would take you over to the next
+             new line. gj will take you the same character in the next row. (Try it).
+        gk - Similar.
+        (To avoid wrapping do :set nowrap)
+
+Note indeed that the small 'g' is called the extended operator in vim. It performs a lot more than merely goto. Indeed the user can see :help g for more information. I'll mention a few useful ones:
+
+		gf - Open the filename under the cursor
+		ga - Print ascii value of character under the cursor.
+		gs - put vim to sleep for 1 second. Of course, like most
+			 vim commands, you can prefix this with a number to get
+			 a general sleep command.
+
+        ma      - mark current position with letter 'a'.
+        `a      - go back to mark a
+        'a      - put the cursor at the start of line a
+        :marks    to see a list of marks made.
+        
+
+ctrl-g  shows line number and statistics  :)
+        >>  - increase indent of current line.
+        <<  - decrease indent of current line.
+        
+: commands use range, can be 
+		a number
+		.
+		$
+		%
+		*   the visual area
+		't  position of marker t
+		/{pattern}[/]   the next line where {pattern} matches     
+        ?{pattern}[?]   the previous line where {pattern} matches 
+        \/              the next line where the previously used search
+                        pattern matches
+        \?              the previous line where the previously used search
+                        pattern matches
+        \&              the next line where the previously used substitute
+                        pattern matches
+
+:s  can use  g, c, e, i, I, n
+ 
+        
+end http://linuxgazette.net/152/srinivasan.html             
+
+====================
+vim tutorial
+
+c3$  : change these 3 lines to eol
+c3j  : change this line and the next 3 (4 total)
+.,+2s/the/THE/g  do an operation on this plus the next 2 lines
+:r file inserts the contents of file at this line
+:r !ls -l inserts the output of that command at this line
+R overstrike mode
+v {some movement to select} y   to yank the text
+: set ic  ignorecase
+/println\c  looks for println and printLn but for this search only
+: set hls highlight search terms
+: set is  incremental search (highlights as you search)
+
+:help
+^] on a tag
+^O to get you back after going to that tag
+
+ctrl-w r   rotate windows
+ctrl-w p   previous window
+ctrl-w c or :close  close current window
+ctrl-w =   make all windows same size
+
+end of vimtutor tutorial
+
+end vim tutorial
+====================
+start misc stuff i found
+
+Q  go to ex mode and stay there, exit with :vi
+
+end misc stuff i found
+====================
+
+start https://blog.interlinked.org/tutorials/vim_tutorial.html
+
+s …substitute the text from the current cursor position up to the position given by the next command with the newly typed one.
+s can be used after selecting a block in visual mode, sub the whole block
+
+yanking and pasting buffer:
+ayy
+ap
+
+prepending/appending to all lines
+0       go to beginning of line
+ctrl-v$ select in visual mode
+3j  (or however many lines)
+Isometext<Esc>
+or
+Asometext<Esc>
+
+text objects (iw is inner word)
+ciw ci" ci( 
+these are also useful:
+iw  iW  is  ip
+i(  i)  i{  i}  choose either the openy or closey variation
+i"  i'  i`
+
+filter:   (see :h filter):
+!sort %            run current text thru external program
+:r which ls        insert output of external program into current text
+
+completion
+type a partial word, then ctrl-p
+Thi^p^x^l  will find a line that starts with Thi and insert a copy of that line
+thier^x^k  will do dictionary search  (doesn't work for me, dict not set)
+
+marks:
+ma                 or mb or mz
+`a                 to jump to that mark
+
+mA   or mB or mZ   for marks that remain between sessions
+:marks             to see all marks
+
+preset marks:
+0-9                last 10 positions of closed files 0 is last
+< >                left, right position of marked text
+( )                start, end of sentence
+{ }                paragraph
+[ ]                first, last character of last yanked or changed text
+.                  position of last change
+' `                position before last jump
+"                  position before last exit of the file (local to a file)
+^                  position of last insert stop
+
+
+tabs
+$vim -p *.js       open all files, one in each tab
+gt                 switch tab
+:tabnew            new tab
+:tabe xyz          bring contents of file xyz into new tab
+
+buffers:
+:sp newfile.txt    split top/bottom loading newfile
+:vsp newfile.txt   split l/r
+ctrl-w h,j,k,l     go to other window
+:bd                unload buffer, remove from list
+:set hidden        to enable unsaved buffers, may be dangerous
+:sp 3              split current window, edit buffer 3
+:new               new empty window
+:on                close all but this window
+
+end https://blog.interlinked.org/tutorials/vim_tutorial.html
+====================
+begin the linux command line
+
+:n move to next file (won't work for buffers, just files loaded with vi startup)
+:N previous file
+:n! force this, instead of saving
+
+end the linux command line
+====================
+begine various misc stuff
+
+:e .               browse current directory press enter to edit
+:browse e          same thing   works also for :browse w
+cc                 change entire line
+C                  change rest of line
+~                  toggle case
+:g~iw              toggle case of word
+:bnext             next buffer
+:bprev             prev buffer
+
+end various misc stuff
+
+====================

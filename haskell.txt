@@ -1,0 +1,87 @@
+$ ghci
+:l first.hs
+:r
+:set prompt "ghci> "
+
+5 * (-3)           requires parens around - numbers
+5/3                outputs a real number
+5 + 4.1            converts result to real
+
+
+&& || not True False
+3 == 1 + 2
+3 /= 1 + 4         not equal specified like this
+
+'a'                seems to be a char
+
+These don't work!!!!
+!!! 'hello'
+!!! 3 <> 3
+!!! "he" + "llo"
+!!! "he" + 3
+!!! "he" . "llo"   also space /   //  , don't work
+!!! 'h' + 'e'
+!!! 0 == True
+!!! 1 == False
+!!! "a" = "b"
+
+succ 8             9
+min 3 2
+
+These don't work!!!
+!!! + 3 2
+!!! add 3 2
+!!! int 3.1
+
+function application has highest precedence:
+succ 9 * 10                  100
+succ (9 * 10)                91
+
+succ 9 + max 10 4 + 1        21
+succ 9 + max 10 4.7 + 1      21.0
+
+infix function calling with backticks
+92/10              9.2
+div 92 10          9
+92 `div` 10        9
+
+These don't work!!!
+!!! `add` 3 2
+!!! `+`   3 2
+!!! add   3 2
+!!! /     3 2
+!!! `/`   3 2
+!!! 92 div 10
+
+parens are not used for parameters, spaces are
+myfunc (myfunc 3) means call myfunc 3,
+                  then use that result for myfunc result
+
+
+$ cat > baby.hs <<EOF
+doubleMe x = x + x
+EOF
+$ghci
+:l baby
+doubleMe 8.3       16.6
+
+    doubleUs x y = doubleMe x + doubleMe y   
+        doubleSmallNumber x = if x > 100  
+                                    then x  
+                                                                else x*2   
+                                                                else part is mandatory
+
+                                                                if statement in Haskell is that it is an expression. An expression is basically a piece of code that returns a value. 
+                                                                doubleSmallNumber' x = (if x > 100 then x else x*2) + 1 
+
+                                                                ' to either denote a strict version of a function (one that isn't lazy) or a slightly modified version of a function or a variable.
+
+                                                                conanO'Brien = "It's a-me, Conan O'Brien!"
+                                                                functions can't begin with uppercase letters
+                                                                When a function doesn't take any parameters, we usually say it's a definition (or a name).
+
+
+
+
+
+

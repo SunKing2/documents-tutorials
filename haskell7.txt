@@ -1,0 +1,150 @@
+====================
+start http://learn.hfm.io/first_steps.html
+
+length ("Hello " ++ "World!")
+
+we write
+1 :: Int
+"Hello" :: String
+
+"type error"
+
+function definition
+head = body   where head is:
+name-of-function names-of-arguments
+inc x = y + 1
+
+expression evaluation:
+the => represents a step in the progresing from an expression to the value denoted by that expression, 
+inc 2 => 2 + 1 => 3
+
+identifier: names of objects
+
+functions map input values to output values:
+inc :: Int -> Int     -- type signature
+inc x = x + 1         -- function equation
+
+optional function signatures:
+- provide documentation for other programmers
+- help the system to spot type errors
+For example, show inconsistencies between what we think a function is doing, vs what it is actually doing
+
+Nested functions:
+we can apply `inc` multiple times to a value by nesting the function application:
+
+$ cat p19.hs
+inc :: Int -> Int
+inc a  = a + 1
+main = print (inc (inc 5))
+$ runhaskell  <in.txt p19.hs
+7
+
+inc (inc 5) => inc (5 + 1) => inc 6 => 6 + 1 => 7
+
+two parameters:
+$ cat p18.hs
+--http://learn.hfm.io/first_steps.html
+average :: Float -> Float -> Float
+average a b  = (a + b) / 2.0
+main = print (average 3.0 4.0)
+$ runhaskell  <in.txt p18.hs
+3.5
+
+so we have 
+average 3.0 4.0 => (3.0 + 4.0) / 2.0  => 3.5
+
+The notation average :: Float -> Float -> Float comes about because we can view average as a function which, when applied to a single Float returns a new function from Float to Float:
+Float -> (Float -> Float), but since -> is right associative, it is expressed as:
+Float -> Float -> Float
+
+Application is left associative, so
+average 3.0 4.0 is just short hand for
+(average 3.0) 4.0
+
+curried functions: functions of multiple arguments that can be applied to their arguments one at a time; all Haskell functions of multiple arguments are curried by default.
+
+our binary functions (take exactly two arguments) can be expressed in a prefix notation:
+
+(+) 1 5            -- function in parenthesis to show prefix notation
+
+6.9 `average` 7.25 -- function in backticks to show infix notation
+
+binary functions in backticks are left associative.
+
+------20170623----
+
+Using Num instead of Float so our function is useful with Float, Int
+$ cat p21.hs
+myplus :: Float -> Float -> Float
+myplus a b = a + b
+main = print (myplus 2 3)
+$ runhaskell p21.hs
+5.0
+
+$ cat p22.hs
+--myplus :: Num -> Num -> Num
+myplus :: Num a => a -> a -> a
+myplus a b = a + b
+main = print (myplus 2 3)
+$ runhaskell p22.hs
+5
+
+notice how we had to replace a line
+myplus ::          Num -> Num -> Num  -- !!!does not work!!!!
+myplus :: Num a => a   -> a   -> a
+
+Overloaded functions have a multiplicity of type signatures.
+
+Type classes:
+We have to resort to a family of type signatures, requiring additional notation.
+We say that myplus has type a -> a -> a where a is either Int or Float, or actually any numeric type.  We denote the set of numeric types by Num and generally call such sets of types type classes. 
+
+type type of myplus is a -> a -> a
+where a ∈ Num
+
+Haskell abbreviates a ∈ Num to Num a and places it in front of the function type separated by a double arrow =>. Hence, the closed form of the type signature for myplus is
+
+myplus :: Num a => a -> a -> a
+
+Types such as Int, Float start with uppercase letter, placeholders, such as 'a' lowercase.
+This convention is enforced in Haskell. We call place holders in types, such as a above, type variables.
+
+Eq:
+In addition to Num, another important type class is Eq. It contains all those types for which the function == is defined. 
+
+2 == 2
+5.0 == 5.0
+("Hello " ++ "World!") == "Hello World!"
+
+The type of == is
+(==) :: Eq a => a -> a -> Bool
+
+Show      (another type class):
+contains all types for which the system knows how to convert them to a string representation.  
+
+show function: is the most important function of this class of values:
+
+Prelude> show 123
+"123"
+Prelude> show 1.75
+"1.75"
+Prelude> show False
+"False"
+Prelude> show "False"
+"\"False\""
+
+note that the Int value 123 and the string "123" are two fundamentally different objects, same for the boolean value False and the string "False". As we can see in the last example, if we apply show to a value which is already a string, it returns a different string.
+
+functions are not in the type class Show.
+Prelude> show min
+<interactive>:10:1:
+    No instance for (Show (a0 -> a0 -> a0))
+
+We will later see that we can extend type classes, and the compiler suggests to do so as a fix.
+
+The function show is also invoked whenever we enter an expression in a REPL;  after the expression is evaluated, the system tries to convert it to a string using the show function
+
+
+
+end http://learn.hfm.io/first_steps.html
+====================

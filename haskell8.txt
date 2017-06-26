@@ -1,0 +1,48 @@
+====================
+begin of programming in haskell chapter 3 section 6 curried functions
+
+curried functions
+
+functions can return functions as results:
+
+add' :: Int -> (Int -> Int)
+add' x y = x + y
+
+the type states that add' is a function taking  an Int as an argument, returning a function.
+
+The definition, however, states that add' takes an integer x followed by an integer y, and returns the result x + y.  
+
+More precisely, add' takes an integer x and returns a function, which in turn takes an integer y and returns the result x + y.
+
+here is a comparison to the previous add function:
+add  :: (Int, Int) -> Int
+add' :: Int -> (Int -> Int)
+
+add takes two arguments at the same time packaged as a pair, add' takes to arguments one at a time.
+
+$ cat p23.hs
+add :: (Int, Int) -> Int
+add (a, b) = a + b
+main = print (add (2, 3))
+$ runhaskell p23.hs
+5
+
+$ cat p24.hs
+add :: Int -> (Int ->Int)
+add a b = a + b
+main = print (add 2 3)
+$ runhaskell p24.hs
+5
+
+
+cabal update
+cabal install cassava
+
+
+
+
+
+end  of programming in haskell chapter 3 section 6 curried functions
+
+====================
+
