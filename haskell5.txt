@@ -1,4 +1,4 @@
-next chapter
+next chapter  (programming in haskell chapter 2 (1st edition)
 
 head, tail take 3  drop 3   length sum product reverse
 
