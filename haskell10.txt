@@ -1,3 +1,10 @@
+start haskell programming from first principles chapter 2 
+
+Prelude is a library of standard functions.  Opening GHCI automatically loads these functions.  Prelude is contained in the 
+base
+package.  https://www.stackage.org/package/base
+
+
 :l test     don't need extension
 
 $ stack ghci
@@ -79,12 +86,5 @@ infixr is right associative (^), for exampl, so
 
 finished 2.6 and exercises 
 
-2.7
 
-lines exceeding 100 columns:
-x = 10
-    * y + 5
-
-require at least one space on indentation of second line
-
-
+end  haskell programming from first principles chapter 2 
