@@ -1,0 +1,108 @@
+====================
+begin haskell programming from first principles (continued from haskell10.txt)
+
+Section 2.7
+
+
+Indent with spaces, not tabs.
+
+lines exceeding 100 columns:
+x = 10
+    * y + 5
+
+require at least one space on indentation of second line
+
+$ cat p41.hs
+module Learn where
+
+x = 10 * 5 + y
+myResult = x * 5
+y = 10
+
+$ stack ghci
+Prelude> :l p41
+[1 of 1] Compiling Learn            ( p41.hs, interpreted )
+Ok, modules loaded: Learn.
+*Learn> myResult
+300
+
+declarations should start in the first column of a line.  Confusing error messages may result with thing such as an extra space at the beginning of one of the lines.
+
+After a module, all following lines should be in column 0, not indented.
+
+2.8 Arithmetic   integer operators and functions
+7/3             2.333333333333335
+7 `div` 3       2
+rem is remainder after division
+mod is like rem but after modular division (this isn't explained in the book yet)
+quot: integral division, rounding towards zero.
+
+use div for integers, not the others
+
+mod vs rem:
+One key difference here is that, in Haskell (not in all languages), if
+one or both arguments are negative, the results of mod will have the
+same sign as the divisor, while the result of rem will have the same
+sign as the dividend:
+
+using unary - with numbers may require parenthesis, usually:
+1000 + (-9)
+-9 is semantically identical to (negate 9) because the - is translated into negate
+
+:info   -- ghci
+you can get info on operators:
+:info (+)
+
+The $ operator, fairly common in haskell, does almost nothing, here is the definition:
+  
+  f $ a = f a
+
+Prelude> :info ($)
+($) ::
+  forall (r :: GHC.Types.RuntimeRep) a (b :: TYPE r).
+  (a -> b) -> a -> b
+infixr 0 $   -- Defined in GHC.Base
+
+The ($) operator is a convenience for when you want to express
+something with fewer pairs of parentheses:
+(2^) (2 + 2)
+(2^) $ 2 + 2
+
+It’s defined as an infix operator with the lowest possible precedence.
+
+The ($) will allow everything to the right of it to be evaluated first
+and can be used to delay function application.
+
+operators (+), for example must be enclosed in parens to refer to a value.  Here it refers to the infix function without any arguments applied.
+
+However (+1) is the same function, but with one argument applied.
+
+sectioning and partially applied functions:
+Prelude> (+1) 2
+3
+
+in this case, sectioning allows you to pass around partially applied functions.  (+1) or ((1+) can be used here, as addition is commutative; the order of the arguments don't change the result.
+
+first way      second way
+(1/) 2         (/1) 2      -- 0.5   2.0
+2 - 1          (-) 2 1     -- 1 in both cases, as subtraction is a special case
+(-2) 1                     -- !!! error!!!
+
+In the last case, a value inside parenthesis with - is interpreted as an argument to a function; the function is negation (not subtraction), therefore error.
+
+You can use sectioning for subtraction, but it must be the first
+argument:
+Prelude> let x = 5
+Prelude> let y = (1 -)
+Prelude> y x
+-4
+Or you instead of (- x), you can write (subtract x):
+Prelude> (subtract 2) 3
+1
+
+-- end of section 2.9 --
+
+
+begin haskell programming from first principles (continued from haskell10.txt)
+====================
+

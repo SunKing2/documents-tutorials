@@ -1,0 +1,147 @@
+===================
+begin https://functional-programming.it.jyu.fi/master/pages/Functions.md
+
+functions
+
+function: each input is related to exactly one output.  In Haskell, each input is related to exactly one, and always the same, output.
+
+In other languages, functions such as readLine will always produce different outputs.  In Haskell, functions always return the same output for the same input.  GetLine, and others that do something else, aren't functions.
+
+Which are functions?
+false print a line to the console
+false reads a line from the console
+true  converts a pre-read line to a list of words
+true  returns the day as a string from a date
+false returns the current day
+
+Calling, or using, a function is called 'applying it'. Function application is written by writing the function name first and following that with the arguments separated by whitespace.
+
+Calculating function applications is doing that Dijkstra thingy.
+
+--2017-06-27
+
+import Data.Char
+greet person = "Hello " ++ person
+enthusiastically phrase = map toUpper phrase ++ "!"
+
+enthusiastically (greet "Jill")
+map toUpper (greet "Jill")       ++ "!"
+map toUpper ("Hello " ++ "Jill") ++ "!"
+map toUpper "Hello Jill"         ++ "!"
+"HELLO JILL" ++ "!"
+"HELLO JILL!"
+
+yay, I got that right!  It didn't make sense yesterday, but now it's obvious.
+
+What are the parameters?: 
+stuff that follows functions are interpreted as parameters
+- non-operator variable
+- literal
+- parenthesized expression
+
+NOTE!!!: any operator ends a function's parameter list.
+
+Any variables that represent functions are treated just like any other parameter.
+
+Types of functions:
+
+myfunc :: something -> something-else
+
+example:
+reverse :: [a] -> [a]     -- [a] means a list, containing whatever
+
+This looks simple, but complex functions with multiple parameter are written differently:
+
+Here are some examples:
+elem    :: Eq a =>  a -> [a] -> Bool     -- Eq a is a constraint specifying any type a
+                                         -- that can be compared for equality
+(+)     :: Num a => a -> a -> a          -- Num a is a constraint specifying type a
+                                         -- that is some kind of number
+
+A constraint is the symbol => and anything to the left of it.
+
+-Each parameter adds a single arrow -> to the type  (Multiple arrows means multiple args)
+-Return type is to the right of the last ->
+-Arguments are applied one at a time
+
+What you provde as arguments affects what is returned:
+So, if you give a function of type
+
+   Int -> Bool -> String
+
+Here are two ways of providing arguments to this:  If you provide these:
+Arguments:     Your result will be:
+Int            Bool -> String   (you'll get back a function)
+Int Bool       String
+
+So this function really takes either:
+one parameter or 
+two parameters
+
+This function can take one or two (this will be explained later w/r/t Currying:
+f :: (Int -> Bool) -> Int
+
+-Type declaration
+-Function definition
+
+How to create functions systematically:
+1. what is input, what is output; write down type declaration
+2. write down examples of how your function can be used, and what the results should be
+3. write out the function definition using these steps:
+   a. examining your examples, are there predefined functions that can help? Make note
+      of them and their types
+   b. can any predefined functions take same input type as the function you are defining?
+   c. do any predefined function return same return type that you need?
+4. test examples from step 2 and ensure your function works.  
+
+ex: count number of words in a piece of text:
+1. input is String, output is Int
+   countWords ::  String -> Int
+2a.countwords ""  should show 0
+ b.countwords "a" should show 1
+ c.countwords "hello" should show 1
+ d.countwords "a,b" should show 2
+ e.countwords "a b" should show 2
+ f.countwords "lean-to shelter" should show 2
+ g.countwords "a_b" should show 2
+ h.countwords "a a b" should show 3
+ i.countwords "a\nb\nd\ne" should produce 4
+ j.countwords "a;;b,,c..d\n\ne" should produce 5
+ k.countwords "Paddy O'Leary" should produce 2
+ l.countwords "hello, word.  How are you?" should show 5
+3. words function seems to create a list of words delimited by whitespace
+   size seems to produce a numeric size of list
+
+   so this is what I came up with, and it runs:
+
+   countWords ::  String -> Int
+   countWords someText = length (words someText)
+
+4. testing:  the following examples fail:
+   -d
+   -g
+   -j
+
+
+Here's a tidbit:
+numberOfWords str = undefined  -- we haven't written this part yet.  Used in GHCI.
+
+The text suggests that there is a step that was not documented.  During our writing of tests, we began to define what exactly what a word is.  In my case I said it was anything with contiguous [a-zA-Z'-] characters.  The text said their examples:
+
+-- | Number of words counts the number of *sequences of 
+--   characters* not containing whitespace but which are
+--  separated by arbitrary amounts of whitespace.
+
+When I wrote my code, I realized that my cases were too difficult to implement, and that there existed functions that would delimit words on white spaces.  So my code reflects this, and my test cases fail for 3 examples, and I'm satisfied with it.  Although I didn't write it down, I changed what I considered to be a word; which happens to conform to the text.
+
+:browse   -- in GHCI shows all currently available functions.  Quite long, but useable.
+
+hoogle tip:
+[String] -> Int +base    -- +base looks in package base
+Adding+base to the query. This limits the search to the 'base' package shipped with GHC.
+The packages right now that seem to be there are HUnit text time fgl base network and others
+
+-- end of Functions section, next is the Syntax
+
+end https://functional-programming.it.jyu.fi/master/pages/Functions.md
+===================
