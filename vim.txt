@@ -312,32 +312,6 @@ cis: same excluding surrounding ws.
 dap
 dip : same with paragraphs
 
-c$ = "hello world"; d = (2+3/2); 
-while(1) {
-  println("hello");
-  println("world");
-}
-c$ = "hello world"; d = (2+3/2); 
-while(1) {
-  println("hello");
-  println("world");
-}
-c$ = "hello world"; d = (2+3/2); 
-while(1) {
-  println("hello");
-  println("world");
-}
-c$ = "hello world"; d = (2+3/2); 
-while(1) {
-  println("hello");
-  println("world");
-}
-a'a"bc a?bc a!bc a/bc a@bc a#bc a%bc a^bc a&bc a*bc a(bc a)bc a-bc a+bc a=bc a;bc a:bc a,bc a<bc a>bc a.bc 
-a_bc a2bc a'bc a"bc a?bc a!bc a/bc a@bc a#bc a%bc a^bc a&bc a*bc a(bc a)bc a-bc a+bc a=bc a;bc a:bc a,bc a<bc a>bc a.bc 
-
-a2bc a'bc a"bc a?bc a!bc a/bc a@bc a#bc a%bc a^bc a&bc a*bc a(bc a)bc a-bc a+bc a=bc a;bc a:bc a,bc a<bc a>bc a.bc 
-   a' a" a? a! a/ a@ a# a% a^ a& a* a( a) a- a+ a= a; a: a, a< a> a. 
-
 
 Vim Text Objects: The Definitive Guide
 ========================

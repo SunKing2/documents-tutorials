@@ -1,6 +1,8 @@
 ====================
 start https://functional-programming.it.jyu.fi/master/pages/Expressions.md
 
+Dijkstra style notation
+
 sum [] = 0       -- Clause 1
 sum (x:xs) = x + sum xs   -- Clause 2
 
@@ -72,12 +74,6 @@ Prelude> (+) 1 (14)
 
 
 
-
-
-
-
-foldr f z []          = z
-foldr f z (x:xs)      = f x (foldr f z xs)
 
 
 
