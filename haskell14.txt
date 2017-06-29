@@ -103,6 +103,6 @@ Prelude> (subtract 2) 3
 -- end of section 2.9 --
 
 
-begin haskell programming from first principles (continued from haskell10.txt)
+end haskell programming from first principles 
 ====================
 
