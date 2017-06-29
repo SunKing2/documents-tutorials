@@ -1,0 +1,99 @@
+====================
+start learn you a haskell
+
+start section: Chapter 2 (Starting Out), Section: I'm a List Comprehension
+
+list comprehensions
+[x*2 | x <- [1,7,8]]                   [2, 14, 16]
+[mod z 3 | z <- [1..8]]                [1,2,0,1,2,0,1,2]
+
+
+A list comprehension is like a mathematical set comprehension.
+
+
+A basic comprehension: 
+S = {2 · x|x ∈ N, x ≤ 10}. 
+
+-before the | is called the output function.
+-x            is the variable
+N             is the input set
+x <= 10       is the predicate
+
+Prelude> [x*2 | x <- [1..10]]
+[2,4,6,8,10,12,14,16,18,20]
+
+Add a condition (or a predicate) to that comprehension. Predicates go after the binding parts, separated by a , Multiple predicates can also be separated by commas. 
+
+Prelude> [x | x <- [50..99], x `mod` 7 == 0, x < 71]
+[56,63,70]
+
+I tried this with [50..], but GHCi hung.  In a program it hung too. A solution from SE showed:
+takeWhile (< 5) [1..]
+
+Filtering: weeding out lists by predicates
+
+Prelude> oddLowHi xs = [if x < 10 then ("<" ++ show x) else (">" ++ show x) | x <- xs, odd x]
+Prelude> oddLowHi [7..13]
+["<7","<9",">11",">13"]
+
+Multiple lists in a list comprehension:
+Prelude> [x * y | x <- [3, 4], y <- [1,2,3]]
+[3,6,9,4,8,12]
+
+we can easily add a predicate such as
+, x * y < 8 
+
+we can use _ if we don't use the value:
+Prelude> [2 | _ <- [1,2,3,4,5]]
+[2,2,2,2,2]
+
+with this, we can write our own length' function, first determine if it will work:
+
+Prelude> sum [1 | _ <- [1,2,3,4,5]]
+5
+
+Prelude> length' myList  = sum [1 | _ <- myList]
+Prelude> length' [3,6,9]
+3
+
+remove non-word characters (where my words are letters and ' and -)
+
+Prelude> removeNonword st = [c | c <- st, c `elem`  (['A'..'Z']++['a'..'z'] ++ ['\'', '-']) ]
+Prelude> removeNonword "Paddy O'Leary"
+"PaddyO'Leary"
+
+why don't i use this to replace non word characters with a space, so i can later count words:
+
+Prelude> replaceNonword "Paddy@#%^   O'Leary??"
+"Paddy       O'Leary  "
+
+Now count them:
+Prelude> length (words (replaceNonword "Paddy@#%^   O'Leary??"))
+2
+
+This also worked perfectly with all my other test cases in haskell13.txt, for example:
+Prelude> length (words (replaceNonword "a;;b,,c..d\n\ne"))
+5
+
+Lists containing lists?  Still works!
+
+ghci> let xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]  
+ghci> [ [ x | x <- xs, even x ] | xs <- xxs]  
+[[2,2,4],[2,4,6,8],[2,4,2,6,2,6]]  
+
+I am planning on using this for a list of strings, but first test it with a single string:
+
+Prelude> removeVowels st = [ c | c <- st, c `notElem` ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']]
+Prelude> removeVowels "my dog died, my wife left me and my truck don't work no more."
+"my dg dd, my wf lft m nd my trck dn't wrk n mr."
+
+Prelude> removeVowels ["my","dog","died,","my","wife","left","me","and","my","truck","don't","work","no","more."]  -- !!! zillions of errors doesn't work!!!
+
+ok , so this is unfinished.  I might learn this later.
+
+
+end section: Chapter 2 (Starting Out), Section: I'm a List Comprehension
+   (next section tuples)
+
+end learn you a haskell
+====================
