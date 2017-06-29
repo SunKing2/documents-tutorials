@@ -1,0 +1,75 @@
+====================
+begin of programming in haskell chapter 3 section 7 polymorphic types 
+
+Polymorphic type: a type that contains one or more type variables.
+
+the length function can be used on a list of any type; Polymorphic function.
+length :: [a] -> Int
+
+Type variable: begins with lowercase letter, typically a-c..
+
+
+Class constraint written as:
+C a, where C is the name of a class and a is a type variable
+
+(+) :: Num a => a -> a -> a
+  that is, for any type a that is an instance of the class Num of numeric types, the function (+) has a type a -> a -> a.
+
+Parenthesizing an operator converts it into a curried function, see chapt 4.
+
+Overloaded: a type that contains one or more class constraints.  Also, an expression with such a type.
+
+  overloaded type:     Num a => a -> a -> a
+  overloaded function: (+)
+
+Most Prelude numeric functions are overloaded, eg negate, abs use Num a, etc.
+
+Numbers are overloaded: 3 ::Num a ⇒a means that for any numeric type a, the number 3 has type a
+
+
+end of programming in haskell chapter 3 section 8 polymorphic types 
+------------
+
+chapter 3 section 9: Basic classes
+
+A type is a collection of related values.  A class is a collection of types that support certain overloaded operations called methods.
+
+Basic classes built into the language:
+
+look at these with :type show, :type read etc.
+
+Eq: equality types, types whose values can be compared with ==  /=
+  -all basic types
+  -list, tuple whose element and component types are instances of the class.
+
+Ord: types that are instances of Eq whose values are totally (linearly) ordered, comparable using < > <= >= min max.  Strings, lists, tuples are ordered lexicographically; look at first component, then 2nd, etc.
+
+Show: showable types: values can be converted to strings.
+ All basic, plus list and tuple whose elements are able.
+
+  Prelude> show 'a'
+  "'a'"
+
+  Prelude> show ('a', False)
+  "('a',False)"
+
+Read: Those that can be String -> a
+ All basic plus list/tuple whose elements are able.
+
+
+
+Num numeric types - This class contains types that are instances of the equality class Eq and showable class Show, but in addition whose values are numeric
+
+Integral integral types - This class contains types that are instances of the numeric class Num, but in addition whose values are integers
+
+Fractional fractional types - This class contains types that are instances of the numeric class Num, but in addition whose values are non-integral
+
+
+
+
+end of programming in haskell chapter 3 section 9: Basic classes
+------------
+
+end of programming in haskell
+
+====================
