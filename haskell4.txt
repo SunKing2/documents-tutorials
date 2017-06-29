@@ -1,3 +1,11 @@
+Contains 
+1. learn haskell fast and hard  http://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/
+2. programming in haskell
+
+
+====================
+begin http://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/
+
 $ alias rh=runhaskell
 $ rh first.hs
 Hello, first.hs: Prelude.!!: index too large
@@ -37,7 +45,16 @@ main = print (f 2 3)
 louie@Jupiter:~/prog/haskell$ rh p4
 13
 
+end http://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/
+====================
 
+
+
+
+====================
+begin Programming in Haskell, 1st ed.
+
+Section 1.1
 
 $ cat p5.hs 
 double x = x + x
@@ -92,3 +109,9 @@ myQuickSort (e: xs)  = myQuickSort lower ++ [e] ++ myQuickSort upper
 main = print (myQuickSort "Hello World!")
 " !HWdellloor"
 
+
+====================
+end section 1.5
+
+end Programming in Haskell, 1st ed.
+(learn haskell fast and hard was also covered earlier in this document)

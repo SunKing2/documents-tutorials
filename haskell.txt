@@ -1,3 +1,9 @@
+====================
+begin learn you a haskell
+
+Chapter 2: Starting Out, Section Ready, set, go!
+
+
 $ ghci
 :l first.hs
 :r
@@ -57,6 +63,8 @@ parens are not used for parameters, spaces are
 myfunc (myfunc 3) means call myfunc 3,
                   then use that result for myfunc result
 
+-----------------------------
+Section: Baby's first functions
 
 $ cat > baby.hs <<EOF
 doubleMe x = x + x
@@ -65,23 +73,26 @@ $ghci
 :l baby
 doubleMe 8.3       16.6
 
-    doubleUs x y = doubleMe x + doubleMe y   
-        doubleSmallNumber x = if x > 100  
-                                    then x  
-                                                                else x*2   
-                                                                else part is mandatory
+doubleUs x y = doubleMe x + doubleMe y   
+doubleSmallNumber x = if x > 100  
+                        then x  
+                        else x*2   
+else part is mandatory
 
-                                                                if statement in Haskell is that it is an expression. An expression is basically a piece of code that returns a value. 
-                                                                doubleSmallNumber' x = (if x > 100 then x else x*2) + 1 
+if statement in Haskell is that it is an expression. An expression is basically a piece of code that returns a value. 
 
-                                                                ' to either denote a strict version of a function (one that isn't lazy) or a slightly modified version of a function or a variable.
+doubleSmallNumber' x = (if x > 100 then x else x*2) + 1 
 
-                                                                conanO'Brien = "It's a-me, Conan O'Brien!"
-                                                                functions can't begin with uppercase letters
-                                                                When a function doesn't take any parameters, we usually say it's a definition (or a name).
+We use ' to either denote a strict version of a function (one that isn't lazy) or a slightly modified version of a function or a variable.
 
+conanO'Brien = "It's a-me, Conan O'Brien!"
 
+functions can't begin with uppercase letters
 
+When a function doesn't take any parameters, we usually say it's a definition (or a name).
 
+end section: Chapter 2 (Starting Out): Section Baby's First Functions
+------------------------------
 
-
+end learn you a haskell
+====================

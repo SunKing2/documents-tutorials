@@ -1,3 +1,8 @@
+====================
+begin learn you a haskell
+
+Chapter 2 (Starting Out), Section: An Intro To Lists
+
 lists: homogenous: same type elements
 
 ghci> let
@@ -67,3 +72,9 @@ maximum, minimum, sum, product  work as expected
 
 3 `elem` [1,2,3]             True !!! usually done infix
 
+
+end section: Chapter 2 (Starting Out), Section: An Intro To Lists
+next section: Texas Ranges
+
+end learn you a haskell
+====================
