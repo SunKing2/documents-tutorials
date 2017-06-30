@@ -1,0 +1,123 @@
+====================
+begin TIEA341
+begin Syntax: https://functional-programming.it.jyu.fi/master/pages/Syntax.md
+
+Precedence
+^ + * precedence is viewed in GHCI:
+
+Prelude> :info (+)
+infixl 6 +
+
+/ and * are 7
+^ is 8
+
+principal operators are the "the last computation of the expression" that partitions the expression into subexpressions.
+
+sum debits++credits      -- principal operator is ++
+sum (debits ++ credits)  -- principal operator is the function application
+let                      -- a principal operator
+if                       -- a principal operator 
+
+principal expressions: if you put a () around them, it does not change their meaning
+
+When analyzing a complicated expression, we find the principal operator:
+
+  uncurry (/) $ foldl' (\(s,c) a -> (s + a,c + 1)) (0,0) studentGrades
+
+The $ cannot be an argument to any function, and no other syntax is present, it must be the principal operator.
+
+You can check the types of these two arguments (or see how they work) in GHCI
+
+15 + 3 + 2        - principal is the 2nd + because of infixl, between (15 + 3) and 2
+
+foldr (+) 0       - function application is left associative, so this is equivalent to
+((foldr (+)) 0)   - therefore the principal is the function application with
+                  -   arguments ;foldr (+)     and     0
+
+case lookup person addressBook of
+    Nothing -> "No such person"
+    Just a  -> "address was " ++ show a
+
+    principal is case
+    the arguments:
+        lookup person addressBook
+        Nothing
+        Just a
+        "No such person"
+        ++  expression
+
+
+Conditionals
+
+Guarded statements: used to branch according to some predicate:  (case statements are preferred)
+
+$ cat p47.hs
+module Main where
+
+area shape diameter
+  | shape == "circle" = pi * (diameter / 2) ** 2
+  | shape == "square" = diameter / sqrt 2
+  | otherwise         = -1
+
+main = do
+  print $ area "circle" 3
+  print $ area "square" 4
+
+$ runhaskell p47.hs
+7.0685834705770345
+2.82842712474619
+
+
+case expression: used to branch according to structure of data. (case expressions are preferred over guarding):
+
+
+$ cat p48.hs
+module Main where
+
+area shape diameter = case shape of
+  "circle" -> pi * (diameter / 2) ** 2
+  "square" -> diameter / sqrt 2
+  _        -> -1
+
+main = do
+ print $ area "circle" 3
+ print $ area "square" 4
+$ runhaskell p48.hs
+7.0685834705770345
+2.82842712474619
+
+guards  : true or false
+case    : strict structural equivalence
+
+case statments are expressions, so:
+  1 + case foo of ...    -- is valid
+
+
+if then else: used to branch according to some predicate:
+
+$ cat p49.hs
+module Main where
+
+area shape diameter = if shape == "circle"
+     then pi * (diameter / 2) ** 2
+     else diameter / sqrt 2
+
+main = do
+  print $ area "circle" 3
+  print $ area "square" 4
+$ runhaskell p49.hs
+7.0685834705770345
+2.82842712474619
+
+- if is least recommended way of branching
+- else in if is required
+- if uses expressions
+- if uses a true/false expression
+- avoid nested ifs to avoid complexities
+
+
+end Syntax: https://functional-programming.it.jyu.fi/master/pages/Syntax.md
+
+next files modules and declarations
+end TIEA341
+====================
