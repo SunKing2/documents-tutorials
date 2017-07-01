@@ -1,0 +1,103 @@
+====================
+begin http://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/
+
+
+f :: Num a => a -> a -> a
+
+In the type a -> a -> a, the letter a is a type variable
+here, both the arguments (2 of them) and the result are of the same type.
+This declaration method is called parametric polymorphism.
+
+Num is a type class containing types which implement a specific list of functions, and in particular (+) and (*)
+
+Num a => a -> a -> a
+means let a be a type belonging to the Num type class.  This is a function 
+from type a to a -> a
+
+Functions all have exactly one argument. To use two arguments, we can make a function that takes one argument and it returns a function with the second argument as a parameter.
+
+f 3 4  is equivalent to
+(f 3) 
+
+Lambda notation:
+
+f :: Num a => a -> a -> a
+g :: Num a => a -> a
+g = f 3
+g y ⇔ 3*3 + y*y  -- lvb probably = because = works in ghci
+
+We can also write
+g = \y -> 3 * 3 + y * y
+
+In the following:
+
+f :: Num a => a -> a -> a
+f x y = x * y + y * y
+bb :: Int
+bb = 3
+
+main = do
+print (f 3 4)      -- ok
+print (f 3 4.01)   -- ok too
+print (f bb 4.01)  !!! error!!! here is error:
+      
+No instance for (Fractional Int) arising from the literal ‘4.01’
+
+When we explicitly state the type is Int, the types conflict.
+But when we use 3 and 4.01 as arguments, the 3 seems to be converted to Fractional.
+The compiler is making a transformation from one type to another.
+That works because 3 is a valid representation both for Fractional numbers like Float and for Integer.
+
+
+2.1 Notations
+
+x ^ n  for Integral n
+x ** y for (author says any kind of number, but look at the formal definition below:)
+
+Prelude> :type (^)
+(^) :: (Num a, Integral b) => a -> b -> a
+Prelude> :type (**)
+(**) :: Floating a => a -> a -> a
+
+Integer has no limit, except for your machine's capacity
+4 ^ 103  is ok
+
+Use rational numbers by importing Data.Ratio
+
+List and range
+[10,9..1]               ⇔ [10,9,8,7,6,5,4,3,2,1]
+
+Text vs char strings:
+In real code, avoid list of char to represent text, favor Data.Text instead.
+Data.ByteString can be used to represent a stream of ASCII char.
+
+Tuples, fst, snd:
+fst(x,y)
+snd(x,y)
+fst(x,y,z)  *** error!!!  not a tuple!!!
+snd(x,y,z)  *** error!!!
+
+($) and (.)
+(.) the composition function:
+(f . g) x       --  f (g x)
+(f . g . h) x   --  f (g (h x))
+
+n-reduction:  these are all equivalent:
+square b = b ^ 2  
+square b = (^) b 2
+square b = (^2) b    - this seems weird
+square   = (^2)      - remove the b, this is called n-reduction
+
+tests:
+absolute x = if x >= 0 then x else -x
+
+or do it like:
+
+absolute x
+    | x > 0 = x
+    | otherwise = -x
+
+end of chapter 2.  Next, chapter 3: Hard Part
+
+end http://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/
+====================
