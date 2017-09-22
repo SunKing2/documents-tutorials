@@ -1,0 +1,103 @@
+====================
+Begin LazyCasts YT #3 https://www.youtube.com/watch?v=qiYVyAmPoUg
+
+pattern matching in functions:
+
+$ cat p51.hs
+module Main where
+
+getCommand "greet"   = "Hiro"
+getCommand "bye"     = "Buh-bye"
+getCommand _         = "what i doing now?"
+
+main = do
+  print $ getCommand "greet"
+  print $ getCommand "fish"
+  print $ getCommand "bye"
+$ runhaskell p51.hs
+"Hiro"
+"what i doing now?"
+"Buh-bye"
+
+Create a function to get third argument of tuple using pattern matching:
+
+Prelude> trd (_,_,a) = a
+Prelude> trd (9,8,7)
+7
+
+if a function parameter is (x:xs), when we refer to the entire list, we can use (x:xs) later in the function.
+
+However, we can use myvar@(x:xs) to define the entire list as myvar.  Then instead of using (x:xs) in the function to refer to the list, use myvar:
+
+$ cat p52.hs
+module Main where
+
+myDropWhile bool (x:xs) =
+  if bool x then (myDropWhile bool xs) else (x:xs)
+
+
+myDropWhile2 bool z@(x:xs) =
+  if bool x then (myDropWhile bool xs) else z
+
+main = do
+  print $ myDropWhile (<3) [1,2,3,4,5]
+  print $ myDropWhile2 (<3) [1,2,3,4,5]
+
+
+Something missing in this function:
+***Important, if the list should be empty, we need:
+myDropWhile _ [] = []
+
+--begin aside http://www.eqianli.tech/questions/347171/in-need-of-the-most-simple-haskell-program --
+
+ Expression = Greeting | Leaving
+
+f :: Expression -> String
+f Greeting = "Hi there!"
+f Leaving  = "Ok, bye!"
+
+main = putStrLn (f Greeting)
+
+what does this function, and this  operator do?
+ fmap greet getLine >>= putStrLn
+
+main = interact reverse 
+
+$ cat interact.hs | runhaskell interact.hs
+esrever tcaretni = niam
+
+and thus with
+
+main = interact (unwords . reverse . words)
+
+$ cat interact.hs | runhaskell interact.hs
+words) . reverse . (unwords interact = main
+
+main = interact showCharcount 
+  where showCharcount str = show (length str) ++ "\n"
+
+$ ghc --make -O2 interact.hs -o charcount
+$ echo "hello world" | ./charcount
+12
+
+In which case it makes sense to start doing a bit of poor man's benchmarking:
+
+$ time cat /usr/share/dict/words | ./charcount
+2486813
+real 0m0.096s
+
+using identy function in compiled program:
+main = interact id
+
+--end aside http://www.eqianli.tech/questions/347171/in-need-of-the-most-simple-haskell-program  --
+
+
+
+$ runhaskell p52.hs
+[3,4,5]
+[3,4,5]
+
+
+
+end LazyCasts YT #3 https://www.youtube.com/watch?v=qiYVyAmPoUg
+====================

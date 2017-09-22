@@ -44,6 +44,10 @@ $ export PYTHONDONTWRITEBYTECODE=1
 $ # remove them:
 $ find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete
 
+
+---- looks like there is nothing from Learning Python before here, but i'm not sure----
+
+p.67
 reload module:
 >>> import hello
 hello world
@@ -57,6 +61,7 @@ hello world
 >>> title
 
 
+p. 70
 >>>import threenames
 dir will return a list of strings which are the attributes of the imported module:
 >>> dir(threenames)
@@ -84,11 +89,13 @@ Help on int object:
 >>> b = u'This is a Unicode string'
 >>> a = b.encode('utf8')
 
+p. 99
 import random
 >>> random.random()
 0.7082048489415967
 >>> random.choice([1, 2, 3, 4])
 
+p.99
 strings
 are sequences of one-character strings; other, more general sequence types include
 lists and tuples, covered later.
@@ -112,6 +119,7 @@ s * 8            spamspamspamspamspamspamspamspam
 s[0] = 'z'     error,  strings are immutable
 s = 'z' + s    is ok
 
+p. 101
 Immutable: numbers, strings, and tuples are immutable; lists, dictionaries, and
 sets are not
 
@@ -123,6 +131,7 @@ L                                  ['s', 'h', ... 'y']
 L[1] = 'c'
 ''.join(L)                        scrubbery
 
+p. 102
 B = bytearray(b'spam') 
 B.extend(b'eggs')
 B                                   bytearray(b'spameggs')
@@ -145,15 +154,17 @@ s.rstrip()  # remove rh white space like trim in basic
 >>> '{0}, eggs, and {1}'.format('spam', 'SPAM!')
 'spam, eggs, and SPAM!'  // older syntax 2.6+, 3.0+
 
+p. 103
 string formatting:
 >>> '{:,.2f}'.format(296999.2567)
 '296,999.26'
 >>> '%.2f | %+05d' % (3.14159, -42)
 '3.14 | -0042'
 
+p. 104
 >>> help(S.replace)
 
-
+========== probably not in book ==========
 formatting (prettyprint) code:
 pip install autopep8
 autopep8 your_script.py    # dry-run, only print
@@ -216,7 +227,8 @@ class S(BaseHTTPRequestHandler):
         self._set_headers()
 
     def do_POST(self):
-        # Doesn't do anything with posted data
+        # Doesn't do anything with 
+        posted data
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
         self._set_headers()
@@ -239,6 +251,8 @@ if __name__ == "__main__":
         run()
 
 ====================
+https://stackoverflow.com/questions/9884132/what-exactly-are-pythons-iterator-iterable-and-iteration-protocols
+
 An iterable is an object that has an __iter__ method which returns an iterator, 
 or which defines a __getitem__ method that can take sequential indexes 
 starting from zero. 
@@ -253,6 +267,7 @@ type (it)
 <class  ‘list_iterator’>
 
 
+=========Python Quick Start https://github.com/jorditorresBCN/Quick-Start/blob/master/Python-Quick-Start.md
 >>> f = open(“test.txt”,”w”) #opens file with name of “test.txt”
 >>> f.write(“Barcelona, “)
 >>> f.write(“is the best city of the world.”)
@@ -303,7 +318,7 @@ print (i)
 18
 9
 etc
-
+=========end Python Quick Start https://github.com/jorditorresBCN/Quick-Start/blob/master/
 
 3 in (1, 2, 3)  #true
 ('Hi!',) * 4    #('Hi!', 'Hi!', 'Hi!', 'Hi!')
@@ -312,6 +327,8 @@ etc
 >>> any(lst)
 False
 
+----------
+https://stackoverflow.com/questions/19601802/how-does-all-in-python-work-on-empty-lists
 
 any vs all on list, set, tuple:
 my_list = []
@@ -336,8 +353,11 @@ def any(list, condition):
 
 That is to say, all is innocent until proven guilty, and any is guilty until proven innocent.
 
+end https://stackoverflow.com/questions/19601802/how-does-all-in-python-work-on-empty-lists
+----------
 
-
+----
+start https://stackoverflow.com/questions/30147428/is-it-wrong-to-use-the-operator-when-comparing-to-an-empty-list
 What is the Pythonic way to check for an empty set?
 For sequences, (strings, lists, tuples), use the fact that empty sequences are false.
 
@@ -347,7 +367,9 @@ Yes: if not seq:
 No: if len(seq):
     if not len(seq):
 
+------ end SO
 
+-- start Python's built-in functions http://archive.oreilly.com/oreillyschool/courses/Python1/Python1-10.html
 dict(arguments)
 >>> {'number': 3, 'string': 'abc', 'numbers': [3, 4, 5]}
 {'numbers': [3, 4, 5], 'number': 3, 'string': 'abc'}
@@ -380,7 +402,12 @@ create dict using dict() and zip() from 2 lists in one easy step:
 >>> dict(zip(lst_1, lst_3))
 {'Python': 10, 'is': 9, 'fun': 8}
 
+-- end Python's built-in functions http://archive.oreilly.com/oreillyschool/courses/
 
+
+==start learning python 
+
+p. 107
 bytearray string type we met earlier, which is es-
 sentially a bytes string (a str in 2.X) that supports most of the list object’s in-place
 mutable change operations.
@@ -408,8 +435,10 @@ Python world')
 [123, 'spam', 'NI'] # Shrinking: delete an item in the middle
 # "del L[2]" deletes from a list too
 
+p. 110
 Other list methods insert an item at an arbitrary position
 ( insert ), remove a given item by value ( remove )
+==end learning python 
 
 
 num = 0xdd
@@ -429,7 +458,7 @@ mylist = list(range(0,10)  # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 >>> d
 {1: 'Blah!', 'name': 'Joe', 'number': 42}
 
-
+======start Notes tutorials on python: https://people.rit.edu/blbgse/pythonNotes/os.html
 >>> import os
 >>> os.system('ls ~/prog')
 
@@ -446,6 +475,8 @@ mylist = list(range(0,10)  # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 >>> os.path.split('/Users/somename/somedirectory/pythoniscool.txt')
 ('/Users/somename/somedirectory', 'pythoniscool.txt')
+
+======end Notes tutorials on python: https://people.rit.edu/blbgse/pythonNotes/os.html
 
 
 ===============
@@ -517,6 +548,8 @@ behave like static local function variables in the C language
 
 Empty except clauses in try statements may catch more than you expect. An except clause in a try that names no exception catches every exception -- even things like genuine programming errors, and the sys.exit() call.
 
+
+https://bobbelderbos.com/2016/06/python-tips/
 6. Use re.compile
 
 If you are going to check a regular expression in a loop, don’t do this:
@@ -549,4 +582,2139 @@ list comprehensions to get list of all methods of
 str, one per line:
 print("\n".join( [i for i in dir(str) if i[0] != '_' ]))
 
+====================
+==================== begin Learning Python: Modules p671 ====================
+cross-file module linking is not resolved until such import statements are executed at runtime.
+import statment the module name serves 2 purposes:
+- identifies external file
+- becomes variable name
+
+import runs the def statements in imported file
+
+Standard library (see reference manual) examples:
+-os interfaces
+-object persistence
+-text pattern matching
+-network and internet scripting
+-GUI construction
+-ex: timeit, sys, os
+
+import does the following the FIRST TIME, later imports fetch the previously loaded mod, ble named , sys.mod
+ules: 
+-find the module file using standard module search path
+-compile it (if need be): checks timestamp, version looking in pycache directory. (no source, just pyc files work too)
+-run the module's code to build objects: ALL STATEMENTS in imported file are run in sequence!
+
+aside:(calling program usually generates no pyc, but it can, with __name__ attribute and __main__ )
+
+You can force an import with an imp.reload call
+
+Byte code:
+- even if it can't compile and save the compiled file, it runs the byte code from memory.
+- myprogram.py will get compiled to __pycache__/myprogram.cpython-36.pyc below the source directory
+- importing with different Python version creates different pyc
+
+Module import search path searches in this order; this becomes the mutable list sys.path:
+- The home directory of the program: this is the directory of the script, or if interactive, the current working directory
+- PYTHONPATH directories searched left to right (if set)
+- Standard library directories
+- The contents of any .pth files (if present)
+- The site-packages home of third-party extensions
+
+.pth files are advanced, and contain one directory per line, and are often present in third party libraries which install a .pth file in the site-packages directory.  usr/local/lib/python3.3/site-packages or /usr/local/lib/site-python  A .pth can also be placed at the top level of the Python install directory.
+
+Python will append the .pth files in order to a list which consists of PYTHONPATH, standard libraries, and filters out duplicates.  After that the list gets appended with site-packages.
+
+site-packages is where 3rd party extensions are installed (often by distutils), and allows clients to import modules since stuff installed here appears on the import search path automatically.
+
+sys.path:  
+- can be examined
+- can be modified (web software does this), you can also use sys.path.append, sys.path.insert
+
+import statment omits file extensions, they could really point to:
+- b.py (source code)
+- b.pyc (byte code)
+- b.pyo (optimized byte code) compiled with -O for a small 5% speed boost
+- ./b directory for package imports
+- b.so  a compiled (C++) extension module, dynamically linked
+- compiled built-in module (C), statically linked
+- a zip file that gets extracted when imported
+- in memory image, for frozen executables
+- (Jython), a java class
+- (IronPython), a .NET component
+
+--page 683
+
+- import hooks can modify import behavior
+- standard library does this to extract a zip file
+- (importlib.import_module is a preferred over __import__ for direct calls to import by name string)
+
+distutils:
+
+-So far we've been describing libraries you create; 
+-Third party extensions use distutils to automatically install them-
+selves, so no path configuration is required to use their code.
+-A setup.py imports distutils, placing stuff in a directory that is automatically in the search path, usually site-packages
+-distutils can automatically compile c extensions
+-eggs (with dependency checking) is an alternative
+-distutils2 may deprecate distutils????
+
+A namespace is a self-contained package of variables, which are known as the
+attributes of the namespace object. A module’s namespace contains all the names
+assigned by code at the top level of the module file (i.e., not nested in def or
+class statements)you can create a module file named if.py, but you cannot import
+it because if is a reserved word—when you try to run import if , you’ll get a syntax
+error. In fact, both the names of module files and the names of directories used in
+package imports (discussed in the next chapter) must conform to the rules for variable
+names. Technically, a module’s global scope morphs into the module
+object’s attributes namespace. A module’s namespace may also be altered by as-
+signments from other files that import it, though this is generally frowned upon
+
+CHAPTER 23
+
+module file named if.py, but you cannot import
+it because if is a reserved word—when you try to run import if , you’ll get a syntax
+error. In fact, both the names of module files and the names of directories used in
+package imports (discussed in the next chapter) must conform to the rules for variable
+names
+
+Python maps the internal module name to an external
+filename by adding a directory path from the module search path to the front
+<directory>\M.<extension>
+
+extensiothey are accessed with import statements, and they provide
+functions and objects as module attributes  in an external language such as C, C++
+accessed with import statements, and they provide
+functions and objects as module attributes.
+
+
+import - fetches whole module
+from - fetches (or copies) specific comma-separated names out of the module
+
+import module1  // module1.printer('xxx')
+from module1 import printer // printer('yyy')  // impossible: module1.printer('x')
+from module1 import * // printer('zzz')
+
+from
+-must use the final name, it can't access the name of the module
+-does full 3 step procedure that is done with import
+-plus it adds one or more names (not objects) out of the file.
+-The entire file is loaded, but you are given more direct access to its parts.
+-essentially collapses one module’s namespace into another
+-must be listed at top of file
+
+Best practices: all imports are at top of file
+
+p 690
+
+
+==================== end   Learning Python: Modules p690 ====================
+
+========== start diversion ppt Lecture notes Sherill Group ====
+
+print("fatal error", file=sys.stderr) # replaces old print x >> myfile, message
+
+
+type
+>>> i = 10/3
+>>> i
+3.3333333333333335
+>>> type (i)
+<class 'float'>
+>>> j = 10 // 3
+>>> type(j)
+<class 'int'>
+
+variable names:
+__bla__ (2 underscores): system defined names
+__bla                  : local to a class
+_                      : results of last expression
+
+
+>>> bool(1)
+True
+>>> bool(0)
+False
+
+>>> "r"+"at"*3
+'ratatat'
+
+========== end   diversion ppt Lecture notes Sherill Group ====
+
+
+========== begin what's new in python 3.0 ==================
+
+print("There are <", 2**32, "> possibilities!", sep="") # removes spaces
+zip() returns iterator
+range() behaves like old xrange()
+dict.keys(), .items(), .values() return views, not lists
+map() and filter() return iterators, not lists
+builtin.sorted(), list.sort() now use key argument for comparison functions
+there is no long, only integers, and there is no limit to how big
+
+========== end   what's new in python 3.0 ==================
+
+
+========== start some list comprehension practice ==================
+>>> lis
+['aqt', 'qat', '67', '117000C', '', 'iqs', 'qis', '32', '115000', 'C', '']
+>>> lis3 = [int(rating)  for rating in lis[2::5]]
+>>> lis3
+[67, 32]
+>>> min(int(rating) for rating in lis[2::5])
+32
+========== end   some list comprehension practice ==================
+
+==================== begin   Learning Python: Modules p691 ====================
+
+like def , the import and from are implicit assignments:
+• import assigns an entire module object to a single name.
+• from assigns one or more names to objects of the same names in another module.
+
+this import stuff does some kind of funky copy similar to function argument passing: 
+-names copied with a from become references to shared objects; as with function arguments
+-(Not terribly true) reassigning a copied name has no effect on the module from which it was copied
+-changing a shared NONmutable does not change it in the module
+-changing a shared mutable object through a copied name can also change it in the module from which it was imported. 
+
+from small import x, y
+x = 42
+y [0] = 42  # 
+
+import small
+
+print(small.x) # 3
+print(small.y) # [42, 2]
+
+small.x = 42 # this is the only way to change a global name in another file, by using import.
+
+Note the change in the beginning of the example changes an object, not a name, and the name in both modules references the same, changed object.
+
+A from compies names from one module to another.  The from statement creates new variables in the importer, which initially refer to objects of the same names in the imported file. Only the names are copied out, though, not the objects they reference, and not the name of the module itself.
+
+import from
+-may make the location of a variable implicit and obscure.  Some recommend using only mymodule.x with import.
+-can't tell which module a name came from 
+-may corrupt namespace in this module
+-may SILENTLY OVERWRITE local variables (for example local functions may be overwritten)
+-reload may still have imported names might reference prior versions of objects.
+-from a import * collapses one namespace into another, and so defeats the namespace partitioning feature of modules.
+-suggested to limit the from * form to just one import per file. 
+
+import as (works in both import and from)
+from M import func as mfunc    # Rename uniquely with "as"
+from N import func as nfunc
+mfunc(); nfunc()               # Calls one or the other
+
+
+Attributes (names in modules):
+-names that live in a module are called its attributes. 
+-every name that is assigned a value at the top level of a module file becomes an attribute of that module.
+-top level assignments create module attributes, storing assigned names in the module's namespace
+-Module namespaces can be accessed with 
+  __dict__  attribute of the module
+  dir(M) (sorted)
+
+the module’s global scope becomes an attribute dictionary of a module object after the module has been loaded, and lives on after the import, providing a source of tools for importers.  (unlike the short-lived scope of functions)
+
+# currentmodule.py
+import sys
+print currentmodule.sys
+<module 'sys' (built-in)>
+# we can also print variables of this module, and functions 
+print currentmodule.myvariable
+print currentmodule.myfunction
+
+__dict__ stuff:  (names are dictionary keys)
+>>> list(module2.__dict__.keys())
+['__loader__', 'func', 'klass', '__builtins__', '__doc__', '__file__', '__name__',
+'name', '__package__', 'sys', '__initializing__', '__cached__']
+
+#filter out the __ stuff
+>>> list(name for name in module2.__dict__.keys() if not name.startswith('__'))
+['func', 'klass', 'name', 'sys']
+>>> list(name for name in module2.__dict__ if not name.startswith('__'))
+['func', 'sys', 'name', 'klass']
+
+This time we’re filtering with a generator instead of a list comprehension, and can omit the .keys() because dictionaries generate their keys automatically though implicitly.
+
+>>> module2.name, module2.__dict__['name']
+(42, 42)
+
+
+Functions can never see names in other functions, unless they are physically enclosing.
+
+Module code can never see names in other modules, unless they are explicitly imported.
+
+==================== end   Learning Python: Modules p700 ====================
+
+
+==================== start automate : p 55  ====================
+
+>>> import random, sys, os, math
+>>> for i in range(25):
+...     a = random.randint(1, 10)
+...     print(i, a)
+...     if a > 7 : sys.exit()
+... 
+0 4
+1 2
+2 8
+
+for i in range(0, 10, 2):
+for i in range(5, -1, -1):
+
+
+p 65
+None is the only value of the NoneType data type.
+
+>>> spam = print('Hello')
+Hello
+>>> print(spam)
+None
+
+None is returned when there is no return statement, as well as by the following:
+return  # no explicit return value
+
+Keyword arguments:
+print(*objects, sep=’ ‘, end=’\n’, file=sys.stdout, flush=False)
+sep, end, file and flush, if present, must be given as keyword arguments.
+
+>>> print('cats', 'dogs', 'mice', end="!", sep=',') ; print("YIKES!!")
+cats,dogs,mice!YIKES!!
+
+
+
+
+
+==================== end   automate : p xx  ====================
+
+======== start python.org/library/functions ======
+
+filter()
+>>> words = ['a', 'ant', 'axe', 'bat']
+
+>>> list(filter(lambda x: x[0] == 'a', words))
+['a', 'ant', 'axe']
+
+Note that filter(function, iterable) is equivalent to the generator expression (item for item in iterable if function(item))
+!!!! why doesn't this work????!!!!
+>>> list((x for x in words if lambda x: x[0] == 'a'))
+['a', 'ant', 'axe', 'bat']
+
+As a list comprehension:
+>>> [x for x in words if x[0] == 'a']
+['a', 'ant', 'axe']
+
+------start 4.7. Text Sequence Type — str----
+>>> d = "ab" "cd"
+>>> d
+'abcd'
+>>> type(d)
+<class 'str'>
+>>> ("ab" "cd")[-1]
+'d'
+
+str(object) returns object.__str__(), and repr(object) if it doesn't exist
+
+str.count number of occurrences of substring in string
+str.casefold()  is a unicode lowercase
+str.endswith
+str.format_map(some dict) is new 3.2
+str.index returns ValueError but str.find does not
+str.isalpha, isalnum, isdecimal, isdigit, isidentifier, islower, isnumeric, isspace
+str.lower, str.upper
+str.lstrip(set of chars) removes any of and all from the set from the string's left
+str.lstrip() defaults to removing leading spaces
+str.strip, str.lstrip('xjzw') removes www from websites
+str.partition returns a 3-tuple
+str.replace(old, new, count)
+str.rfind, rindex, rpartition, rsplit, rstrip,
+str.splitlines
+str.swapcase
+str.translate(table) each char is translated thru mapping in table
+
+
+------done 4.7.1 Text Sequence Type — str----
+
+A million ways to convert a string into an list:
+>>> cword = 'change'
+>>> list(cword)
+['c', 'h', 'a', 'n', 'g', 'e']
+>>> [c for c in cword]
+['c', 'h', 'a', 'n', 'g', 'e']
+>>> lis = []; lis += cword; lis
+['c', 'h', 'a', 'n', 'g', 'e']
+>>> list(map(lambda c: c, cword))
+['c', 'h', 'a', 'n', 'g', 'e']
+>>> [*cword]
+['c', 'h', 'a', 'n', 'g', 'e']
+>>> [cword[i] for i in range(len(cword))]
+['c', 'h', 'a', 'n', 'g', 'e']
+
+
+
+4.6.1, common sequence operations:
+4.6.3  Mutable sequence types:
+del s[i:j]
+>>> clist = list('change'); clist; del clist[1:len(clist)-1];clist
+['c', 'h', 'a', 'n', 'g', 'e']
+['c', 'e']
+
+s.clear()  # same as del(s[:])
+s.copy()   # same as s[:]
+
+list('change').sort()
+
+======== end python.org/library/functions ======
+
+-----
+http://www.cs.put.poznan.pl/csobaniec/software/python/py-qrc.html:
+s = r"c:\dir\new"                     # raw (== 'c:\\dir\\new')
+lis[1:4] = [7,8]                        # substitute
+
+>>> clist = list('change'); clist; clist[2:5] = ['l', 'o']; clist
+['c', 'h', 'a', 'n', 'g', 'e']
+['c', 'h', 'l', 'o', 'e']
+
+dictionaries:
+D = dict(f1=10, f2=20)
+
+keys = ('a', 'b', 'c')
+D = dict.fromkeys(keys)               # new dict with empty values
+
+for k in D: print(k)                  # keys
+for v in D.values(): print(v)         # values
+for k,v in D.items():
+
+
+D = {}
+D[(1,8,5)] = 100                      # 3D sparse matrix
+D.get((1,8,5))
+D.get((1,1,1), -1)
+
+
+set
+S = {1,3,5}
+L = [1, 3, 1, 5, 3]
+S = set(L) 
+
+loop:
+L = [1, 3, 5]
+for i,v in enumerate(L):              # (index,value)
+for x,y in zip(L1,L2):                # returns tuples
+
+def foo(arg1, *arg2, **arg3)
+arg2 is list
+arg3 is dictionar of named args
+
+func2(*mylist)  // what does this do?  I think it applies each list item as an arg
+func3(**mydict) // what does this do?, i think it uses named args and passes them to func3
+
+for line in open("test.txt"): print(line, end="")
+
+L = open("test.txt").readlines()      # returns a list of lines
+
+string buffers and stdout
+from StringIO import StringIO
+buf = StringIO()
+sys.stdout = buf
+print("Hello")
+x = buf.getvalue()
+
+
+exceptions
+try:
+    raise TypeError("arg")
+except (RuntimeError, NameError):
+    pass                              # empty instruction (NOP)
+except:
+    info = sys.exc_info()
+    print(info[0])
+    print(info[1])
+    traceback.print_tb(info[2])
+    raise
+else:
+    ...                               # no exception but before finally
+finally:                              # on the way out
+    ...                               # unhandled exc, release resources
+
+
+
+class Person:
+    ID = 0                            # static variable
+    def __str__(self):
+        # some stuff to return a string    
+
+    so in a method, we can say ID += 1
+
+this is why my variables were not visible as fields of the class!!!
+
+class Worker(Person):
+    def __init__(self, name, position, age=0):
+        super().__init__(name, age)
+        self.position = position
+        
+
+object persistence
+
+pickling:
+f = open("myobj.dat", "w")
+pickle.dump(x, f)
+f = open("myobj.dat", "r")
+x = pickle.load(f)
+
+db = shelve.open("file")
+db["x"] = y
+db.close()
+
+urls
+conn = urllib.urlopen("http://localhost:8080")
+reply = conn.read()
+
+directories
+for (dir, subdirs, files) in os.walk("/tmp"):
+    for f in files: print(f)
+
+
+parsing paths:
+os.path.split("/usr/bin/go.sh")       # ('/usr/bin', 'go.sh')
+os.path.join("/usr/bin", "go.sh")     # '/usr/bin/go.sh'
+os.path.splitext("/usr/bin/go.sh")    # ('/usr/bin/go', '.sh')
+os.path.abspath("../bin/go.sh")       # '/usr/bin/go.sh'
+os.path.isfile("go.sh")
+
+executing os command, capturing output:
+os.popen("ps ax").readlines()
+
+os.listdir("/usr/local")  # returns list of files
+os.glob("*.txt")          # returns list of files in current directory with .txt
+os.curdir                 # returns '.'
+
+
+env vars
+PYTHONPATH
+PYTHONSTARTUP
+os.environ.get("PYTHONSTARTUP")
+
+
+sys.argv      sys.stdin       sys.stdout      sys.stderr
+sys.path      sys.platform    sys.version
+
+
+
+
+
+end http://www.cs.put.poznan.pl/csobaniec/software/python/py-qrc.html:
+-------
+
+-------start learn 90% python in 90 minutes 
+
+dir('hello')  # shows methods available to str
+__xxx__ is called dunder (double under)  ie, special/magic methods
+
+>>> help ("hello".startswith)
+>>> help (str.format)
+>>> type (())
+<class 'tuple'>
+>>> type ({})
+<class 'dict'>
+
+>>> dir([])  # dir ({}) seems to be a dictionary, dir(())    be a tuple
+>>> dir({1,2,3}) seems to be the way you must do it for a set
+
+help([].append)
+
+>>> [1, 'hi'].sort()
+TypeError: '<' not supported between instances of 'str' and 'int'
+
+>>> dic2 = {'aah': 'aah aha', 'aab': 'aba baa'}
+>>> 'aah' in dic2
+True
+>>> 'aaw' in dic2  # uses __contains__, if available, otherwise __iter__
+False
+
+>>> del dic2['aah']
+>>> dic2
+{'aab': 'aba baa'}
+
+
+>>> def f(x):
+...     """this is my groovy docstring"""
+...     return
+... 
+>>> help(f)
+f(x)
+    this is my groovy docstring
+>>> f.__doc__
+'this is my groovy docstring'
+
+lowercase
+underscores_between_words
+
+half-open intervals:
+python follows half-open interval with range and slices (start, end)
+- end-start = length
+
+loops where you need index:
+
+>>> for index, value in enumerate([3, 5, 1]):
+...     print(index, value)
+... 
+0 3
+1 5
+2 1
+
+negative indexing on a list:
+reinterpret [-x] as [len(lis0 - x]
+
+reverse a list in this weird way:
+>>> hw = 'hello world'
+>>> hw[::-1]
+'dlrow olleh'
+
+>>> fin = open('/home/louie/package.lst')
+>>> for line in fin:
+...     print (line)  # seems to include the \n
+... 
+t0u2uLV
+
+z7eoCeB0
+>>> fin.close()
+
+>>> fout = open('bar.txt', 'w')
+>>> fout.write('hello')
+5
+>>> fout.write('worlds!')
+7
+>>> fout.close()
+>>> fin = open('bar.txt')
+>>> for line in fin:
+...     print(line)
+... 
+helloworlds!
+>>> fin.close()
+
+obviously it seems weird that  a read to an existing file adds an extra \n,
+and even weirder that a write to a new file, even though it doesn't add any \n,
+the output doesn't add that extra \n
+
+with open('bar.txt') as fin:  # v2.5 does implicit close
+    for line in fin:
+        print(line)
+
+
+
+-------end   start learn 90% python in 90 minutes ----
+
+============== start Learn Python3 in Y Minutes ===================
+---- start https://learnxinyminutes.com/docs/python3/
+
+
+# Note using Bool operators with ints
+0 and 2     # => 0
+-5 or 0     # => -5
+0 == False  # => True
+2 == True   # => False
+1 == True   # => True
+-5 != False != True #=> True
+
+my notes on that (see comparisons can be chained, below):
+>>> 5 == 2+3 == 1+4
+True
+>>> 5 == 2+3 == 1+3
+False
+
+# it looks like if it results in false, returns 0
+# otherwise:
+# or  : returns the first true value
+# and : returns the 2nd
+
+Mark Lutz: Pocket Reference:
+X or Y If X is false then Y ; else, X
+X and Y If X is false then X ; else, Y
+
+>>> print (-5 or 3, 3 or -5)
+-5 3
+>>> print (-5 and 3, 3 and -5)
+3 -5
+
+# Comparisons can be chained!
+1 < 2 < 3  # => True
+2 < 3 < 2  # => False
+
+# (is vs. ==) is checks if two variables refer to the same object, but == checks
+# if the objects pointed to have the same values.
+a = [1, 2, 3, 4]  # Point a at a new list, [1, 2, 3, 4]
+b = a             # Point b at what a is pointing to
+b is a            # => True, a and b refer to the same object
+
+>>> a = [1, 2, 3, 4]
+>>> b = [1, 2, 3, 4]
+>>> print (a == b, a is b)
+True False
+
+
+.format can use
+{}
+{0}
+{name1}
+
+>>> print('a {} in {}'.format('stitch', 'time'))
+a stitch in time
+>>> from string import Template
+>>> Template('a $noun1 in $noun2').substitute(noun1 = 'stitch', noun2 = 'time')
+'a stitch in time'
+
+>>> print('a {0} in {1} is a {0}'.format('stitch', 'time'))
+a stitch in time is a stitch
+
+None
+>>> a = None; a is None
+True
+
+>>> fakevariable == None  # exception: NameError
+NameError: name 'fakevariable' is not defined
+
+you can add lists
+>>> ['a', 'b'] + ['c', 'd']
+['a', 'b', 'c', 'd']
+
+>>> type((1))
+<class 'int'>
+>>> type((1,)) # tuple of length 1 requires comma
+<class 'tuple'>
+>>> type (())
+<class 'tuple'>
+
+unpack tuples or lists into variables
+a, b, c = (1, 2, 3)
+a, *b, c = (1, 2, 3, 4)  a = 1, b = [2,3], c = 4
+e, d = d, e  # can swap variables without a tmp
+
+dictionary keys have to be immutable types, to ensure a constant hash 
+for example, a tuple
+
+mydict['zqx']     # KeyError
+mydict.get('zqx') # returns None  # can also use a default 2nd argument
+
+# "setdefault()" inserts into a dictionary only if the given key isn't present
+filled_dict.setdefault("five", 5)  # filled_dict["five"] is set to 5
+filled_dict.setdefault("five", 6)  # filled_dict["five"] is still 5
+
+filled_dict.update({"four":4})   # alternate way of updating
+
+# From Python 3.5 you can also use the additional unpacking options
+{'a': 1, **{'b': 2}}  # => {'a': 1, 'b': 2}
+{'a': 1, **{'a': 2}}  # => {'a': 2}
+
+unpacking to a function:
+def f(a,b,c,d): # can be called with:
+f(**{'a': 1, 'c': 3}, **{'b': 2, 'd': 4})
+
+Set:
+-elements of a set have to be immutable
+
+>>> odds = {1,3,5,7,9}
+>>> evens = {0,2,4,6,8}
+>>> both1 = odds + evens  # ERROR!!!
+TypeError: unsupported operand type(s) for +: 'set' and 'set'
+
+set operations
+&  intersection of lvalue set and rvalue set
+|  union of lvalue set and rvalue set
+-  difference
+^  symmetric difference
+>= lvalue is superset of rvalue
+<= lvalue is subset of rvalue
+in 'a' in myset
+
+exceptions:
+
+except (TypeError, NameError):
+except IndexError as e:
+
+with (such as we've seen with open) can be used in place of try/finally to clean up resources.
+
+>>> mydict = filled_dict
+>>> mykeys = mydict.keys()
+>>> type(mykeys)  
+<class 'dict_keys'>  # this is an iterable
+
+We can make an iterable into an iterator
+>>> myiter = iter(mykeys)
+>>> type(myiter)
+<class 'dict_keyiterator'>
+
+An iterator remembers the state as we traverse thru it:
+>>> next(myiter)
+'one'
+>>> next(myiter)
+'two'
+
+>>> list(myiter)  # get all remaining items:
+['three']
+
+warning! list(myiter) seems to consume the iterator, so we can't do any further 
+>>>next(myiter)
+!!!!exception StopIteration
+
+functions:
+
+variable number of arguments:
+>>> def f7(*args):
+...     return sum(args)
+... 
+>>> f7(2,1,3)
+6
+>>> f7(5,3)
+8
+
+variable number of named arguments:
+>>> def fk(**kwargs):
+...     return kwargs
+
+>>> fk(big="foot", loch="ness")
+{'big': 'foot', 'loch': 'ness'}
+
+>>> fk(shuttle="discovery", song="Yesterday", year=2001)
+{'shuttle': 'discovery', 'song': 'Yesterday', 'year': 2001}
+
+
+expanding tuples and dictionaries to use as arguments:
+
+>>> args = (1,2,3,4)
+>>> f7(*args)
+10
+
+>>> kwargs = {"a": 3, "b": 4}
+>>> fk(**kwargs)
+{'a': 3, 'b': 4}
+
+
+return y,x  # returns a tuple, parenthesis are optional
+
+# Python has first class functions
+def create_adder(x):
+    def adder(y):
+        return x + y
+    return adder
+
+
+import alias name:
+>>> import math as m
+>>> m.sqrt(81)
+9.0
+
+
+    # A class method is shared among all instances
+    # They are called with the calling class as the first argument
+    @classmethod
+    def get_species(cls):
+        return cls.species
+
+    # A static method is called without a class or instance reference
+    @staticmethod
+    def grunt():
+        return "*grunt*"
+
+    # A property is just like a getter.
+    # It turns the method age() into an read-only attribute of the same name.
+    # There's no need to write trivial getters and setters in Python, though.
+    @property
+    def age(self):
+        return self._age
+
+    # This allows the property to be set
+    @age.setter
+    def age(self, age):
+        self._age = age
+
+
+there's also
+@age.deleter   # allows property to be deleted
+
+>>> class Human:
+...     @property
+...     def age(self):
+...         return 21
+... 
+>>> h = Human()
+>>> h.age
+21
+
+>>> h.age = 22
+AttributeError: can't set attribute
+
+
+h.get_age()
+
+
+calling:
+class method:  MyClass.my_class_method()
+               myinstance.my_class_method()
+static method: MyClass.my_static_method()
+               myinstance.my_static_method !!!! TypeError!
+
+
+multiple inheritance:
+class Batman(Human, Bat):
+	def __init__(self, *args, **kwargs):
+        Human.__init__(self, 'anonymous', *args, **kwargs)
+        Bat.__init__(self, *args, can_fly=False, **kwargs)	
+
+
+# Generators help you make lazy code.
+def double_numbers(iterable):
+    for i in iterable:
+        yield i + i
+
+for i in double_numbers(range(1, 900000000)):  # `range` is a generator.
+    print(i)
+    if i >= 30:
+        break
+        
+
+# Just as you can create a list comprehension, you can create generator
+# comprehensions as well.
+values = (-x for x in [1,2,3,4,5])
+for x in values:
+    print(x)  # prints -1 -2 -3 -4 -5 to console/terminal
+
+# You can also cast a generator comprehension directly to a list.
+values = (-x for x in [1,2,3,4,5])
+gen_to_list = list(values)
+print(gen_to_list)  # => [-1, -2, -3, -4, -5]
+
+# Decorators
+# In this example `beg` wraps `say`. If say_please is True then it
+# will change the returned message.
+from functools import wraps
+
+
+def beg(target_function):
+    @wraps(target_function)
+    def wrapper(*args, **kwargs):
+        msg, say_please = target_function(*args, **kwargs)
+        if say_please:
+            return "{} {}".format(msg, "Please! I am poor :(")
+        return msg
+
+    return wrapper
+
+
+@beg
+def say(say_please=False):
+    msg = "Can you buy me a beer?"
+    return msg, say_please
+
+
+print(say())                 # Can you buy me a beer?
+print(say(say_please=True))  # Can you buy me a beer? Please! I am poor :(
+
+----done https://learnxinyminutes.com/docs/python3/
+============== end Learn Python3 in Y Minutes ===================
+
+
+--- begin A crash course in Python for Scientists ---
+
+If you want to group different data types together into a composite data object, it's best to use tuples (over lists)
+
+
+There's also a convenient way to create dictionaries without having to quote the keys.
+
+dict(Rick=46,Bob=86,Fred=20)
+
+
+
+--- end A crash course in Python for Scientists ---
+
+==========start lp p 109 =============
+
+lists
+
+addition +
+>>> [1,2,3] + [4,5]
+[1, 2, 3, 4, 5]
+
+multiplication *
+>>> ['a', 'b', 'c'] * 2
+['a', 'b', 'c', 'a', 'b', 'c']
+
+shrink list, remove item
+>>> a = [1,2,3,4]
+>>> b = a.pop(2)
+>>> print(a,b)
+[1, 2, 4] 3
+
+insert: at a position
+remove: an item by value
+extend: add multiple items at the end
+
+assigning past end causes IndexError, use extend instead
+a[11] = 2  
+
+
+A list comprehension in parentheses creates a generator:
+>>> let = (c.upper() for c in list('hello'))
+>>> next(let)
+'H'
+>>> next(let)
+'E'
+
+map can do similar work:
+>>> list(map(lambda x: x.upper(), list('hello')))
+['H', 'E', 'L', 'L', 'O']
+
+note that list(map(upper, list('hello'))) did not work
+
+comprehension create sets, and dictionary too:
+
+set
+>>> {c.upper() for c in list('hello')}  # pretty cool way to find unique letters
+{'O', 'H', 'L', 'E'}
+
+dictionary
+>>> {c : ord(c) for c in list('hello')}
+{'h': 104, 'e': 101, 'l': 108, 'o': 111}
+
+I see these can be abbreviated to:
+
+>>> {c.upper() for c in 'hello'}
+{'O', 'H', 'L', 'E'}
+
+>>> {c : ord(c) for c in 'hello'}
+{'h': 104, 'e': 101, 'l': 108, 'o': 111}
+
+p.113
+
+dictionary
+incrementing a value
+D['quantity'] += 1
+
+bob2 = dict(zip(['name', 'job', 'age'], ['Bob', 'dev', 40]))  
+
+>>> rec = {'name': {'first': 'Bob', 'last': 'Smith'},
+           'jobs': ['dev', 'mgr'],
+           'age':  40.5}
+           
+nesting (data structures)
+>>> rec['name']['last']                 # Index the nested dictionary
+'Smith'
+
+>>> rec['jobs'].append('janitor')       # Expand Bob's job description in place
+
+some weird postfix type if here????
+default dictionary value using if:
+value = D['x'] if 'x' in D else 0 
+
+sort using sorted not sort, to be more concise:
+
+>>> D = {'a': 1, 'b': 2, 'c': 3}
+>>> for key in sorted(D):
+...         print(key, '=>', D[key])
+... 
+a => 1
+b => 2
+c => 3
+
+Iterable
+objects are considered iterable because they support the iteration protocol—they respond to the iter call with an object that advances in response to next calls and raises an exception when finished producing values.
+
+perhaps the following (I'm guessing) seem to work on iterable objects
+- for loop
+- list comprehension
+- generator
+
+a generator's values can be produced as requested usually thru iteration tools.
+
+file objects iterate line by line with iteration tools; file content isn't a list, it's fetched on demand
+
+both are iterable objects, which also include
+-range
+-map
+
+dictionaries are an iterable object with a next that returns successive keys, allowing the sorted to work.
+
+list comprehension expressions, of course, can always be coded using for/in to build up a list as you go; since booth tools use iteration protocol.
+
+list comprehension, map, filter are very fast, faster than looping manually.
+
+benchmarking
+ tools:
+- time
+- timeit
+
+Persistence modules
+-pickle
+-shelve
+The record we created above could be an actual database record, when we employ Python’s object persistence system—an easy way to store native Python objects in simple files or access-by-key databases, which translates objects to and from serial byte streams automatically. (chapters 9, 28, 31, 37)
+
+Json like?: 
+looks similar, though Python’s support for variables, arbitrary expressions, and changes can make its data structures more general. Python’s json library module supports creating and parsing JSON text, but the translation to Python objects is often trivial. 
+-JSON example in ch. 9, re. files. 
+-MongoDB, using PyMongo interface.
+
+==========end lp p121 xxx =============
+
+=== start python.org tutorial ===
+
+slice indexes which are out of range are handled gracefully when used for slicing:
+
+>>> word[4:42]
+'on'
+>>> word[42:]
+''
+
+A strange thing happens if you just print a range:
+
+>>> print(range(10))
+range(0, 10)
+
+In many ways the object returned by range() behaves as if it is a list, but in fact it isn’t. It is an object which returns the successive items of the desired sequence when you iterate over it, but it doesn’t really create a list, thus saving space.
+
+We say such an object is iterable, that is, suitable as a target for functions and constructs that expect something from which they can obtain successive items until the supply is exhausted. We have seen that the for statement is such an iterator. The function list() is another; it creates lists from iterables:
+
+>>> list(range(5))
+[0, 1, 2, 3, 4]
+
+
+FUNCTIONS
+
+local variables, global variables, symbol table:
+The execution of a function introduces a new symbol table used for the local variables of the function. More precisely, all variable assignments in a function store the value in the local symbol table; whereas variable references first look in the local symbol table, then in the local symbol tables of enclosing functions, then in the global symbol table, and finally in the table of built-in names. 
+
+So, within a function, global variables may be only referenced, but not assigned a value (unless named in a global statement).
+
+A function name can be assigned to another name:
+>>> fib
+<function fib at 10042ed0>
+>>> f = fib
+>>> f(100)
+
+in
+>>> 'as' in 'hash'
+True
+>>> 'as' in 'hawh'
+False
+
+4.7 Function variable # of arguments
+1. Default argument (4.7.1)
+2. kwargs calling style (4.7.2)
+3. arbitrary argument lists (4.7.3)
+
+4.7.1 default argument
+
+The default values are evaluated at the point of function definition in the defining scope, so that
+
+i = 5
+
+def f(arg=i):
+    print(arg)
+
+i = 6
+f()  # prints 5
+
+
+default values are evaluated only once, so this is possible:
+
+
+def f(a, L=[]):
+    L.append(a)
+    return L
+
+
+if you want the default argument to be reinitialized on each function call:
+def f(a, L=None):
+  if (L == None):
+      L = []
+
+4.7.2 Keyword arguments
+
+def student(id, age=21, weight=150, height=180):
+    pass
+is one required argument, and 3 optional, and may be called in any of the following ways:
+
+student(171421)
+student(id=191165)
+student(id=172017, age=19)
+student(age=19, id=172017)
+student(175982, 20, 105)
+student(165233, age=21)
+
+>>> def student(id, age=21, weight=150, height=180):
+...     pass
+... 
+>>> student(id=172235, 19)
+  File "<stdin>", line 1
+SyntaxError: positional argument follows keyword argument
+
+In a function call, keyword arguments must follow positional arguments.
+(- can't have a non-keyword argument after a kwarg in a call)
+
+The order of keyword arguments is not important. This also includes non-optional arguments (e.g. student(id=191165) is valid too). 
+
+When a final formal parameter of the form **name is present, it receives a dictionary (see Mapping Types — dict) containing all keyword arguments except for those corresponding to a formal parameter. This may be combined with a formal parameter of the form *name (described in the next subsection) which receives a tuple containing the positional arguments beyond the formal parameter list. (*name must occur before **name.) For example, if we define a function like this:
+
+def university(name, *degrees, **attributes):
+    print(name + " University has degrees in")
+    for d in degrees:
+        print(d)
+    for k in attributes:
+        print("It's " + k + " is " + attributes[k] + ',')
+    print('and is a fine school.')
+  
+>>> university('Stanford', 'PhD', 'MD', 'MEng', weather='warm', grass='green')
+Stanford University has degrees in
+PhD
+MD
+MEng
+It's weather is warm,
+It's grass is green,
+and is a fine school.
+
+4.7.3. Arbitrary Argument Lists
+
+Finally, the least frequently used option is to specify that a function can be called with an arbitrary number of arguments. These arguments will be wrapped up in a tuple (see Tuples and Sequences). Before the variable number of arguments, zero or more normal arguments may occur.
+
+Accepting any number of arguments:
+def f(first, *second):
+    print("first=" + first);
+    for s in  second:
+        print("second=" + s)
+        
+f("hello", "nice", "wide", "world")
+
+first=hello
+second=nice
+second=wide
+second=world
+
+-------start aside about accessing dictionaries---
+dictionary keys are the things accessed by default:
+We don't have to say 
+    in keys(a)
+
+>>> for k in a:
+...     print(k + " is " + str(a[k]))
+... 
+animal is cow
+weight is 2000
+-------end aside about accessing dictionaries---
+
+Normally, these variadic arguments will be last in the list of formal parameters, because they scoop up all remaining input arguments that are passed to the function. Any formal parameters which occur after the *args parameter are ‘keyword-only’ arguments, meaning that they can only be used as keywords rather than positional arguments.
+
+>>> def concat(*args, sep="/"):
+...     return sep.join(args)
+...
+>>> concat("earth", "mars", "venus")
+'earth/mars/venus'
+>>> concat("earth", "mars", "venus", sep=".")
+'earth.mars.venus'
+
+4.7.4 Unpacking argument lists
+
+A list or tuple can be converted into arguments to be passed to a function:
+
+list
+>>> args = [3, 6]
+>>> list(range(*args))
+[3, 4, 5]
+
+tuple
+>>> args2=(3,6)
+>>> list(range(*args2))
+[3, 4, 5]
+
+A dictionary can be converted to arguments to a function
+
+>>> def professor(last_name, department, start_year):
+...     print("Professor " + last_name)
+...     print("Department of " + department)
+...     print("started teaching in " + str(start_year))
+... 
+>>> prof2 = {"last_name": "Smith", "start_year" : 2013, "department": "Medicine"}
+>>> professor(**prof2)
+Professor Smith
+Department of Medicine
+started teaching in 2013
+
+4.7.5 Lambda Expressions
+
+Lambda functions can reference variables from the containing scope:
+
+>>> def make_incrementor(n):
+...     return lambda x: x + n
+... 
+>>> f = make_incrementor(42)
+>>> f(0)
+42
+>>> f(1)
+43
+
+sort by each baby's 2nd name:
+>>> babies = ["Darrin James", "Michael Colin", "Therese Elizabeth", "Connie Ann"]
+>>> babies.sort(key = lambda s: s[s.find(' ')+1:])
+>>> babies
+['Connie Ann', 'Michael Colin', 'Therese Elizabeth', 'Darrin James']
+
+
+4.7.6. Documentation Strings
+
+The first line should should read like an English sentence with a period.  This is optionally followed by a blank line and some description test.
+
+Tools normally strip indentation based on the the 2nd line.
+
+myfunction.__doc__ will print it
+
+
+4.7.7 Function Annotations
+
+Are completely optional, don't affect the function:
+- metadata about the 
+    types of parameters and uses :
+    type of return value,   uses ->
+- stored in __annotations__
+
+>>> def stringify(a: str, b: int, c: float) -> str:
+...     return a + ' ' + str(b) + ' ' + str(c)
+... 
+>>> stringify('Hello', 21, 3.14)
+'Hello 21 3.14'
+
+
+4.8. Intermezzo: Coding Style
+- 4 space indent, no tabs
+- 79 character max
+- blank lines separate functions, classes
+- comments on own line, ideally
+- use docstrings
+- spaces around operators, and bracketing should like this: (1, 2)
+- CamelCase classes
+- lowercase_functions and methods
+- self is first arg
+- UTF8 or even Ascii for source code
+- Ascii characters in identifiers is best as code may be maintained in different language
+
+
+=== end   python.org end of 4.8 (next is 5.0) tutorial ===
+
+===start learned from dive into python3=====
+print with a format for float type 1 digit after the decimal
+print('{:.1f}{}'.format(size, k))
+
+import sys
+print(sys.path)  # shows library search path
+
+>>> print (str.__doc__)
+
+
+try:
+    import chardet
+except ImportError:
+    chardet = None
+
+
+once you have a single named argument, the rest of the arguments must also be named. As soon as you have a named argument, all arguments to the right of that need to be named arguments, too:
+
+myfunc(size=4000, False)  # will always fail no matter what the function looks like
+
+sys.path.insert() is possible
+
+you can pass a module as an argument to a functions
+
+try...except blocks handle exceptions
+
+try:
+    import chardet
+except ImportError:
+    chardet = None
+
+import errors, catching and defaulting to another module:
+
+try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree
+
+module.name
+If you import the module, then __name__ is the module’s filename, without a directory path or file extension
+
+But you can also run the module directly as a standalone program, in which case __name__ will be a special
+default value, __main__ .
+
+Common types:
+bool
+int, float, complex,  (fraction is a library class)
+str
+list
+tuple
+set
+dict
+
+bool are evaluated in a 'boolean context'
+
+bool can be added, etc  
+True + False  # 1
+True - False  # 1  !!! that is 1 - 0 = 1
+True * 2      # 2
+>>> True/3
+0.3333333333333333
+
+type checking with isinstance(a,b)
+>>> isinstance(2,int)
+True
+>>> isinstance(2,float)
+False
+
+// in a floating expression still returns a float:
+>>> 7 // 3
+2
+>>> 1.0 + 7 // 3
+3.0
+
+/ will always return a float, even if numerator and denominator are ints:
+
+>>> type (4/2)
+<class 'float'>
+
+>>> int(4)/int(2)
+2.0
+
+
+fractions:
+>>> import fractions
+
+>>> fractions.Fraction(1,2) * 2   # result shows as Fraction
+Fraction(1, 1)
+
+>>> fractions.Fraction(6,4)       # result is automatically reduced 6/3 becomes 3/2
+Fraction(3, 2)
+
+any fraction with numerator of 0 evaluates to False, all others exaluate to True
+
+list: append a list to a list, extend a list to a list
+
+append inserts a list as a single item:
+>>> list1 = [1, 2, 3]
+>>> list1.append([4, 5, 6])
+>>> list1
+[1, 2, 3, [4, 5, 6]]
+
+the length of this list is 4
+
+extend inserts each item:
+>>> list2 = ['a', 'b', 'c']
+>>> list2.extend(['d', 'e', 'f'])
+>>> list2
+['a', 'b', 'c', 'd', 'e', 'f']
+
+index() raises an exception if not found
+
+del mylist[1]  # deletes item
+mylist.remove(3.14) # removes item
+
+del, remove, and removing an item may remove only its first one!!!!
+>>> list3 = ['one', 2, 3.14, 42, 'one']
+>>> del list3[3]
+>>> list3
+['one', 2, 3.14, 'one']
+>>> del list3[9]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+IndexError: list assignment index out of range
+>>> list3.remove(3.14)
+>>> list3
+['one', 2, 'one']
+>>> list3.remove('one')
+>>> list3
+[2, 'one']
+>>> list3.remove(2)
+>>> list3
+['one']
+>>> list3.remove(99.44)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: list.remove(x): x not in list
+
+mylist.pop(x) removes item x, and returns x
+mylist.pop()  With no parameter removes last item, returning last item
+to remove the first item (like in other precious languages) mylist.pop(0)
+
+tuples
+- are immutable, don't have methods like append() , extend() , insert() , remove() , and pop().  
+- slicing a tuple returns a new tuple
+- Tuples are faster than lists. If you’re defining a constant set of values and all you’re ever going to do with it is iterate through it, use a tuple instead of a list.
+- Tuples make your code safer
+
+converting between tuple and list
+tuple(mylist)
+list(mytuple)
+
+assigning to multiple items using a tuple:
+>>> (x, y, z) = ('a', 2, True)
+>>> print(x, y, z)
+a 2 True
+
+I don't know why you can do this with a range (because you'd think a range returns an iterator):
+# create 7 variables, each with the name of a weekday:
+>>> (MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY) = range(7)
+>>> TUESDAY
+1
+>>> WEDNESDAY
+2
+
+sets
+(type({}) is a dictionary not a set
+
+to create a set that you can add to later:
+myset = set()
+
+An empty set shows up funny in print statements:
+>>> set1 = {1,2}
+>>> set2 = set([1,2])
+>>> print(set1)
+{1, 2}
+>>> print (set2)
+{1, 2}
+>>> set3 = set()
+>>> print(set3)
+set()
+
+myset.add(22)
+myset.update({3, 42, 101})  # adds each to set
+myset.update([3, 42, 101])  # same
+myset.update([1, 2], [9, 10])  # takes multiple arguments!
+
+myset.remove('notinset')  # KeyError exception!
+myset.discard('notinset') # nop
+
+sets are not ordered, so things like 
+pop()  # may not return what you want
+
+myset.clear()   # removes all items 
+mylist.clear()  # works with lists too
+
+>>> myset246 = {2,4,6}
+>>> myset246.clear()
+>>> print(myset246)
+set()
+
+set operations may also be written out longhand:
+myset.symmetric_difference(yourset)
+| union, & intersection, - difference, ^ symmetric_difference
+<= issubset, >= issuperset
+
+
+None
+Comparing None to anything other than None will always return False.
+All variables with value None are equal to each other
+
+
+===end   learned from dive into python3=====
+
+=== begin PerlPhrasebook - Python Wiki ====
+https://wiki.python.org/moin/PerlPhrasebook#Introduction
+
+string interpolation with adjacent characters:
+header2 = "Dear %(title)s %(name)s," % vars()
+
+using a dictionary with string interpolation:
+-each name in parentheses is a key in the dictionary.
+-format specifier immediately follows the parens:
+
+>>> emp = {'first_name': 'John', 'last_name': 'Smith', 'years': 3.59}
+>>> '%(first_name)s %(last_name)s has been here %(years).1f years' % emp
+'John Smith has been here 3.6 years'
+
+useful pre-made dictionaries:
+locals()
+globals()
+vars()
+
+substrings, s[:-2] (also applies to other sequences):
+a[x:y],  
+If either index is negative, the length of the array is added to it. 
+So a[-4:] is the last four characters of a. 
+
+CONTINUE READING, THIS IS VERY INTERESTING!!!!
+
+=== end   PerlPhrasebook - Python Wiki ====
+
+--- begin aside from Think Python
+
+---test.dat---
+this is line 1 and the next line is blank
+
+this is line 3 and is the last line of the file
+--------------
+
+f.read(n) and f.read()
+-n argument indicates how many characters to read:
+-With no arguments, it reads the entire (remaining) contents of the file:
+-If not enough characters are left in the file, read(n) returns the remaining characters. 
+-When we get to the end of the file, read() and read(n) returns the empty string: 
+-seemingly you can read(very_large_number) after end of file, still returns ''
+
+>>> f = open("test.dat","r")
+>>> print(f.read(6))
+this i
+>>> print(f.read())
+s line 1 and the next line is blank
+
+this is line 3 and is the last line of the file
+
+>>> s = f.read()
+>>> print(s)
+
+>>> print(s == '')
+True
+>>> s = f.read(9999)
+>>> print(s)
+
+>>> print(s == '')
+True
+>>> f.close()
+
+
+readline
+-reads all the characters up to and including the next newline character:
+-at end of file, returns ""
+
+>>> f = open("test.dat","r")
+>>> print (f.readline())
+this is line 1 and the next line is blank
+
+>>> s = f.readline()
+>>> print(s)
+
+
+>>> print(s == '\n')
+True
+>>> s = f.readline().strip()
+>>> print(s)
+this is line 3 and is the last line of the file
+>>> s = f.readline()  # this should return empty string
+>>> print(s)
+
+>>> print(s == '')
+True
+>>> f.close()
+
+
+readlines
+-returns all of the remaining lines as a list of strings:
+-at end of file returns []
+-in list format, each strings appear with the newline character.
+
+>>> f = open("test.dat","r")
+>>> print(f.readlines())
+['this is line 1 and the next line is blank\n', '\n', 'this is line 3 and is the last line of the file\n']
+>>> print(f.readlines())
+[]
+>>> f.close()
+
+
+this seems to work, even in Python3:
+from __future__ import print_function, division
+
+
+more formatting:
+If the number of spaces is negative, trailing spaces are added:
+
+>>> "%-6d" % 62
+'62    '
+
+--- end aside from Think Python
+
+=================== begin learning python ==========
+4.8 Tuples p.121
+
+tuples
+- don't often need parens to create
+- add with + to make a new object
+
+t = 1, 4, 2, ('b', 'g'), ['!', '?']
+>>> t
+(1, 4, 2, ('b', 'g'), ['!', '?'])
+
+>>> t + (7, 42)
+(1, 4, 2, ('b', 'g'), ['!', '?'], 7, 42)
+
+
+4.9 Files
+
+reading
+- omit the 'r' in reading, it is the default
+
+Don't read line by line!
+
+The best way to read a file today is to not read it at all—files provide an iterator that automatically reads line by line in for loops and other contexts:
+
+>>> for line in open('data.txt'): print(line)
+
+dir(f) on an open file shows the methods available
+
+Text IO relies on your platform’s Unicode encoding default in Python 3.X
+
+Binary writing 10 bytes:
+
+import struct
+packed = struct.pack('>i4sh', 7, b'spam', 8)
+packed                        # b'\x00\x00\x00\x07spam\x00\x08'
+file = open('data.bin', 'wb') 
+file.write(packed)
+file.close()
+
+data = open('data.bin', 'rb').read() 
+data                          # b'\x00\x00\x00\x07spam\x00\x08'
+data[4:8]                     # b'spam'
+list(data)                    # [0, 0, 0, 7, 115, 112, 97, 109, 0, 8]
+struct.unpack('>i4sh', data)  # (7, b'spam', 8)
+
+The above list was a list of 8 bit bytes
+
+Accessing Unicode files:
+
+If the text matches our system's encoding, we can read it normally, 
+Otherwise, 
+- pass in an encoding name if the text in the file doesn’t match the default encoding for our platform. 
+- text files encode on writes and decode on reads 
+
+S = 'sp\xc4m'
+open('unidata.txt', 'w', encoding='utf-8')
+file.write(S) 
+text = open('unidata.txt', encoding='utf-8').read()  #str len of 4
+
+to see what's really stored, we can read it in binary
+len(open('unidata.txt', 'rb').read())      # surprise, 5 bytes!
+
+
+---SE aside
+open 2 files on same with open line!
+with open(infile,'r') as fin, open(outfile,'w') as fout:
+   fout.write(fin.read())
+   
+sys.argv store command line arguments
+
+---end SE aside
+
+
+even without files, you can do encoding and decoding:
+
+>>> stuff = b'sp\xc3\x84m'
+>>> type(stuff)
+<class 'bytes'>
+>>> stuff2 = stuff.decode('utf-8')
+>>> type(stuff2)
+<class 'str'>
+>>> stuff2
+'spÄm'
+>>> stuff3 = stuff2.encode('utf8')
+>>> stuff3 == stuff
+True
+
+it’s largely automatic; tools such as walkers and listers offer more control when needed, though we’ll defer further details until Chapter 37.
+
+Other stuff:
+- pipes
+- persistent object shelves
+- descriptor files for locking and other low-level tools
+ 
+
+4.1 Sets
+
+difference and symmetric difference
+
+>>> set('spam') - set('ham')
+{'p', 's'}
+>>> set('ham') - set('spam')
+{'h'}
+>>> set('spam') ^ set('ham')
+{'h', 'p', 's'}
+
+sets can be used to 
+- filter out duplicates
+- isolating differences in collections (see immediately preceding example)
+- testing to see if collections contain same elements, regardless of the order
+
+--- diversion, taken from python.org 9.4. decimal — Decimal fixed point and floating point arithmetic
+Decimal 
+- fixed-precision floating point numbers
+- fixes problems with float:  1.1 + 2.2   # 3.3000000000000003
+- equality: fixes problems with 0.1 + 0.1 + 0.1 - 0.3  should == 0, but doesn't
+- significant digits, and showing a zero to demonstrate this
+- specify a precision, defaults to 28, but can be arbitrarily large
+- exceptions can block imprecise operations, which enforces exactness
+- also supports rounded arithmetic
+- Infinity, -Infinity, and NaN, +0, -0
+
+>>> from decimal import *
+>>> getcontext()
+Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999999, Emax=999999999,
+        capitals=1, flags=[], traps=[Overflow, DivisionByZero,
+        InvalidOperation])
+
+>>> getcontext().prec = 7       # Set a new precision
+
+>>> Decimal(1) / Decimal(7)
+Decimal('0.142857')
+>>> getcontext().prec = 28
+>>> Decimal(1) / Decimal(7)
+Decimal('0.1428571428571428571428571429')
+
+python docs 9.5 Fractions
+
+- instance of numbers.Rational
+
+>>> Fraction()
+Fraction(0, 1)
+>>> Fraction('1.414213 \t\n')
+Fraction(1414213, 1000000)
+>>> Fraction('-.125')
+Fraction(-1, 8)
+>>> Fraction('7e-6')
+Fraction(7, 1000000)
+>>> Fraction(2.25)
+Fraction(9, 4)
+>>> Fraction(1.1)
+Fraction(2476979795053773, 2251799813685248)
+>>> from decimal import Decimal
+>>> Fraction(Decimal('1.1'))
+Fraction(11, 10)
+--- end diversion, taken from python.org 9.4. decimal — Decimal fixed point and floating point arithmetic
+
+
+None
+>>> L = [None] * 100                # Initialize a list of 100 Nones
+>>> L
+[None, None, None, None, None, None, None, None, None, None, None, None,
+None, None, None, None, None, None, None, None, ...a list of 100 Nones...]
+
+type() returns a class, but in Python 2, it returned a type
+
+Using type() is non-pythonic!!!!
+- doing so is almost always the wrong thing to do in a Python program 
+- you effectively break its flexibility—you limit it to working on just one type.
+- Without such tests, your code may be able to work on a whole range of types.
+- code to object interfaces (operations supported), not to types. 
+- care what an object does, not what it is. 
+- Make code automatically applicable to many of types —any object with a compatible interface will work
+- polymorphism is probably the key idea behind using Python well.
+
+Classes
+
+- The implied “self” object is why we call this an object-oriented model: 
+- there is always an implied subject in functions within a class. 
+- inheritance mechanism supports software hierarchies that lend themselves to customization by extension. 
+- We extend software by writing new classes, not by changing what already works.
+
+
+- simpler built-in types such as lists and dictionaries are often better tools than user-coded classes.
+
+
+Everything you can process in a Python script is a type of object. Everything in Python is an “object,”
+- only those types of objects we’ve met so far are considered part of Python’s core type set. 
+
+Other types in Python
+- objects related to program execution (like functions, modules, classes, and compiled code)
+- or are implemented by imported module functions, not language syntax. 
+- these also tend to have application-specific roles—text patterns, database interfaces, network connections, and so on.
+
+Objects, not object-oriented
+Moreover, keep in mind that the objects we’ve met here are objects, but not necessarily object-oriented—a concept that usually requires inheritance and the Python class statement, which we’ll meet again later in this book. Still, Python’s core objects are the workhorses of almost every Python script you’re likely to meet, and they usually are the basis of larger noncore types.
+
+----end 4.10
+
+=================== end learning python ==========
+
+
+========== begin Perl Phrasebook - Python Wiki (part 2)========== 
+
+# Unless the module is specifically designed for this kind of import, don't use it
+from module import *
+
+In Python, objects must be initialized before they are used, and the initialization determines the type. For example, a = [] creates an empty array a, d = {} creates an empty dictionary. 
+
+
+fileinput — iterates over the lines of all files listed in sys.argv[1:], 
+- defaulting to sys.stdin if the list is empty.
+- lines read in include the newline (last line may not have one)
+- this module also can support in-place filtering and backups of current file
+- different list of files can be given rather than the it using the command line arguments
+
+import fileinput
+for line in fileinput.input():
+    process(line)
+
+with can also be used:
+with fileinput.input(files=('spam.txt', 'eggs.txt')) as f:
+    for line in f:
+        process(line)
+
+
+more recent Python version allow a file to be used as an iterator:
+for line in open(filename):
+    process_line()
+
+
+stdin:
+for line in open(sys.stdin):
+    process_line()
+
+as an alternative to the fileinput module, you can loop over filenames on the command line:
+
+import sys
+for fname in sys.argv[1:]
+    for line in open(fname):
+        process_line()
+
+
+Python's object model is very uniform, allowing you, for example, to define types that can be used wherever a standard file object can be used.
+
+Python allows you to define operators for user-defined types. The operator overloading facility in Perl is provided as an add-on---the overload module. 
+
+pprint(list_of_lists) # there are formatting options when printing data structures
+
+let's read some json from the internet, pprint it and limit the output widths and depths:
+
+>>> import json
+>>> import pprint
+>>> from urllib.request import urlopen
+>>> with urlopen('http://pypi.python.org/pypi/Twisted/json') as url:
+...     http_info = url.info()
+...     raw_data = url.read().decode(http_info.get_content_charset())
+>>> project_info = json.loads(raw_data)
+
+>>> pprint.pprint(project_info, depth=2, width=50)
+{'info': {'_pypi_hidden': False,
+          '_pypi_ordering': 125,
+          'author': 'Glyph Lefkowitz',
+          'author_email': 'glyph@twistedmatrix.com',
+          'bugtrack_url': '',
+          'cheesecake_code_kwalitee_id': None,
+etc. etc. etc. [mine, not the method's etc's]
+
+a = [1, 2, 3]
+b = a  # does not copy, it's just another reference.   Changing the values in b will affect a. 
+
+b = a[:] # does a shallow copy; references in the original array will be shared with references in the new 
+>>> a = [[1],[2]]
+>>> b = a[:]
+>>> a[0][0] = 42
+>>> b[0][0]
+42
+
+>>> a = [[1],[2]]
+>>> import copy
+>>> b = copy.deepcopy(a)
+>>> a[0][0] = 42
+>>> b[0][0]
+1
+
+
+slurping a file, stripping \n into a list all in one go:
+>>> lista = [line.split() for line in open('words')]
+>>> lista
+[['abacus'], ['bazaar'], ['cat'], ['do'], ['elephant']]
+
+
+LoL = [somefunc(i) for i in range(10)]
+printLoL('filled with somefunc:', LoL)
+
+dunno what this is for, but it's interesting to note that you can make a list of functions.
+
+with lambda, it looks like this
+b = [lambda x: [x] for i in range(10)]
+
+You have to populate the matrix -- this doesn't happen automatically in Python.
+I think this means that you can't just create a [] list and then say a[3] = 42. 
+Instead there has to be a item at [3], any item at all, of any type.
+
+@LoL = map [ somefunc $_ ], 0..9;
+printLoL 'filled with map', \@LoL;
+
+LoL = map(lambda x: somefunc(x), range(10))
+printLoL('filled with map', LoL)
+
+Map, or list comprehension?
+If conceptually the idea you want to express is "do this to each element of the list", I would recommend mapping because it expresses this precisely. If you want more precise control of the flow during this process, particularly for debugging, use loops. 
+
+begin {i have no idea what this means: 
+	Christiansen suggests that it is often better to make it clear that a function is being defined:
+	
+	@LoL = map {[ somefunc($_) ]} 0..9;
+	
+	rather than
+	
+	@LoL = map [ somefunc($_) ], 0..9;
+	
+	or
+	
+	@LoL = map ([ somefunc($_)], 0..9);
+end}
+
+
++= adding lists
+list6 = [1,2]
+list6 += [3,4]
+>>> list6
+[1, 2, 3, 4]
+
+Python replaced its original regular expression module some years ago with one that closely matches the capabilities of Perls, including being able to do advanced RE tasks such as calling a function to provide the data for an RE substitution, and the optional inclusion of whitespace and comments in REs.
+
+In Python, string methods are often used where Perl would use a regex. Among these string methods are title() and capitalize().
+
+>>> "the cat in the hat; it'll be a cat i dig".title()
+"The Cat In The Hat; It'Ll Be A Cat I Dig"
+>>> "the cat in the hat; it'll be a cat i dig".capitalize()
+"The cat in the hat; it'll be a cat i dig"
+>>> import string
+>>> string.capwords("the cat in the hat; it'll be a cat i dig")
+"The Cat In The Hat; It'll Be A Cat I Dig"
+
+Python Guide Documentation, Release 0.0.1
+
+A GOTCHA: function with default parameters and mutable datatypes:
+
+The desired result in this example is to generate a new list, put a single item in it, and return that.
+But that's not what happens!  
+
+>>> def make_one_item_list(item, mylist=[]):
+...     mylist.append(item)
+...     return mylist
+... 
+>>> make_one_item_list(3)
+[3]
+>>> make_one_item_list(42)
+[3, 42]   # hey! it's supposed to be a new list with one item!
+
+Why?
+
+A new list is created once, when the function is defined, not each time it is called.
+If you use a mutable default argument, and change the value it refers to, you will have that changed value on all subsequent calls.
+
+Solution:
+>>> def make_one_item_list(item, mylist=None):
+...     if mylist is None:
+...         mylist = []
+...     mylist.append(item)
+...     return mylist
+... 
+>>> make_one_item_list(42)
+[42]
+>>> make_one_item_list(42)
+[42]
+
+
+--- start diversion to StackExchange---
+
+   == None vs is None
+   
+PEP 8 says:
+    "Comparisons to singletons like None should always be done with 'is' or 'is not', never the equality operators."   
+
+SE:
+A class is free to implement comparison any way it chooses, and it can choose to make comparison against None mean something (which actually makes sense; if someone told you to implement the None object from scratch, how else would you get it to compare True against itself?).
+
+Practically-speaking, there is not much difference since custom comparison operators are rare. But you should use is None as a general rule.
+
+None is a singleton object (there only ever exists one None).
+is checks to see if they are the same object
+
+[1] is [1]  # false, because they are not the same actual object
+a = None
+b = None
+a is b      # true because there's only one none, and both point to it.
+
+with regards to x == None:
+
+Technically speaking, it's possible to have a class with a custom equality operator,
+and in this special case, it may be possible that:
+x == None   # may possibly evaluate to True even if x is not None
+but practically speaking, this would be the use of bizarre code.
+
+Jared Grubb: A class is free to implement comparison any way it chooses, and it can choose to make comparison against None mean something (which actually makes sense; if someone told you to implement the None object from scratch, how else would you get it to compare True against itself?).
+
+Mark Lutz: is performs an identity test; == performs value comparison, and so is much more generally useful.  (this is his general comment, not related to this problem)
+
+While on the topic, it seems the rich comparison operators are:
+__eq__  __ne__ __lt__ __gt__ __le__ __ge__
+
+
+--- end diversion to StackExchange---
+	
+
+========== end   Perl Phrasebook - Python Wiki (part 2)========== 
+
+
+
+--- begin aside: SO: ternary operator doing stuff -----
+
+This doesn't compile:
+>>> def s(read):
+...     read.rstrip() if read else print('not read') # this is fine
+...     read.rstrip() if read else return 1  # oops!
+  File "<stdin>", line 3
+    read.rstrip() if read else return 1
+
+In the documentation you will see that the "ternary operator" should be like this:
+
+conditional_expression ::=  or_test ["if" or_test "else" expression]
+expression             ::=  conditional_expression | lambda_expr
+
+and pass is a statement not an expression
+
+--- end aside: SO: ternary operator doing stuff -----
+
+--- start aside reading random module ---
+You can make a list of random numbers that are weighted!
+
+then use counter to count occurrences:
+
+>>> Counter(random.choices(['twenty', 'eighty'], [.2, .8], k=10000))
+Counter({'eighty': 8061, 'twenty': 1939})
+
+
+using this in qz.pl:
+
+qz.pl allows questions to be asked in a random order, but weighted according to their rating.  The weight assigned to any question is based on its rating and the sum of the ratings of all the quesitons.
+
+For instance, the question 'dioot' has rating 30
+
+If the sum of all the ratings in the question set are, say 612, then the probability of getting this as a question is rating/sum(ratings)  = 30 / 612 = .049.  
+
+If questions were asked 10,000 times, you'd expect to get 10000 * .049 = 490 of this question.
+
+I need to code this weighted-random question choosing ability.  I stumbled upon Python's API for the random module, which seems to have methods to generate weighted random numbers.
+
+random.choices allows us to generate an arbitrary amount of random numbers, where selections of random numbers are made according to the relative weights in a sequence of weights provided to the method.
+
+random.choices takes, as a second parameter, a sequence of weights.  Our sequence of weights are simply the ratings of the each corresponding question.  This works out very simply and nicely to fulfill the need of qz.pl.
+
+In a run of generating 10,000 weighted numbers, (shown below), we got {'dioot: 474} which confirms this.
+
+Let's generate 10000 random numbers using a list of weights (which in our case is a list of ratings to each question) 
+
+questions = ['dioot', 'mnou', 'guv', 'hqrsu', 'aafnu', 'afln', 'deef', 'nys']
+ratings=[30, 45, 69, 68, 100, 100, 100, 100]
+
+import random
+import collections
+collections.Counter(random.choices(questions, ratings, k=10000)) # do 10,000 randoms and count results
+
+Counter({'deef': 1699, 'aafnu': 1695, 'afln': 1649, 'nys': 1586, 'guv': 1131, 'hqrsu': 1057, 'mnou': 669, 'dioot': 514})
+
+
+To verify, let's generate the expected counts:
+
+expected=[int(10000 * x/sum(ratings)) for x in ratings]
+list(zip(questions, expected))
+
+[('dioot', 490), ('mnou', 735), ('guv', 1127), ('hqrsu', 1111), ('aafnu', 1633), ('afln', 1633), ('deef', 1633), ('nys', 1633)]
+
+Clearly the random.choices method fulfils the requirement.
+
+
+--- end aside reading random module ---
 
