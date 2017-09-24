@@ -2,16 +2,18 @@ numbers
     int     1234, 0b111
     float  3.14
     decimal
-    complex 3+4j
+    complex 3+4j      #later in the book he says fraction, too
 string (immutable)
 list
 dict
 tuple (immutable)
 File
 set
+----
 bool
-type
+type   wtf?
 None
+---
 
 Function
 Module
@@ -882,10 +884,6 @@ sep, end, file and flush, if present, must be given as keyword arguments.
 
 >>> print('cats', 'dogs', 'mice', end="!", sep=',') ; print("YIKES!!")
 cats,dogs,mice!YIKES!!
-
-
-
-
 
 ==================== end   automate : p xx  ====================
 
@@ -2573,6 +2571,10 @@ In Python, string methods are often used where Perl would use a regex. Among the
 >>> string.capwords("the cat in the hat; it'll be a cat i dig")
 "The Cat In The Hat; It'll Be A Cat I Dig"
 
+========== end   Perl Phrasebook - Python Wiki (part 2)========== 
+
+
+--- start diversion into python guide, mutable datatypes ----
 Python Guide Documentation, Release 0.0.1
 
 A GOTCHA: function with default parameters and mutable datatypes:
@@ -2606,6 +2608,7 @@ Solution:
 >>> make_one_item_list(42)
 [42]
 
+--- end diversion into python guide, mutable datatypes ----
 
 --- start diversion to StackExchange---
 
@@ -2645,7 +2648,6 @@ __eq__  __ne__ __lt__ __gt__ __le__ __ge__
 --- end diversion to StackExchange---
 	
 
-========== end   Perl Phrasebook - Python Wiki (part 2)========== 
 
 
 
@@ -2718,3 +2720,391 @@ Clearly the random.choices method fulfils the requirement.
 
 --- end aside reading random module ---
 
+----begin aside into amazon python books----
+
+Fluent Python:
+This brought me from an intermediate Python programmer to a, somewhat advanced level. I'd recommend Philip Guo's interpreter videos and David Beazley's modules talk for additional information but overall this is the best Python book I know of. The 55 techniques book was great too but not comprehensive.
+
+----end aside into amazon python books----
+
+
+========== start   Perl Phrasebook - Python Wiki (part 3)========== 
+
+The highest valid index of an array is len(arr) - 1. 
+The highest valid upper bound to a python range is len(arr)
+
+range(0, 10) or simply range(10) (assumes 0 as initial)
+
+Python uses a closed-open interval, and this pattern is applied consistently across the language.
+
+The lack of true lambda expressions in Python is not really a problem, since all it means is that you have to provide a name for the function. Since you can define a function within another function, this does not lead to namespace clutter. 
+
+
+
+
+
+
+========== end   Perl Phrasebook - Python Wiki (part 3)========== 
+
+
+---- start Python Cookbook 3rd starting (yes right in the middle of book)------
+
+p. 141
+
+'r' 'w'  are 'rt' and 'wt' in this book
+
+the API says r is default, and t is default, so this is just stupid.
+
+# Redirected print statement
+with open('somefile.txt', 'wt') as f:
+    print(line1, file=f)
+    print(line2, file=f)
+
+To append to the end of an existing file, use open() with mode 'at'.
+
+utf-8
+By default, files are read/written using the system default text encoding, as can be found
+in sys.getdefaultencoding() . On most machines, this is set to utf-8 (as in ubuntu)
+
+encodings
+- common ones are ascii , latin-1 , utf-8 , and utf-16
+- utf-8 is is safe for web
+- ascii is x0 to x7F  (7 bit)
+- latin-1 is x0 to xFF
+- latin-1 can read the text in any file of any encoding (sort of)
+- latin-1 writing on any format produces a good write anyway
+
+newline
+newline is converted to \n on read
+\n is converted to system default newline character on output
+-open has kwarg of newline if needed
+
+for example, reading a windows file by default shows \n on read
+with newline='', it shows \r\n because this disables newline translation
+
+sep
+print normally uses ' ' between csv items, change it with print("yo", "yo", sep='-')
+sep can be '' to eliminate spaces between items
+
+row = ('ACME', 50, 91.5)
+print(*row, sep=',')     #ACME,50,91.5
+
+binary i/o
+- read in data is byte strings (probably bytes as opposed to bytearray)
+- indexing and iteration return integer byte values instead of byte strings
+
+b = b'Hello World'
+b[0]
+72
+
+Other notes on i/o:
+- opening with 'b', and using text to either read or write requires mystring.encode, indata.decode
+- same idea with any 'buffer interface' objects
+- f.readinto(obj) can read directly into a sequence, for example, but is platform dependent
+- open 'xt' rather than 'wt' will cause exception when trying to overwrite a file
+- alternatively: os.path.exists('somefile')
+
+io.StringIO() and io.BytesIO(): 
+s = io.StringIO()
+s.write('hello') or print('hello',s)
+s.getValue() # hello
+
+operate on a string with read:
+>>> s = io.StringIO('Hello\nWorld\n')
+>>> s.read(4)
+'Hell'
+
+-io.BytesIO will do similar stuff with binary
+-these 2 don't work with filedescriptor consumers such as pipes, socket, file
+
+#zip files
+import gzip; 
+with gzip.open('somefile.gz', 'rt') as f:  #bz2.open
+text = f.read()
+
+with gzip.open('somefile.gz', 'wt', compresslevel=5) as f: #default level of 9 is max
+f.write(text)
+
+layer a gzip and a binary open:
+f = open('somefile.gz', 'rb')
+with gzip.open(f, 'rt') as g:  # first parameter used here as a file descriptor for a wrapped file
+    text = g.read()
+This allows the gzip and bz2 modules to work with various file-like objects such as
+sockets, pipes, and in-memory files.
+
+file, iterate over a fixed number of bytes with each call with this trick:
+- be careful about exact file size
+
+from functools import partial
+RECORD_SIZE = 32
+with open('somefile.data', 'rb') as f:
+    records = iter(partial(f.read, RECORD_SIZE), b'')
+    for r in records:
+
+the iter() function is that it can create an iterator if you pass
+it a callable and a sentinel value. The resulting iterator simply calls the supplied callable
+over and over again until it returns the sentinel, at which point iteration stops.
+
+end of p 51
+
+---- end Python Cookbook 3rd ------
+
+============begin learning python==============
+
+4.13
+They are known as “core” types because they are part of the Python language itself and are always available; to create other objects, you generally must call functions in imported modules. 
+
+Because of this, core types are hardwired into Python’s syntax. In contrast, you must call the built-in open function to create a file object (even though this is usually considered a core type too)
+
+5.01 Types
+
+integers can no longer be coded with a trailing l or L, and integers never print with this character either. 
+
+Hexadecimals leading 0x or 0X
+Octal        leading  0o or 0O
+
+
+hex(I), oct(I), and bin(I) convert an integer to its representation string in these three bases, and int(str, base) converts a runtime string to an integer per a given base.
+
+>>> type(hex(3))
+<class 'str'>
+>>> type(oct(9))
+<class 'str'>
+
+>>> oct(9)
+'0o11'
+>>> hex(17)
+'0x11'
+>>> bin(9)
+'0b1001'
+
+complex number:
+realpart(optional) + imaginarypartJ  (or j)
+also:
+complex(real,imag)
+
+float:
+myfloat.as_integer_ratio()
+myfloat.is_integer()
+
+int:
+myint.bit_length
+
+expression: combination of numbers and operators that produce a value
+
+
+the is operator tests object identity (i.e., address in memory, a strict form of equality)
+
+lambda creates unnamed functions.
+
+============end learning python==============
+
+--- start stuff I found at https://dbader.org/blog/cool-new-features-in-python-3-6
+
+formatted string listerals f'strings, interpolation:
+- take expressions
+- takes format string syntax
+
+>>> a = 5
+>>> b = 10
+>>> sTen = 'ten'
+>>> f'Five plus {sTen} is {a + b} and not {a / b:.2f}.'
+'Five plus ten is 15 and not 0.50.'
+
+type annotations for variables:
+>>> python_version : float = 3.6
+
+--- end stuff I found at https://dbader.org/blog/cool-new-features-in-python-3-6
+
+----- start static type checking https://medium.com/@ageitgey/learn-how-to-use-static-type-checking-in-python-3-6-in-10-minutes-12c86d72677b--
+
+
+-PyCharm (the IDE) does type checking right now
+-Atom has plugins
+
+from typing import Dict, List
+
+my_string: str = "My String Value"
+
+name_counts: Dict[str, int] = {
+    "Adam": 10,
+    "Guido": 12
+}
+
+list_of_dicts: List[Dict[str, int]] = [
+    {"key1": 1},
+    {"key2": 2}
+]
+
+Union type: accepts several types
+Any type: any
+generic types
+user defined types
+
+----- end static type checking https://medium.com/@ageitgey/learn-how-to-use-static-type-checking-in-python-3-6-in-10-minutes-12c86d72677b--
+
+
+===========start Fluent Python ============
+
+__repr__ should  match the source code necessary to re-create the object being represented, we used one, in our new Vector class that looks like calling the constructor of the class (e.g., Vector(3, 4) ).
+
+repr is called:
+- repr built-in
+- interactive console, and debugger call repr
+- %r in old style formatting
+- !r in str.format()
+
+repr is used in our __repr__ method to show the component field names, so they come out as 1,2 and not '1', '2'.
+
+__str__ , which is called by the str() constructor and implicitly
+used by the print function. __str__ should return a string suitable for display to end
+users.
+If you only implement one of these special methods, choose __repr__ , because when
+no custom __str__ is available, Python will call __repr__ as a fallback.
+
+The “Data Model” chapter of The Python Language Reference lists 83 special method
+names, 47 of which are used to implement arithmetic, bitwise, and comparison opera‐
+tors.
+
+
+The % formatting operator understands tuples and treats each item as a separate
+field.
+print('%s/%s' % passport)
+
+
+tuple unpacking in calling a function:
+t = (20, 8)
+divmod(*t)
+
+unpack a tuple to single variable using a _
+_, filename = os.path.split('/home/luciano/.ssh/idrsa.pub')
+
+
+remaining elements with assignment
+a, b, *rest = range(5)
+rest i
+>>> type(rest)
+<class 'list'>
+
+a, *body, c, d = range(5)
+here the * can appear in any position to capture all non-named values
+p.29
+===========end Fluent Python ============
+
+
+chained comparison with different operators:
+>>> 1 < 2 < 3.0 < 4
+True
+
+Gotcha? floor division returns a float, but it still is doing floor division
+>>> 10 // 4.0
+2.0
+
+true division in 2.x
+from __future__ import division
+
+5 // -2 , the -2.5 will not get truncated, but floor instead:
+>>> 5 // -2
+-3
+
+if you want results that differ, there is math.trunc, int built-in and round built-in
+
+
+SKIPPING P151 TO 156 inclusive
+
+
+builtins: there's a library module builtins.
+
+
+>>> repr(1.01)
+'1.01'
+>>> str(1.01)
+'1.01'
+>>> Decimal(1.01)
+Decimal('1.0100000000000000088817841970012523233890533447265625')
+
+that's messed up
+
+>>> a = Decimal.from_float(1.25)
+>>> a
+Decimal('1.25')
+
+this also fixes it:
+>>> print(Decimal('1.01')); Decimal('1.01')
+1.01
+Decimal('1.01')
+
+
+>>> decimal.getcontext().prec = 4  # sets precision for all calcualtions from now on
+
+precision can be set temporarily, and holds true within the 'with'
+with decimal.localcontext() as ctx:
+    ctx.prec = 2
+    decimal.Decimal('1.00') / decimal.Decimal('3.00')
+
+
+Fraction can accept floating point numbers, and a print shows a textbook fraction
+>>> print(Fraction(1.25))
+5/4
+
+>>> Fraction(1.25)
+Fraction(5, 4)
+
+>>> print(Fraction(1.1)); Fraction(1.1)
+2476979795053773/2251799813685248
+Fraction(2476979795053773, 2251799813685248)
+
+this is equally messed up  (11/10)????
+here's the fix:
+
+>>> print(Fraction('1.1')); Fraction('1.1')
+11/10
+Fraction(11, 10)
+
+
+>>> (1.01).as_integer_ratio()
+(4548635623644201, 4503599627370496)
+
+messed up, take 3!!!
+
+>>> print(Fraction.from_float(1.01)); Fraction.from_float(1.01)
+4548635623644201/4503599627370496
+Fraction(4548635623644201, 4503599627370496)
+
+this is supremely messed up, because Decimal seemed to work with this fix!!!!
+
+you can add Fraction + float
+fr + 1.2
+
+done p 162 and numbers!
+
+x = set('abcde')
+
+>>> 'e' in 'Camelot', 22 in [11, 22, 33]
+
+set add method inserts one
+item, update is an in-place union, and remove deletes an item by value
+
+Because they are unordered, though, they don’t support sequence
+operations like indexing and slicing:
+
+set expressions shown earlier generally require two sets, their
+method-based counterparts can often work with any iterable type
+S.union([3, 4])
+
+S.issubset(range(-5, 5))
+
+sets can only contain immutable (a.k.a. “hashable”) object types.
+
+tuples in sets, are ok (they are immutable)
+
+177
+
+
+
+
+
+==========start learning python =============
+
+
+==========end learning python =============
